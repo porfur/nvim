@@ -33,4 +33,7 @@ use ( { "nvim-telescope/telescope-file-browser.nvim" } )
 --Hilight word occurences under the cursor
   use( { 'RRethy/vim-illuminate' } )
 
+--Lazygit
+  use( { 'kdheepak/lazygit.nvim' } )
+
 end
