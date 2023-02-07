@@ -1,26 +1,3 @@
--- Functions
-function OP_Toggle_Ex()
-	if vim.bo.filetype == 'netrw'
-	-- Close Ex
-	then
-		vim.cmd('Rex')
-	else
-		-- Open Ex
-		vim.cmd('Ex')
-	end
-end
-
-function OP_q_Ex()
-	if vim.bo.filetype == 'netrw'
-	-- Close Ex
-	then
-		vim.cmd('Rex')
-	else
-		-- Open Ex
-		vim.cmd('q')
-	end
-end
-
 -----------------------------------------------------------------------------------
 --MY KEYMAPS
 -----------------------------------------------------------------------------------
@@ -46,7 +23,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>bC', ':%bd<CR>', { desc = '[ :%bd ] Delete
 vim.keymap.set({ 'n', 'v' }, '<leader>bk', ':bd!<CR>', { desc = '[ :bd! ] Kill Buffer' })
 vim.keymap.set({ 'n', 'v' }, '<leader>bK', ':%bd!<CR>', { desc = '[ :%bd! ] Kill All Buffers' })
 
---Debun
+--Debug
 vim.keymap.set({ 'n', 'v' }, '<leader>df', function()
 	print(vim.bo.filetype)
 end, { desc = 'Printfiletype' })
@@ -55,7 +32,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>db', function()
 	print(b)
 end, { desc = 'Esc Quickfix' })
 --Netrw Keymaps
-vim.keymap.set({ 'n', 'v', 't' }, '<leader>o-', OP_Toggle_Ex, { desc = "Open Netrw" })
+vim.keymap.set({ 'n', 'v', 't' }, '<leader>o-', ':Ex<CR>', { desc = "Open Netrw" })
 
 --NeoTree Keymaps
 vim.keymap.set({ 'n', 'v', 't' }, '<leader>op', ':NeoTreeFloatToggle<CR>', { desc = "Open NeoTreeFloat" })
