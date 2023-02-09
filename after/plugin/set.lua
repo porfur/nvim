@@ -1,11 +1,11 @@
 vim.opt.termguicolors = true
 -- Set theme to dracula
-vim.cmd[[colorscheme dracula]]
+-- vim.cmd[[colorscheme dracula]]
 
 -- Set lualine theme to match theme
-if (vim.g.colors_name == "dracula")
-then require('lualine').setup{options={theme='dracula-nvim'}}
-end
+-- if (vim.g.colors_name == "dracula")
+-- then require('lualine').setup{options={theme='dracula-nvim'}}
+-- end
 -- Editor Layout settings
 vim.opt.relativenumber = true
 vim.opt.cursorline = true

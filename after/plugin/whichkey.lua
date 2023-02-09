@@ -1,3 +1,3 @@
 require('which-key').register({
-  ["<leader>b"] = { name = "+buffer" },
+  ["<leader>b"] = { name = "+ Buffer" },
 })
