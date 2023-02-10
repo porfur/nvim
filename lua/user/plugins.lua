@@ -61,8 +61,8 @@ return packer.startup(function(use)
   use { "moll/vim-bbye"}
   use { "nvim-lualine/lualine.nvim"}
   use { "akinsho/toggleterm.nvim"}
-  -- use { "ahmedkhalf/project.nvim"}
-  -- use { "lewis6991/impatient.nvim"}
+  use { "ahmedkhalf/project.nvim"}
+  use { "lewis6991/impatient.nvim"}
   use { "lukas-reineke/indent-blankline.nvim"}
   use { "goolord/alpha-nvim"}
 
@@ -107,16 +107,14 @@ return packer.startup(function(use)
   use { "ravenxrz/DAPInstall.nvim"}
 
   -- Which key
-  use {"/folke/which-key.nvim"}
+  use {"folke/which-key.nvim"}
 
   -- Tmux Navigation
   use{ "aserowy/tmux.nvim" }
 
     -- Vim Surround
   use({ "kylechui/nvim-surround", tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-    config = function()
-    end
-})
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

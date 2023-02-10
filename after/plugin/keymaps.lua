@@ -38,10 +38,10 @@ vim.keymap.set({ 'n', 'v', 't' }, '<leader>o-', ':Ex<CR>', { desc = "Open Netrw"
 vim.keymap.set({ 'n', 'v', 't' }, '<leader>op', ':NeoTreeFloatToggle<CR>', { desc = "Open NeoTreeFloat" })
 
 --Split resize
-vim.keymap.set({ 'n', 'v', 't' }, '–', ':resize -5<CR>', {}) -- Alt -
-vim.keymap.set({ 'n', 'v', 't' }, '≠', ':resize +5<CR>', {}) -- Alt +
-vim.keymap.set({ 'n', 'v', 't' }, '—', ':vertical resize -5<CR>', {}) -- Alt Shift -
-vim.keymap.set({ 'n', 'v', 't' }, '±', ':vertical resize +5<CR>', {}) -- Alt Shift +
+-- vim.keymap.set({ 'n', 'v', 't' }, '–', ':resize -5<CR>', {}) -- Alt -
+-- vim.keymap.set({ 'n', 'v', 't' }, '≠', ':resize +5<CR>', {}) -- Alt +
+-- vim.keymap.set({ 'n', 'v', 't' }, '—', ':vertical resize -5<CR>', {}) -- Alt Shift -
+-- vim.keymap.set({ 'n', 'v', 't' }, '±', ':vertical resize +5<CR>', {}) -- Alt Shift +
 
 --Lazygit
 vim.keymap.set({ 'n', 'v' }, '<leader>gg', ':LazyGit<CR>', {})
@@ -61,7 +61,7 @@ vim.keymap.set({ 'n', 'v' }, '<Esc>', function()
 end, { desc = 'Esc Quickfix' })
 
 --Tmux Navigator
-vim.keymap.set('n', '˙', ':<C-U>TmuxNavigateLeft<cr>', { desc = 'Tmux Navigate Left' })
-vim.keymap.set('n', '∆', ':<C-U>TmuxNavigateDown<cr>', { desc = 'Tmux Navigate Down' })
-vim.keymap.set('n', '˚', ':<C-U>TmuxNavigateUp<cr>', { desc = 'Tmux Navigate Up' })
-vim.keymap.set('n', '¬', ':<C-U>TmuxNavigateRight<cr>', { desc = 'Tmux Navigate Right' })
+-- vim.keymap.set('n', '˙', ':<C-U>TmuxNavigateLeft<cr>', { desc = 'Tmux Navigate Left' })
+-- vim.keymap.set('n', '∆', ':<C-U>TmuxNavigateDown<cr>', { desc = 'Tmux Navigate Down' })
+-- vim.keymap.set('n', '˚', ':<C-U>TmuxNavigateUp<cr>', { desc = 'Tmux Navigate Up' })
+-- vim.keymap.set('n', '¬', ':<C-U>TmuxNavigateRight<cr>', { desc = 'Tmux Navigate Right' })

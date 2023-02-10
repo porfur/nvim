@@ -1,10 +1,17 @@
 -- Shorten function name
-local keymap = vim.keymap.set
--- Silent keymap option
-local opts = function(desc) return{ silent = true,desc=desc or "NEED DESC"}end
+local key = vim.keymap
+
+-- Silent keymap option & Desc
+local opts = function(desc) return{ silent = false,desc=desc or "NEED DESC"}end
+
+local status_ok, builtin = pcall(require, "telescope.builtin")
+if not status_ok then
+    return
+end
+
 
 --Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts())
+key.set("", "<Space>", "<Nop>", opts('Space'))
 vim.g.mapleader = " "
 
 -- Modes
@@ -17,73 +24,100 @@ vim.g.mapleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts())
-keymap("n", "<C-j>", "<C-w>j", opts())
-keymap("n", "<C-k>", "<C-w>k", opts())
-keymap("n", "<C-l>", "<C-w>l", opts())
+key.set("n", "<C-h>", "<C-w>h", opts('Window Navigate Left'))
+key.set("n", "<C-j>", "<C-w>j", opts('Window Navigate Down'))
+key.set("n", "<C-k>", "<C-w>k", opts('Window Navigate Up'))
+key.set("n", "<C-l>", "<C-w>l", opts('Window Navigate Right'))
+key.set("n", "<C-c>", "<C-w>c", opts('Close Window'))
 
---Tmux Navigator
-vim.keymap.set('n', '<C-h>',':<C-U>TmuxNavigateLeft<cr>', opts( 'Tmux Navigate Left' ))
-vim.keymap.set('n', '<C-j>',':<C-U>TmuxNavigateDown<cr>', opts( 'Tmux Navigate Down' ))
-vim.keymap.set('n', '<C-k>',':<C-U>TmuxNavigateUp<cr>', opts( 'Tmux Navigate Up' ))
-vim.keymap.set('n', '<C-l>',':<C-U>TmuxNavigateRight<cr>', opts( 'Tmux Navigate Right' ))
+key.set("n", "<leader>wh", "<C-w>h", opts('Window Navigate Left'))
+key.set("n", "<leader>wj", "<C-w>j", opts('Window Navigate Down'))
+key.set("n", "<leader>wk", "<C-w>k", opts('Window Navigate Up'))
+key.set("n", "<leader>wl", "<C-w>l", opts('Window Navigate Right'))
+key.set("n", "<leader>wc", "<C-w>c", opts('Close Window'))
+key.set("n", "<leader>wr", "<C-w>r", opts('Swap Windows'))
+key.set("n", "<leader>wo", "<C-w>o", opts('Only Window'))
 
--- Resize with arrows
-keymap("n", "˚", ":resize -2<CR>", opts())
-keymap("n", "∆", ":resize +2<CR>", opts())
-keymap("n", "˙", ":vertical resize -2<CR>", opts())
-keymap("n", "¬", ":vertical resize +2<CR>", opts())
+
+--Tmux Navigator should match window navigation
+key.set('n', '<C-h>','<cmd><C-U>TmuxNavigateLeft<cr>', opts( 'Tmux Navigate Left' ))
+key.set('n', '<C-j>','<cmd><C-U>TmuxNavigateDown<cr>', opts( 'Tmux Navigate Down' ))
+key.set('n', '<C-k>','<cmd><C-U>TmuxNavigateUp<cr>', opts( 'Tmux Navigate Up' ))
+key.set('n', '<C-l>','<cmd><C-U>TmuxNavigateRight<cr>', opts( 'Tmux Navigate Right' ))
+
+-- Resize with Alt-hjkl
+key.set("n", "˚", "<cmd>resize -2<CR>", opts('Window Horizontal Shrink'))
+key.set("n", "∆", "<cmd>resize +2<CR>", opts('Window Horizontal Grow'))
+key.set("n", "˙", "<cmd>vertical resize -2<CR>", opts('Window Vertical Shrink'))
+key.set("n", "¬", "<cmd>vertical resize +2<CR>", opts('Window Vertical Grow'))
+key.set("n", "≠", "<C-w>=", opts('Equalize Windows'))
 
 -- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts())
-keymap("n", "<S-h>", ":bprevious<CR>", opts())
+key.set("n", "<S-l>", "<cmd>bnext<CR>", opts('Buffer Next'))
+key.set("n", "<S-h>", "<cmd>bprevious<CR>", opts('Buffer Previous'))
+key.set("n", "<leader>bn", "<cmd>bnext<CR>", opts('Buffer Next'))
+key.set("n", "<leader>bp", "<cmd>bprevious<CR>", opts('Buffer Previous'))
 
--- Clear highlights
-keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts())
+--Save buffers
+key.set({ 'n', 'v' }, '<leader>bs', '<cmd>write<CR>', opts('Write Buffer'))
+key.set({ 'n', 'v' }, '<leader>bS', '<cmd>wall<CR>', opts('Write all Buffers'))
+key.set({ 'n', 'v' }, '<leader>bw', '<cmd>write<CR>', opts('Write Buffer'))
+key.set({ 'n', 'v' }, '<leader>bW', '<cmd>wall<CR>', opts('Write all Buffers'))
+key.set({ 'n', 'v', 'i' }, '<C-s>', '<cmd>write<CR>', opts('Write Buffer'))
+key.set({ 'n', 'v', 'i' }, '<C-S>', '<cmd>wall<CR>', opts('Write all Buffers'))
 
 -- Close buffers
-keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts())
+key.set("n", "<S-q>", "<cmd>bdelete<CR>", opts('Delete Buffer'))
+key.set("n", "<leader>bD", "<cmd>bdelete!<CR>", opts('Delete Buffer (Discard Changes)'))
+key.set("n", "<leader>bd", "<cmd>bdelete<CR>", opts('Delete Buffer'))
+key.set("n", "<leader>bc", "<cmd>write<CR> <cmd>bdelete<CR>", opts('Write & Delete Buffer'))
+key.set("n", "<leader>bC", "<cmd>wall<CR> <cmd>%bdelete<CR>", opts('Write & Delete Buffers'))
+key.set("n", "<leader>bqq", "<cmd>q!<CR>", opts('Quit Buffer'))
+key.set("n", "<leader>bQQ", "<cmd>qa!<CR>", opts('Quit All Buffers'))
+
+-- Clear highlights
+key.set("n", "<leader>h", "<cmd>nohlsearch<CR>", opts('Clear Search Highlight'))
 
 -- Better paste
-keymap("v", "p", '"_dP', opts())
+key.set("v", "p", '"_dP', opts())
 
 -- Insert --
 -- Press jk fast to enter
-keymap("i", "kj", "<ESC>", opts())
+key.set("i", "kj", "<ESC>", opts())
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts())
-keymap("v", ">", ">gv", opts())
+key.set("v", "<", "<gv", opts())
+key.set("v", ">", ">gv", opts())
 
 -- Plugins --
 
 -- NvimTree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts())
+key.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts('Toggle NvimTree'))
 
 -- Telescope
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts())
-keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts())
-keymap("n", "<leader>fp", ":Telescope projects<CR>", opts())
-keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts())
+key.set("n", "<leader>sf", "<cmd>Telescope find_files<CR>", opts('Telescope Files'))
+key.set("n", "<leader>ft", "<cmd>Telescope live_grep<CR>", opts('Telescope Live Grep'))
+key.set("n", "<leader>sp", "<cmd>Telescope projects<CR>", opts('Telescope Projects'))
+key.set("n", "<leader><space>", "<cmd>Telescope buffers<CR>", opts('Telescope Buffers'))
 
 -- Git
-keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts())
+key.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts())
 
 -- Comment
-keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts())
-keymap("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts())
+key.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts())
+key.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts())
 
 -- DAP
-keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts())
-keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts())
-keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts())
-keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts())
-keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts())
-keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts())
-keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts())
-keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts())
-keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts())
+key.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts())
+key.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts())
+key.set("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts())
+key.set("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts())
+key.set("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts())
+key.set("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts())
+key.set("n", "<leader>dle", "<cmd>lua require'dap'.run_last()<cr>", opts())
+key.set("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts())
+key.set("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts())
 
 -- Lsp
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts())
+key.set("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts())
