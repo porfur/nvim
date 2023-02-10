@@ -97,7 +97,7 @@ key.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts('Toggle NvimTree'))
 
 -- Telescope
 key.set("n", "<leader>sf", "<cmd>Telescope find_files<CR>", opts('Telescope Files'))
-key.set("n", "<leader>ft", "<cmd>Telescope live_grep<CR>", opts('Telescope Live Grep'))
+key.set("n", "<leader>sg", "<cmd>Telescope live_grep<CR>", opts('Telescope Live Grep'))
 key.set("n", "<leader>sp", "<cmd>Telescope projects<CR>", opts('Telescope Projects'))
 key.set("n", "<leader><space>", "<cmd>Telescope buffers<CR>", opts('Telescope Buffers'))
 
