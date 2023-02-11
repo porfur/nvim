@@ -18,6 +18,6 @@ null_ls.setup {
     formatting.black.with { extra_args = { '--fast' } },
     formatting.stylua,
     formatting.google_java_format,
-    diagnostics.eslint_d,
+    diagnostics.eslint,
   },
 }
