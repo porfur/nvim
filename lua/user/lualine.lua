@@ -2,7 +2,13 @@ local status_ok, lualine = pcall(require, 'lualine')
 if not status_ok then
   return
 end
---
+local hide = function(section, width)
+  width = width or 60
+  local condition = function()
+    return vim.fn.winwidth(0) > width
+  end
+  return { section, cond = condition }
+end
 
 require('lualine').setup {
   options = {
@@ -10,8 +16,8 @@ require('lualine').setup {
     theme = 'auto',
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
-    disabled_filetypes = { "alpha", "dashboard",'packer', 'NVimTree' },
-    disabled_buftypes = { 'quickfix', 'prompt'},
+    disabled_filetypes = { 'alpha', 'dashboard', 'packer', 'NVimTree' },
+    disabled_buftypes = { 'quickfix', 'prompt' },
     ignore_focus = {},
     always_divide_middle = true,
     globalstatus = false,
@@ -23,16 +29,16 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_b = { hide ( 'branch',100 ), hide 'diff', hide 'diagnostics' },
     lualine_c = { { 'filename', path = 1 } },
-    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' },
+    lualine_x = { hide 'encoding', hide 'fileformat', hide 'filetype' },
+    lualine_y = { hide 'progress' },
+    lualine_z = { hide 'location' },
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = { { 'filename',path = 2 } },
+    lualine_c = { { 'filename', path = 1 } },
     lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {},
@@ -40,7 +46,7 @@ require('lualine').setup {
   tabline = {},
   winbar = {},
   inactive_winbar = {},
-  extensions = {'nvim-tree', 'neo-tree'},
+  extensions = { 'nvim-tree', 'neo-tree' },
 }
 
 --
