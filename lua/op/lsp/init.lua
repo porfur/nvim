@@ -1,5 +1,11 @@
-local status_ok, _ = pcall(require, "lspconfig")
-if not status_ok then
+local neodev_status_ok, neodev = pcall(require, "neodev")
+if not neodev_status_ok then
+    return
+end
+neodev.setup({})
+
+local lspconfig_status_ok, _ = pcall(require, "lspconfig")
+if not lspconfig_status_ok then
   return
 end
 
