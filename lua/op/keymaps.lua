@@ -88,7 +88,7 @@ key.set("v", ">", ">gv", opts())
 -- NvimTree
 key.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts('Toggle NvimTree'))
 -- Git
-key.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts('Lazy [G]it'))
+key.set("n", "<leader>gg", "<cmd>LazyGit<CR>", opts('Lazy [G]it'))
 
 -- Comment
 -- key.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts())
