@@ -9,9 +9,9 @@ whichkey.setup {
 }
 
 whichkey.register({
-    ["<leader>b"] = { name = "+ Buffer" },
-    ["<leader>c"] = { name = "+ [C]ode (LSP)" },
-    ["<leader>g"] = { name = "+ [G]it actions" },
-    ["<leader>w"] = { name = "+ [W]indow actions" },
-    ["<leader>s"] = { name = "+ [S]earch" },
+    ["<leader>b"] = { name = "Buffer" },
+    ["<leader>c"] = { name = "[C]ode (LSP)" },
+    ["<leader>g"] = { name = "[G]it" },
+    ["<leader>w"] = { name = "[W]orkspace" },
+    ["<leader>s"] = { name = "[S]earch" },
 })

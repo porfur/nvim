@@ -47,7 +47,7 @@ key.set("n", "<leader>wv", "<C-w>v", opts('Vertical Split'))
 key.set("n", "<leader>ws", "<C-w>s", opts('Horizontal Split'))
 
 -- Navigate buffers
-key.set("n", "<C-s>", "<cmd>bnext<CR>", opts('Buffer Next'))
+key.set("n", "<C-z>", "<cmd>bnext<CR>", opts('Buffer Next'))
 key.set("n", "<C-a>", "<cmd>bprevious<CR>", opts('Buffer Previous'))
 key.set("n", "<leader>bn", "<cmd>bnext<CR>", opts('Buffer Next'))
 key.set("n", "<leader>bp", "<cmd>bprevious<CR>", opts('Buffer Previous'))
@@ -57,7 +57,7 @@ key.set({ 'n', 'v' }, '<leader>bs', '<cmd>write<CR>', opts('Write Buffer'))
 key.set({ 'n', 'v' }, '<leader>bS', '<cmd>wall<CR>', opts('Write all Buffers'))
 key.set({ 'n', 'v' }, '<leader>bw', '<cmd>write<CR>', opts('Write Buffer'))
 key.set({ 'n', 'v' }, '<leader>bW', '<cmd>wall<CR>', opts('Write all Buffers'))
-key.set({ 'n', 'v', 'i' }, '<C-s>', '<cmd>write<CR>', opts('Write Buffer'))
+key.set({ 'n', 'v', 'i' },  '<C-s>', '<cmd>write<CR>', opts('Write Buffer'))
 key.set({ 'n', 'v', 'i' }, '<C-S>', '<cmd>wall<CR>', opts('Write all Buffers'))
 
 -- Close buffers
