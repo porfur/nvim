@@ -8,6 +8,13 @@ if not lspzero_status_ok then
   return
 end
 
+--
+require("mason").setup()
+require("null-ls").setup()
+require("mason-null-ls").setup({
+    automatic_setup = true,
+    automatic_installation = true,
+})
 -- No idea what this does
 neodev.setup({})
 

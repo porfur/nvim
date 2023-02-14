@@ -66,6 +66,13 @@ use {
       {'rafamadriz/friendly-snippets'}, -- Optional
     }
   }
+  use {
+    "jay-babu/mason-null-ls.nvim",
+    requires ={
+          "williamboman/mason.nvim",
+          "jose-elias-alvarez/null-ls.nvim",
+    }
+}
   ---------------------------------
   -- My plugins here
   use { "folke/neodev.nvim" }
@@ -115,7 +122,6 @@ use {
   use { 'neovim/nvim-lspconfig' } -- enable LSP
   use { 'williamboman/mason.nvim' }
   use { 'williamboman/mason-lspconfig.nvim' }
-  use { 'jose-elias-alvarez/null-ls.nvim' } -- for formatters and linters
   use { 'RRethy/vim-illuminate' }
   use { 'MunifTanjim/prettier.nvim' }
 
@@ -124,9 +130,7 @@ use {
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
   -- Treesitter
-  use {
-    'nvim-treesitter/nvim-treesitter',
-  }
+  use { 'nvim-treesitter/nvim-treesitter', }
 
   -- Git
   use { 'lewis6991/gitsigns.nvim' }
