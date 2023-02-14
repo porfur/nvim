@@ -8,19 +8,13 @@ if not lspzero_status_ok then
   return
 end
 
---
-require("mason").setup()
-require("null-ls").setup()
-require("mason-null-ls").setup({
-    automatic_setup = true,
-    automatic_installation = true,
-})
 -- No idea what this does
 neodev.setup({})
 
 --
 lspzero.preset({
   name = 'recommended',
+  sugestsuggest_lsp_servers = true,
   set_lsp_keymaps = {
     -- Omit keybinds that are customized below on_attach
     omit = { '<F2>', '<F4>', 'gr', '<C-k>' },
@@ -29,7 +23,10 @@ lspzero.preset({
   }
 }
 )
-
+lspzero.ensure_installed({
+  'tsserver',
+  'rust_analyzer',
+})
 -- Add custom keybindings on_attach
 lspzero.on_attach(function(_, bufnr)
   local opts = function(desc) return { buffer = bufnr, silent = true, desc = desc or "NEED DESC" } end
@@ -71,3 +68,30 @@ lspzero.setup()
 -- gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
 -- [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
 -- ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
+--
+-- Setup null-ls
+local null_ls = require('null-ls')
+local null_opts = lspzero.build_options('null-ls', {})
+
+null_ls.setup({
+  on_attach = function(client, bufnr)
+    null_opts.on_attach(client, bufnr)
+  end,
+  sources = {
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.formatting.stylua,
+    -- You can add tools not supported by mason.nvim
+  }
+})
+
+-- See mason-null-ls.nvim's documentation for more details:
+-- https://github.com/jay-babu/mason-null-ls.nvim#setup
+require('mason-null-ls').setup({
+  ensure_installed = nil,
+  automatic_installation = true, -- You can still set this to `true`
+  automatic_setup = true,
+})
+
+-- Required when `automatic_setup` is true
+require('mason-null-ls').setup_handlers()
