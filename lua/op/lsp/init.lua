@@ -1,81 +1,216 @@
-local neodev_status_ok, neodev = pcall(require, "neodev")
+local neodev_status_ok, neodev = pcall(require, 'neodev')
 if not neodev_status_ok then
   return
 end
 
-local lspzero_status_ok, lspzero = pcall(require, "lsp-zero")
+local lspzero_status_ok, lspzero = pcall(require, 'lsp-zero')
 if not lspzero_status_ok then
   return
 end
 
+local cmp_stats_ok, cmp = pcall(require, 'cmp')
+if not lspzero_status_ok then
+  return
+end
 -- VSCode luasnip snippets
 require('luasnip/loaders/from_vscode').lazy_load()
 -- No idea what this does
-neodev.setup({})
+neodev.setup {}
 
 --
-lspzero.preset({
+lspzero.preset {
   name = 'recommended',
   sugestsuggest_lsp_servers = true,
   set_lsp_keymaps = {
     -- Omit keybinds that are customized below on_attach
     omit = { '<F2>', '<F4>', 'gr', '<C-k>' },
     -- Stops whichkey.nvim from overriding cmp keymaps
-    preserve_mappings = false
-  }
+    preserve_mappings = false,
+  },
 }
-)
-lspzero.ensure_installed({
+lspzero.ensure_installed {
   'tsserver',
   'rust_analyzer',
-})
+}
 -- Add custom keybindings on_attach
 lspzero.on_attach(function(_, bufnr)
-  local opts = function(desc) return { buffer = bufnr, silent = true, desc = desc or "NEED DESC" } end
+  local opts = function(desc)
+    return { buffer = bufnr, silent = true, desc = desc or 'NEED DESC' }
+  end
   local bind = vim.keymap.set
 
-  bind('n', '<leader>cK', function() vim.lsp.buf.hover() end, opts('[K] Hover info'))
-  bind('n', '<leader>ci', function() vim.lsp.buf.signature_help() end, opts('S[i]gnature help (alias: <C-i>)'))
-  bind('n', '<C-i>', function() vim.lsp.buf.signature_help() end, opts('S[i]gnature help'))
-  bind('n', '<leader>cgd', function() vim.lsp.buf.definition() end, opts('[d]efinition'))
-  bind('n', '<leader>cgl', function() vim.diagnostic.open_float() end, opts('Diagnostics in F[l]oating window'))
-  bind('n', '<leader>cgD', function() vim.lsp.buf.declaration() end, opts('[D]eclaration'))
-  bind('n', '<leader>cgi', function() vim.lsp.buf.implementation() end, opts('[i]mplementation'))
-  bind('n', '<leader>cgo', function() vim.lsp.buf.type_definition() end, opts('Symb[o]l type definition'))
-  bind('n', '<leader>cgr', require('telescope.builtin').lsp_references, opts('[r]eferences'))
-  bind('n', 'gr', require('telescope.builtin').lsp_references, opts('Go to [r]eferences'))
-  bind('n', '<leader>c[d', function() vim.diagnostic.goto_prev() end, opts('Previous Diagnostic'))
-  bind('n', '<leader>c]d ', function() vim.diagnostic.goto_next() end, opts('Next Diagnostic'))
-  bind('n', '<leader>cr', function() vim.lsp.buf.rename() end, opts('[R]ename'))
-  bind('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts('[A]ction'))
-  bind('n', '<leader>cf', ':LspZeroFormat<CR>', opts('[f]ormat'))
+  bind('n', '<leader>cK', function()
+    vim.lsp.buf.hover()
+  end, opts '[K] Hover info')
+  bind('n', '<leader>ci', function()
+    vim.lsp.buf.signature_help()
+  end, opts 'S[i]gnature help (alias: <C-i>)')
+  bind('n', '<C-i>', function()
+    vim.lsp.buf.signature_help()
+  end, opts 'S[i]gnature help')
+  bind('n', '<leader>cgd', function()
+    vim.lsp.buf.definition()
+  end, opts '[d]efinition')
+  bind('n', '<leader>cgl', function()
+    vim.diagnostic.open_float()
+  end, opts 'Diagnostics in F[l]oating window')
+  bind('n', '<leader>cgD', function()
+    vim.lsp.buf.declaration()
+  end, opts '[D]eclaration')
+  bind('n', '<leader>cgi', function()
+    vim.lsp.buf.implementation()
+  end, opts '[i]mplementation')
+  bind('n', '<leader>cgo', function()
+    vim.lsp.buf.type_definition()
+  end, opts 'Symb[o]l type definition')
+  bind('n', '<leader>cgr', require('telescope.builtin').lsp_references, opts '[r]eferences')
+  bind('n', 'gr', require('telescope.builtin').lsp_references, opts 'Go to [r]eferences')
+  bind('n', '<leader>c[d', function()
+    vim.diagnostic.goto_prev()
+  end, opts 'Previous Diagnostic')
+  bind('n', '<leader>c]d ', function()
+    vim.diagnostic.goto_next()
+  end, opts 'Next Diagnostic')
+  bind('n', '<leader>cr', function()
+    vim.lsp.buf.rename()
+  end, opts '[R]ename')
+  bind('n', '<leader>ca', function()
+    vim.lsp.buf.code_action()
+  end, opts '[A]ction')
+  bind('n', '<leader>cf', ':LspZeroFormat<CR>', opts '[f]ormat')
   -- more keybindings...
-  bind('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, opts('[S]ymbols'))
-  bind('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts('[a]dd Folder'))
-  bind('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts('[r]emove Folder'))
-  bind('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-    opts('[l]ist folder'))
+  bind('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, opts '[S]ymbols')
+  bind('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts '[a]dd Folder')
+  bind('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts '[r]emove Folder')
+  bind('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, opts '[l]ist folder')
 end)
+
+--cmp
+local check_backspace = function()
+  local col = vim.fn.col '.' - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
+end
+
+local kind_icons = {
+  Text = '',
+  Method = '',
+  Function = '',
+  Constructor = '',
+  Field = '',
+  Variable = '',
+  Class = '',
+  Interface = '',
+  Module = '',
+  Property = '',
+  Unit = '',
+  Value = '',
+  Enum = '',
+  Keyword = '',
+  Snippet = '',
+  Color = '',
+  File = '',
+  Reference = '',
+  Folder = '',
+  EnumMember = '',
+  Constant = '',
+  Struct = '',
+  Event = '',
+  Operator = '',
+  TypeParameter = '',
+}
+lspzero.setup_nvim_cmp {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body) -- For `luasnip` users.
+    end,
+  },
+
+  mapping = cmp.mapping.preset.insert {
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-e>'] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    -- Accept currently selected item. If none selected, `select` first item.
+    --     -- Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping.confirm { select = true },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif check_backspace() then
+        fallback()
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
+  },
+  formatting = {
+    fields = { 'kind', 'abbr', 'menu' },
+    format = function(entry, vim_item)
+      vim_item.kind = kind_icons[vim_item.kind]
+      vim_item.menu = ({
+        nvim_lsp = '[LSP]',
+        nvim_lua = '[nvim_lua]',
+        luasnip = '[LuaSnip]',
+        buffer = '[buffer]',
+        path = '[path]',
+        emoji = '[emoji]',
+      })[entry.source.name]
+      return vim_item
+    end,
+  },
+  sources = {
+    { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
+    { name = 'buffer' },
+    { name = 'path' },
+  },
+  confirm_opts = {
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = false,
+  },
+  -- window = {
+  --   -- completion = cmp.config.window.bordered(),
+  --   -- documentation = cmp.config.window.bordered(),
+  -- },
+  experimental = {
+    ghost_text = false,
+  },
+}
+
 lspzero.setup()
---Default keymaps of lsp-zero
--- K: Displays hover information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.hover().
--- gd: Jumps to the definition of the symbol under the cursor. See :help vim.lsp.buf.definition().
--- gD: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. See :help vim.lsp.buf.declaration().
--- gi: Lists all the implementations for the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.implementation().
--- go: Jumps to the definition of the type of the symbol under the cursor. See :help vim.lsp.buf.type_definition().
--- gr: Lists all the references to the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.references().
--- <Ctrl-k>: Displays signature information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.
--- <F2>: Renames all references to the symbol under the cursor. See :help vim.lsp.buf.rename().
--- <F4>: Selects a code action available at the current cursor position. See :help vim.lsp.buf.code_action().
--- gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
--- [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
--- ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
---
--- Setup null-ls
-local null_ls = require('null-ls')
+
+-- Setup null-ls afterlsp
+local null_ls = require 'null-ls'
 local null_opts = lspzero.build_options('null-ls', {})
 
-null_ls.setup({
+null_ls.setup {
   on_attach = function(client, bufnr)
     null_opts.on_attach(client, bufnr)
   end,
@@ -84,16 +219,16 @@ null_ls.setup({
     null_ls.builtins.diagnostics.eslint,
     null_ls.builtins.formatting.stylua,
     -- You can add tools not supported by mason.nvim
-  }
-})
+  },
+}
 
 -- See mason-null-ls.nvim's documentation for more details:
 -- https://github.com/jay-babu/mason-null-ls.nvim#setup
-require('mason-null-ls').setup({
+require('mason-null-ls').setup {
   ensure_installed = nil,
   automatic_installation = true, -- You can still set this to `true`
   automatic_setup = true,
-})
+}
 
 -- Required when `automatic_setup` is true
 require('mason-null-ls').setup_handlers()
