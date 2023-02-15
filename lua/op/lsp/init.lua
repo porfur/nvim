@@ -8,6 +8,8 @@ if not lspzero_status_ok then
   return
 end
 
+-- VSCode luasnip snippets
+require('luasnip/loaders/from_vscode').lazy_load()
 -- No idea what this does
 neodev.setup({})
 

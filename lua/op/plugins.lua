@@ -104,13 +104,7 @@ return packer.startup(function(use)
   use { 'folke/tokyonight.nvim' }
   use { 'lunarvim/darkplus.nvim' }
   use { 'navarasu/onedark.nvim' }
-  use {
-    'mcchrish/zenbones.nvim',
-    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
-    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
-    -- In Vim, compat mode is turned on as Lush only works in Neovim.
-    requires = 'rktjmp/lush.nvim',
-  }
+  use { 'projekt0n/github-nvim-theme', tag = 'v0.0.7'} 
   use { 'rebelot/kanagawa.nvim' }
   use { 'aktersnurra/no-clown-fiesta.nvim' }
   use { 'romgrk/doom-one.vim' }
@@ -150,6 +144,7 @@ return packer.startup(function(use)
   use { 'nvim-treesitter/nvim-treesitter' }
 
   -- Git
+  use { 'f-person/git-blame.nvim' }
   use { 'lewis6991/gitsigns.nvim' }
   use { 'kdheepak/lazygit.nvim' }
    use {'tpope/vim-fugitive'}
