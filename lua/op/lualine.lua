@@ -29,8 +29,8 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { hide ( 'branch',100 ), hide 'diff', hide 'diagnostics' },
-    lualine_c = { { 'filename', path = 1 } },
+    lualine_b = { { 'filename', path = 1 } },
+    lualine_c = { hide ( 'branch',100 ), hide 'diff', hide 'diagnostics' },
     lualine_x = { hide 'encoding', hide 'fileformat', hide 'filetype' },
     lualine_y = { hide 'progress' },
     lualine_z = { hide 'location' },

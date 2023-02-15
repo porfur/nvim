@@ -43,39 +43,38 @@ packer.init {
 
 -- Install your plugins here
 return packer.startup(function(use)
-
-use {
+  use {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v1.x',
     requires = {
       -- LSP Support
-      {'neovim/nvim-lspconfig'},             -- Required
-      {'williamboman/mason.nvim'},           -- Optional
-      {'williamboman/mason-lspconfig.nvim'}, -- Optional
+      { 'neovim/nvim-lspconfig' }, -- Required
+      { 'williamboman/mason.nvim' }, -- Optional
+      { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
       -- Autocompletion
-      {'hrsh7th/nvim-cmp'},         -- Required
-      {'hrsh7th/cmp-nvim-lsp'},     -- Required
-      {'hrsh7th/cmp-buffer'},       -- Optional
-      {'hrsh7th/cmp-path'},         -- Optional
-      {'saadparwaiz1/cmp_luasnip'}, -- Optional
-      {'hrsh7th/cmp-nvim-lua'},     -- Optional
+      { 'hrsh7th/nvim-cmp' }, -- Required
+      { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+      { 'hrsh7th/cmp-buffer' }, -- Optional
+      { 'hrsh7th/cmp-path' }, -- Optional
+      { 'saadparwaiz1/cmp_luasnip' }, -- Optional
+      { 'hrsh7th/cmp-nvim-lua' }, -- Optional
 
       -- Snippets
-      {'L3MON4D3/LuaSnip'},             -- Required
-      {'rafamadriz/friendly-snippets'}, -- Optional
-    }
+      { 'L3MON4D3/LuaSnip' }, -- Required
+      { 'rafamadriz/friendly-snippets' }, -- Optional
+    },
   }
   use {
-    "jay-babu/mason-null-ls.nvim",
-    requires ={
-          "williamboman/mason.nvim",
-          "jose-elias-alvarez/null-ls.nvim",
-    }
-}
+    'jay-babu/mason-null-ls.nvim',
+    requires = {
+      'williamboman/mason.nvim',
+      'jose-elias-alvarez/null-ls.nvim',
+    },
+  }
   ---------------------------------
   -- My plugins here
-  use { "folke/neodev.nvim" }
+  use { 'folke/neodev.nvim' }
   use { 'wbthomason/packer.nvim' } -- Have packer manage itself
   use { 'nvim-lua/plenary.nvim' } -- Useful lua functions used by lots of plugins
   use { 'windwp/nvim-autopairs' } -- Autopairs, integrates with both cmp and treesitter
@@ -105,6 +104,24 @@ use {
   use { 'folke/tokyonight.nvim' }
   use { 'lunarvim/darkplus.nvim' }
   use { 'navarasu/onedark.nvim' }
+  use {
+    'mcchrish/zenbones.nvim',
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    requires = 'rktjmp/lush.nvim',
+  }
+  use { 'rebelot/kanagawa.nvim' }
+  use { 'aktersnurra/no-clown-fiesta.nvim' }
+  use { 'romgrk/doom-one.vim' }
+  use { 'rockerBOO/boo-colorscheme-nvim' }
+  use {
+    'uloco/bluloco.nvim',
+    requires = { 'rktjmp/lush.nvim' },
+  }
+  use { 'lunarvim/templeos.nvim' }
+  use { 'luisiacc/the-matrix.nvim' }
+  use { 'EdenEast/nightfox.nvim' }
 
   -- cmp plugins
   use { 'hrsh7th/nvim-cmp' } -- The completion plugin
@@ -130,12 +147,15 @@ use {
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
   -- Treesitter
-  use { 'nvim-treesitter/nvim-treesitter', }
+  use { 'nvim-treesitter/nvim-treesitter' }
 
   -- Git
   use { 'lewis6991/gitsigns.nvim' }
   use { 'kdheepak/lazygit.nvim' }
-
+   use {'tpope/vim-fugitive'}
+  use {'tpope/vim-rhubarb'}
+  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  --
   -- DAP
   use { 'mfussenegger/nvim-dap' }
   use { 'rcarriga/nvim-dap-ui' }

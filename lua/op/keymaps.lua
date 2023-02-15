@@ -16,7 +16,9 @@ vim.g.mapleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
--- Normal --
+
+--
+key.set("i", "<C-s>", "<Plug>luasnip-expand-snippet", opts('Window Navigate Left'))
 -- Better window navigation
 key.set("n", "<C-h>", "<C-w>h", opts('Window Navigate Left'))
 key.set("n", "<C-j>", "<C-w>j", opts('Window Navigate Down'))
@@ -47,8 +49,8 @@ key.set("n", "<leader>wv", "<C-w>v", opts('Vertical Split'))
 key.set("n", "<leader>ws", "<C-w>s", opts('Horizontal Split'))
 
 -- Navigate buffers
-key.set("n", "<C-z>", "<cmd>bnext<CR>", opts('Buffer Next'))
-key.set("n", "<C-a>", "<cmd>bprevious<CR>", opts('Buffer Previous'))
+key.set("n", "<C-n>", "<cmd>bnext<CR>", opts('Buffer Next'))
+key.set("n", "<C-p>", "<cmd>bprevious<CR>", opts('Buffer Previous'))
 key.set("n", "<leader>bn", "<cmd>bnext<CR>", opts('Buffer Next'))
 key.set("n", "<leader>bp", "<cmd>bprevious<CR>", opts('Buffer Previous'))
 
@@ -57,8 +59,8 @@ key.set({ 'n', 'v' }, '<leader>bs', '<cmd>write<CR>', opts('Write Buffer'))
 key.set({ 'n', 'v' }, '<leader>bS', '<cmd>wall<CR>', opts('Write all Buffers'))
 key.set({ 'n', 'v' }, '<leader>bw', '<cmd>write<CR>', opts('Write Buffer'))
 key.set({ 'n', 'v' }, '<leader>bW', '<cmd>wall<CR>', opts('Write all Buffers'))
-key.set({ 'n', 'v', 'i' },  '<C-s>', '<cmd>write<CR>', opts('Write Buffer'))
-key.set({ 'n', 'v', 'i' }, '<C-S>', '<cmd>wall<CR>', opts('Write all Buffers'))
+key.set({ 'n', 'v', },  '<C-s>', '<cmd>write<CR>', opts('Write Buffer'))
+key.set({ 'n', 'v', }, '<C-S>', '<cmd>wall<CR>', opts('Write all Buffers'))
 
 -- Close buffers
 key.set("n", "<leader>bD", "<cmd>bdelete!<CR>", opts('Delete Buffer (Discard Changes)'))
