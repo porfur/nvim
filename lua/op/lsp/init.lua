@@ -38,8 +38,8 @@ lspzero.on_attach(function(_, bufnr)
   local bind = vim.keymap.set
 
   bind('n', '<leader>cK', function() vim.lsp.buf.hover() end, opts('[K] Hover info'))
-  bind('n', '<leader>ci', function() vim.lsp.buf.signature_help() end, opts('S[i]gnature help (alias: <C-i>)'))
-  bind('n', '<C-i>', function() vim.lsp.buf.signature_help() end, opts('S[i]gnature help'))
+  bind('n', '<leader>cg', function() vim.lsp.buf.signature_help() end, opts('Si[g]nature help (alias: <C-i>)'))
+  bind('n', '<C-g>', function() vim.lsp.buf.signature_help() end, opts('Si[g]nature help'))
   bind('n', '<leader>cgd', function() vim.lsp.buf.definition() end, opts('[d]efinition'))
   bind('n', '<leader>cgl', function() vim.diagnostic.open_float() end, opts('Diagnostics in F[l]oating window'))
   bind('n', '<leader>cgD', function() vim.lsp.buf.declaration() end, opts('[D]eclaration'))
