@@ -21,6 +21,7 @@ neodev.setup({})
 lspzero.preset({
   name = 'recommended',
   sugestsuggest_lsp_servers = true,
+  setup_lsp_servers_on_start = true,
   set_lsp_keymaps = {
     -- Omit keybinds that are customized below on_attach
     omit = { '<F2>', '<F4>', 'gr', '<C-k>' },
