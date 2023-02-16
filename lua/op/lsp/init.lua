@@ -20,8 +20,6 @@ neodev.setup({})
 --
 lspzero.preset({
   name = 'recommended',
-  sugestsuggest_lsp_servers = true,
-  setup_lsp_servers_on_start = true,
   set_lsp_keymaps = {
     -- Omit keybinds that are customized below on_attach
     omit = { '<F2>', '<F4>', 'gr', '<C-k>' },
@@ -151,8 +149,8 @@ lspzero.setup_nvim_cmp( {
       vim_item.kind = kind_icons[vim_item.kind]
       vim_item.menu = ({
         nvim_lsp = "[LSP]",
-        nvim_lua = "[nvim_lua]",
         luasnip = "[LuaSnip]",
+        nvim_lua = "[nvim_lua]",
         buffer = "[buffer]",
         path = "[path]",
         emoji = "[emoji]",
@@ -167,18 +165,19 @@ lspzero.setup_nvim_cmp( {
     { name = "buffer" },
     { name = "path" },
   },
-  confirm_opts = {
-    behavior = cmp.ConfirmBehavior.Replace,
-    select = false,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
+  select_behavior='insert',
   experimental = {
     ghost_text = false,
   }, }
 )
+cmp.setup({
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+
+})
+
 
 lspzero.setup()
 
