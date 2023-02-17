@@ -63,10 +63,12 @@ key.set({ 'n', 'v', },  '<C-s>', '<cmd>write<CR>', opts('Write Buffer'))
 key.set({ 'n', 'v', }, '<C-S>', '<cmd>wall<CR>', opts('Write all Buffers'))
 
 -- Close buffers
-key.set("n", "<leader>bD", "<cmd>bdelete!<CR>", opts('Delete Buffer (Discard Changes)'))
-key.set("n", "<leader>bd", "<cmd>bdelete<CR>", opts('Delete Buffer'))
-key.set("n", "<leader>bc", "<cmd>write<CR> <cmd>bdelete<CR>", opts('Write & Delete Buffer'))
-key.set("n", "<leader>bC", "<cmd>wall<CR> <cmd>%bdelete<CR>", opts('Write & Delete Buffers'))
+-- switch to prev buffer then delete prev buffer [ bdelete# ]
+-- That way splits dont close 
+key.set("n", "<leader>bD", "<cmd>bprevious<bar>bdelete!#<CR>", opts('Delete Buffer (Discard Changes)'))
+key.set("n", "<leader>bd", "<cmd>bprevious<bar>bdelete#<CR>", opts('Delete Buffer'))
+key.set("n", "<leader>bc", "<cmd>write<bar><bprevious<bar>bdelete#<CR>", opts('Write & Delete Buffer'))
+key.set("n", "<leader>bC", "<cmd>wall<bar> %bdelete<CR>", opts('Write & Delete Buffers'))
 key.set("n", "<leader>bqq", "<cmd>q!<CR>", opts('Quit Buffer'))
 key.set("n", "<leader>bQQ", "<cmd>qa!<CR>", opts('Quit All Buffers'))
 
@@ -91,6 +93,7 @@ key.set("v", ">", ">gv", opts())
 key.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts('Toggle NvimTree'))
 -- Git
 key.set("n", "<leader>gg", "<cmd>LazyGit<CR>", opts('Lazy [G]it'))
+key.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>", opts('Lazy [G]it'))
 
 -- Comment
 -- key.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts())
