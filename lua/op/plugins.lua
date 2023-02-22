@@ -1,6 +1,5 @@
 local fn = vim.fn
 
-
 -- Automatically install packer
 local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -105,7 +104,7 @@ return packer.startup(function(use)
   use { 'folke/tokyonight.nvim' }
   use { 'lunarvim/darkplus.nvim' }
   use { 'navarasu/onedark.nvim' }
-  use { 'projekt0n/github-nvim-theme', tag = 'v0.0.7'} 
+  use { 'projekt0n/github-nvim-theme', tag = 'v0.0.7' }
   use { 'rebelot/kanagawa.nvim' }
   use { 'aktersnurra/no-clown-fiesta.nvim' }
   use { 'romgrk/doom-one.vim' }
@@ -149,8 +148,8 @@ return packer.startup(function(use)
   use { 'f-person/git-blame.nvim' }
   use { 'lewis6991/gitsigns.nvim' }
   use { 'kdheepak/lazygit.nvim' }
-   use {'tpope/vim-fugitive'}
-  use {'tpope/vim-rhubarb'}
+  use { 'tpope/vim-fugitive' }
+  use { 'tpope/vim-rhubarb' }
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
   --
   -- DAP

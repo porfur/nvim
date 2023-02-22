@@ -67,7 +67,7 @@ key.set({ 'n', 'v', }, '<C-S>', '<cmd>wall<CR>', opts('Write all Buffers'))
 -- That way splits dont close 
 key.set("n", "<leader>bD", "<cmd>bprevious<bar>bdelete!#<CR>", opts('Delete Buffer (Discard Changes)'))
 key.set("n", "<leader>bd", "<cmd>bprevious<bar>bdelete#<CR>", opts('Delete Buffer'))
-key.set("n", "<leader>bc", "<cmd>write<bar><bprevious<bar>bdelete#<CR>", opts('Write & Delete Buffer'))
+key.set("n", "<leader>bc", "<cmd>write<bar>bprevious<bar>bdelete#<CR>", opts('Write & Delete Buffer'))
 key.set("n", "<leader>bC", "<cmd>wall<bar> %bdelete<CR>", opts('Write & Delete Buffers'))
 key.set("n", "<leader>bqq", "<cmd>q!<CR>", opts('Quit Buffer'))
 key.set("n", "<leader>bQQ", "<cmd>qa!<CR>", opts('Quit All Buffers'))
