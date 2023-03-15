@@ -48,6 +48,11 @@ key.set("n", "<leader>w=", "<C-w>=", opts('Equalize Windows'))
 key.set("n", "<leader>wv", "<C-w>v", opts('Vertical Split'))
 key.set("n", "<leader>ws", "<C-w>s", opts('Horizontal Split'))
 
+--Tabs
+key.set("n", "<leader>tn", "<cmd>tabnew<CR>", opts('Tab New'))
+key.set("n", "<leader>tc", "<cmd>tabclose<CR>", opts('Tab Close'))
+key.set("n", "<leader>to", "<cmd>tabonly<CR>", opts('Tab Only'))
+
 -- Navigate buffers
 key.set("n", "<C-n>", "<cmd>bnext<CR>", opts('Buffer Next'))
 key.set("n", "<C-p>", "<cmd>bprevious<CR>", opts('Buffer Previous'))

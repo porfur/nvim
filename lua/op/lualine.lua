@@ -3,7 +3,7 @@ if not status_ok then
   return
 end
 local hide = function(section, width)
-  width = width or 60
+  width = width or 150
   local condition = function()
     return vim.fn.winwidth(0) > width
   end
@@ -14,12 +14,12 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = { 'alpha', 'dashboard', 'packer', 'NVimTree' },
     disabled_buftypes = { 'quickfix', 'prompt' },
     ignore_focus = {},
-    always_divide_middle = true,
+    always_divide_middle = false,
     globalstatus = false,
     refresh = {
       statusline = 1000,
@@ -30,8 +30,8 @@ require('lualine').setup {
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { { 'filename', path = 1 } },
-    lualine_c = { hide ( 'branch',100 ), hide 'diff', hide 'diagnostics' },
-    lualine_x = { hide 'encoding', hide 'fileformat', hide 'filetype' },
+    lualine_c = {  hide 'diff', hide 'diagnostics' },
+    lualine_x = { hide ( 'branch',100 ),hide 'encoding', hide 'fileformat', hide 'filetype' },
     lualine_y = { hide 'progress' },
     lualine_z = { hide 'location' },
   },

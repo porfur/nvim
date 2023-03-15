@@ -51,6 +51,7 @@ return packer.startup(function(use)
       { 'neovim/nvim-lspconfig' }, -- Required
       { 'williamboman/mason.nvim' }, -- Optional
       { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+      { 'jose-elias-alvarez/typescript.nvim' }, -- For file rename
 
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' }, -- Required
@@ -72,6 +73,16 @@ return packer.startup(function(use)
       'jose-elias-alvarez/null-ls.nvim',
     },
   }
+  -- cmp plugins
+  use { 'hrsh7th/nvim-cmp' } -- The completion plugin
+  use { 'hrsh7th/cmp-buffer' } -- buffer completions
+  use { 'hrsh7th/cmp-path' } -- path completions
+  use { 'saadparwaiz1/cmp_luasnip' } -- snippet completions
+  use { 'hrsh7th/cmp-nvim-lsp' }
+  use { 'hrsh7th/cmp-nvim-lua' }
+  use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
+
+  use { 'MunifTanjim/prettier.nvim' }
   ---------------------------------
   -- My plugins here
   use { 'folke/neodev.nvim' }
@@ -87,11 +98,12 @@ return packer.startup(function(use)
     branch = 'v2.x',
     requires = {
       'nvim-lua/plenary.nvim',
-      -- "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
       'MunifTanjim/nui.nvim',
     },
   }
   -- use { "akinsho/bufferline.nvim"}
+  use { 'RRethy/vim-illuminate' }
   use { 'moll/vim-bbye' }
   use { 'nvim-lualine/lualine.nvim' }
   use { 'akinsho/toggleterm.nvim' }
@@ -109,33 +121,10 @@ return packer.startup(function(use)
   use { 'aktersnurra/no-clown-fiesta.nvim' }
   use { 'romgrk/doom-one.vim' }
   use { 'rockerBOO/boo-colorscheme-nvim' }
-  use {
-    'uloco/bluloco.nvim',
-    requires = { 'rktjmp/lush.nvim' },
-  }
-  use { 'lunarvim/templeos.nvim' }
-  use { 'luisiacc/the-matrix.nvim' }
   use { 'EdenEast/nightfox.nvim' }
-
-  -- cmp plugins
-  use { 'hrsh7th/nvim-cmp' } -- The completion plugin
-  use { 'hrsh7th/cmp-buffer' } -- buffer completions
-  use { 'hrsh7th/cmp-path' } -- path completions
-  use { 'saadparwaiz1/cmp_luasnip' } -- snippet completions
-  use { 'hrsh7th/cmp-nvim-lsp' }
-  use { 'hrsh7th/cmp-nvim-lua' }
-  use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
-
-  -- snippets
-  use { 'L3MON4D3/LuaSnip' } --snippet engine
-  use { 'rafamadriz/friendly-snippets' } -- a bunch of snippets to use
-
-  -- LSP
-  use { 'neovim/nvim-lspconfig' } -- enable LSP
-  use { 'williamboman/mason.nvim' }
-  use { 'williamboman/mason-lspconfig.nvim' }
-  use { 'RRethy/vim-illuminate' }
-  use { 'MunifTanjim/prettier.nvim' }
+  use { 'bluz71/vim-moonfly-colors', as = 'moonfly' }
+  use { 'ishan9299/modus-theme-vim' }
+  use { 'cpea2506/one_monokai.nvim' }
 
   -- Telescope
   use { 'nvim-telescope/telescope.nvim' }
@@ -150,8 +139,8 @@ return packer.startup(function(use)
   use { 'kdheepak/lazygit.nvim' }
   use { 'tpope/vim-fugitive' }
   use { 'tpope/vim-rhubarb' }
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
-  --
+  use { 'tpope/vim-sleuth' } -- Detect tabstop and shiftwidth automatically
+
   -- DAP
   use { 'mfussenegger/nvim-dap' }
   use { 'rcarriga/nvim-dap-ui' }
