@@ -117,6 +117,7 @@ return packer.startup(function(use)
 
   -- Colorschemes
   use { 'folke/tokyonight.nvim' }
+  use { 'Mofiqul/dracula.nvim' }
   use { 'lunarvim/darkplus.nvim' }
   use { 'navarasu/onedark.nvim' }
   use { 'projekt0n/github-nvim-theme', tag = 'v0.0.7' }

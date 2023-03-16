@@ -35,3 +35,4 @@ vim.keymap.set('n', '<leader>sw', builtin.live_grep, { desc = '[S]earch [w]ord b
 vim.keymap.set('n', '<leader>ss', builtin.live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>sc', builtin.colorscheme, { desc = '[S]earch [c]olorschemes' })
