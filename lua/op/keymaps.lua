@@ -18,7 +18,6 @@ vim.g.mapleader = " "
 
 
 --
-key.set("i", "<C-s>", "<Plug>luasnip-expand-snippet", opts('Window Navigate Left'))
 -- Better window navigation
 key.set("n", "<C-h>", "<C-w>h", opts('Window Navigate Left'))
 key.set("n", "<C-j>", "<C-w>j", opts('Window Navigate Down'))
@@ -84,13 +83,20 @@ key.set("n", "<leader>x", "<cmd>nohlsearch<cr>", opts('clear search highlight'))
 key.set("v", "p", '"_dp', opts())
 
 -- insert --
--- press jk fast to enter
+-- press jk fast to esc
 key.set("i", "kj", "<esc>", opts())
 
 -- visual --
 -- stay in indent mode
 key.set("v", "<", "<gv", opts())
 key.set("v", ">", ">gv", opts())
+
+-- Netrw
+key.set("n", "<leader>o-", vim.cmd.Ex,opts('Open Netrw'))
+
+-- Move line in visual mode
+key.set("v", "J", ":m '>+1<CR>gv=gv")
+key.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Plugins --
 
@@ -101,12 +107,8 @@ key.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts('Toggle NvimTree'))
 key.set("n", "<leader>gg", "<cmd>LazyGit<CR>", opts('Lazy [G]it'))
 key.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>", opts('Toggle Git [B]lame'))
 
---Harpoon
--- TODO
-
--- Comment
--- key.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts())
--- key.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts())
+--Expand snippet
+key.set("i", "<C-s>", "<Plug>luasnip-expand-snippet", opts('Expand snippet'))
 
 -- DAP
 key.set("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts())
