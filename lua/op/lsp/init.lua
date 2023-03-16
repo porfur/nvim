@@ -82,7 +82,7 @@ lspzero.on_attach(function(_, bufnr)
   bind('n', '<leader>cgr', require('telescope.builtin').lsp_references, opts '[r]eferences')
   bind('n', 'gr', require('telescope.builtin').lsp_references, opts 'Go to [r]eferences')
   bind('n', '<leader>c[d', function()
-    vim.diagnostic.goto_prev()
+    vim.diagnostic.goto_prev(_)
   end, opts 'Previous Diagnostic')
   bind('n', '<leader>c]d ', function()
     vim.diagnostic.goto_next()
@@ -145,7 +145,7 @@ lspzero.setup_nvim_cmp {
   mapping = cmp.mapping.preset.insert {
     ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-j>'] = cmp.mapping.select_next_item(),
-    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs( -1), { 'i', 'c' }),
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<C-e>'] = cmp.mapping {
@@ -174,8 +174,8 @@ lspzero.setup_nvim_cmp {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -189,13 +189,13 @@ lspzero.setup_nvim_cmp {
     format = function(entry, vim_item)
       vim_item.kind = kind_icons[vim_item.kind]
       vim_item.menu = ({
-            nvim_lsp = '[LSP]',
-            luasnip = '[LuaSnip]',
-            nvim_lua = '[nvim_lua]',
-            buffer = '[buffer]',
-            path = '[path]',
-            nvim_lsp_signature_help = '[LSP-Signature]',
-          })[entry.source.name]
+        nvim_lsp = '[LSP]',
+        luasnip = '[LuaSnip]',
+        nvim_lua = '[nvim_lua]',
+        buffer = '[buffer]',
+        path = '[path]',
+        nvim_lsp_signature_help = '[LSP-Signature]',
+      })[entry.source.name]
       return vim_item
     end,
   },

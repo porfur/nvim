@@ -34,3 +34,4 @@ vim.keymap.set('n', '<leader>sw', builtin.live_grep, { desc = '[S]earch by [G]re
 vim.keymap.set('n', '<leader>sS', builtin.grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>ss', builtin.live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })

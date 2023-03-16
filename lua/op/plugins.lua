@@ -102,6 +102,8 @@ return packer.startup(function(use)
       'MunifTanjim/nui.nvim',
     },
   }
+  use { 'ThePrimeagen/harpoon' }
+
   -- use { "akinsho/bufferline.nvim"}
   use { 'RRethy/vim-illuminate' }
   use { 'moll/vim-bbye' }

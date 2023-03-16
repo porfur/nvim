@@ -78,7 +78,7 @@ key.set("n", "<leader>bqq", "<cmd>q!<CR>", opts('Quit Buffer'))
 key.set("n", "<leader>bQQ", "<cmd>qa!<CR>", opts('Quit All Buffers'))
 
 -- Clear highlights
-key.set("n", "<leader>h", "<cmd>nohlsearch<cr>", opts('clear search highlight'))
+key.set("n", "<leader>x", "<cmd>nohlsearch<cr>", opts('clear search highlight'))
 
 -- better paste
 key.set("v", "p", '"_dp', opts())
@@ -96,9 +96,13 @@ key.set("v", ">", ">gv", opts())
 
 -- NvimTree
 key.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts('Toggle NvimTree'))
+
 -- Git
 key.set("n", "<leader>gg", "<cmd>LazyGit<CR>", opts('Lazy [G]it'))
-key.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>", opts('Lazy [G]it'))
+key.set("n", "<leader>gb", "<cmd>GitBlameToggle<CR>", opts('Toggle Git [B]lame'))
+
+--Harpoon
+-- TODO
 
 -- Comment
 -- key.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts())
