@@ -17,3 +17,5 @@ vim.keymap.set('n', '<leader>h', function() ui.nav_file(1) end, { desc = 'Harpoo
 vim.keymap.set('n', '<leader>j', function() ui.nav_file(2) end, { desc = 'Harpoon to file 2' })
 vim.keymap.set('n', '<leader>k', function() ui.nav_file(3) end, { desc = 'Harpoon to file 3' })
 vim.keymap.set('n', '<leader>l', function() ui.nav_file(4) end, { desc = 'Harpoon to file 4' })
+vim.keymap.set('n', '<leader>;', function() ui.nav_file(5) end, { desc = 'Harpoon to file 5' })
+vim.keymap.set('n', "<leader>'", function() ui.nav_file(6) end, { desc = 'Harpoon to file 6' })
