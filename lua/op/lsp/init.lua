@@ -230,9 +230,9 @@ null_ls.setup {
     null_opts.on_attach(client, bufnr)
   end,
   sources = {
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.formatting.stylua,
+    -- null_ls.builtins.formatting.prettier,
+    -- null_ls.builtins.diagnostics.eslint,
+    -- null_ls.builtins.formatting.stylua,
     -- You can add tools not supported by mason.nvim
   },
 }
@@ -240,7 +240,7 @@ null_ls.setup {
 -- See mason-null-ls.nvim's documentation for more details:
 -- https://github.com/jay-babu/mason-null-ls.nvim#setup
 require('mason-null-ls').setup {
-  ensure_installed = nil,
+  ensure_installed = {},
   automatic_installation = true, -- You can still set this to `true`
   automatic_setup = true,
 }
