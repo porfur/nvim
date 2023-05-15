@@ -121,6 +121,10 @@ return packer.startup(function(use)
 
   -- Colorschemes
   use { 'folke/tokyonight.nvim' }
+  use { 'sainnhe/edge' }
+  use { 'sainnhe/sonokai' }
+  use { 'tanvirtin/monokai.nvim' }
+  use { "catppuccin/nvim", as = "catppuccin" }
   use { 'Mofiqul/dracula.nvim' }
   use { 'lunarvim/darkplus.nvim' }
   use { 'navarasu/onedark.nvim' }
@@ -140,6 +144,7 @@ return packer.startup(function(use)
 
   -- Treesitter
   use { 'nvim-treesitter/nvim-treesitter' }
+  use { 'nvim-treesitter/nvim-treesitter-context' }
 
   -- Git
   use { 'f-person/git-blame.nvim' }

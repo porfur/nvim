@@ -104,7 +104,7 @@ key.set('n', '[o', 'moO<ESC>`o', opts 'Empty Line above')
 key.set('n', ']o', 'moo<ESC>`o', opts 'Empty Line below')
 
 -- Split Line
-key.set('n', '<Enter>', 'i<CR><Esc>', opts 'Split line (Oposite of J)')
+key.set('n', '<Enter>', 'i<CR><Esc>', opts 'Split line (Opposite of J)')
 
 -- Split Line
 key.set('n', '<leader>qs', ':mksession!<CR>', opts 'Make session')
@@ -139,4 +139,4 @@ key.set('n', '<leader>du', "<cmd>lua require'dapui'.toggle()<cr>", opts())
 key.set('n', '<leader>dt', "<cmd>lua require'dap'.terminate()<cr>", opts())
 
 -- Lsp
-key.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format{ async = true }<cr>', opts())
+key.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format{ async = true }<cr>|<cmd>TypescriptOrganizeImports<cr>|<cmd>TypescriptRemoveUnused<cr>', opts())
