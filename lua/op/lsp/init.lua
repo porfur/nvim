@@ -29,7 +29,8 @@ neodev.setup {}
 
 -- Plugin that adds rename file and organize imports for typescript.
 -- This needs to be separated from LSP zero
-typescript.setup {}
+-- comented because it stopped working
+-- typescript.setup {}
 
 --
 lspzero.preset {
@@ -46,7 +47,7 @@ lspzero.ensure_installed {
   'rust_analyzer',
 }
 -- Skip tsserver if using typescript.nvim
-lspzero.skip_server_setup { 'tsserver' }
+-- lspzero.skip_server_setup { 'tsserver' }
 
 -- Add custom keybindings on_attach
 lspzero.on_attach(function(_, bufnr)
@@ -246,4 +247,4 @@ require('mason-null-ls').setup {
 }
 
 -- Required when `automatic_setup` is true
-require('mason-null-ls').setup_handlers()
+-- require('mason-null-ls').setup_handlers({})
