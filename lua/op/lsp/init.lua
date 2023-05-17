@@ -228,13 +228,12 @@ lspzero.setup()
 local null_ls = require 'null-ls'
 local null_opts = lspzero.build_options('null-ls', {})
 
-
 -- See mason-null-ls.nvim's documentation for more details:
 -- https://github.com/jay-babu/mason-null-ls.nvim#setup
 require('mason-null-ls').setup({
   ensure_installed = {},
-  automatic_installation = false, -- You can still set this to `true`
-  handlers = {},
+  automatic_installation = false,
+  handlers = {}
 })
 
 null_ls.setup {
@@ -248,5 +247,3 @@ null_ls.setup {
     -- You can add tools not supported by mason.nvim
   },
 }
--- Required when `automatic_setup` is true
--- require('mason-null-ls').setup_handlers()
