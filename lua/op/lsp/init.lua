@@ -29,7 +29,7 @@ neodev.setup {}
 
 -- Plugin that adds rename file and organize imports for typescript.
 -- This needs to be separated from LSP zero
--- comented because it stopped working
+-- commented because it stopped working
 -- typescript.setup {}
 
 --
@@ -94,7 +94,9 @@ lspzero.on_attach(function(_, bufnr)
   bind('n', '<leader>ca', function()
     vim.lsp.buf.code_action()
   end, opts '[A]ction')
-  bind('n', '<leader>cf', ':LspZeroFormat<CR>', opts '[f]ormat')
+  bind('n', '<leader>cf', function()
+    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+  end, opts '[f]ormat')
   -- more keybindings...
   bind('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, opts '[S]ymbols')
   bind('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts '[a]dd Folder')
@@ -226,6 +228,15 @@ lspzero.setup()
 local null_ls = require 'null-ls'
 local null_opts = lspzero.build_options('null-ls', {})
 
+
+-- See mason-null-ls.nvim's documentation for more details:
+-- https://github.com/jay-babu/mason-null-ls.nvim#setup
+require('mason-null-ls').setup({
+  ensure_installed = {},
+  automatic_installation = false, -- You can still set this to `true`
+  handlers = {},
+})
+
 null_ls.setup {
   on_attach = function(client, bufnr)
     null_opts.on_attach(client, bufnr)
@@ -237,14 +248,5 @@ null_ls.setup {
     -- You can add tools not supported by mason.nvim
   },
 }
-
--- See mason-null-ls.nvim's documentation for more details:
--- https://github.com/jay-babu/mason-null-ls.nvim#setup
-require('mason-null-ls').setup {
-  ensure_installed = {},
-  automatic_installation = true, -- You can still set this to `true`
-  automatic_setup = true,
-}
-
 -- Required when `automatic_setup` is true
--- require('mason-null-ls').setup_handlers({})
+-- require('mason-null-ls').setup_handlers()
