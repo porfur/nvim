@@ -30,4 +30,4 @@ treesitter_context.setup({
 
 
 
-key.set('n', '<leader>cc', ':TSContextToggle<CR>', opts 'TS [c]ontext tobble')
+key.set('n', '<leader>cc', ':TSContextToggle<CR>', opts 'TS [c]ontext toggle')

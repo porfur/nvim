@@ -128,15 +128,17 @@ key.set('n', '<leader>gb', '<cmd>GitBlameToggle<CR>', opts 'Toggle Git [B]lame')
 key.set('i', '<C-s>', '<Plug>luasnip-expand-snippet', opts 'Expand snippet')
 
 -- DAP
-key.set('n', '<leader>db', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts())
-key.set('n', '<leader>dc', "<cmd>lua require'dap'.continue()<cr>", opts())
-key.set('n', '<leader>di', "<cmd>lua require'dap'.step_into()<cr>", opts())
-key.set('n', '<leader>do', "<cmd>lua require'dap'.step_over()<cr>", opts())
-key.set('n', '<leader>dO', "<cmd>lua require'dap'.step_out()<cr>", opts())
-key.set('n', '<leader>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", opts())
-key.set('n', '<leader>dle', "<cmd>lua require'dap'.run_last()<cr>", opts())
-key.set('n', '<leader>du', "<cmd>lua require'dapui'.toggle()<cr>", opts())
-key.set('n', '<leader>dt', "<cmd>lua require'dap'.terminate()<cr>", opts())
+key.set('n', '<leader>db', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts 'Toggle [b]reakpoint')
+key.set('n', '<leader>dc', "<cmd>lua require'dap'.continue()<cr>", opts '[c]ontinue')
+key.set('n', '<leader>di', "<cmd>lua require'dap'.step_into()<cr>", opts 'Step [i]nto')
+key.set('n', '<leader>do', "<cmd>lua require'dap'.step_over()<cr>", opts 'Step [o]ver')
+key.set('n', '<leader>dO', "<cmd>lua require'dap'.step_out()<cr>", opts 'Step [O]ut')
+key.set('n', '<leader>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", opts '[r]epl toggle')
+key.set('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<cr>", opts 'Run [l]ast')
+key.set('n', '<leader>dd', "<cmd>lua require'dapui'.toggle()<cr>", opts 'DAP UI Toggle')
+key.set('n', '<leader>dt', "<cmd>lua require'dap'.terminate()<cr>", opts 'DAP [t]errminate')
 
 -- Lsp
-key.set('n', '<leader>cf', '<cmd>lua vim.lsp.buf.format{ async = true }<cr>|<cmd>TypescriptOrganizeImports<cr>|<cmd>TypescriptRemoveUnused<cr>', opts())
+key.set('n', '<leader>cf',
+  '<cmd>lua vim.lsp.buf.format{ async = true }<cr>|<cmd>TypescriptOrganizeImports<cr>|<cmd>TypescriptRemoveUnused<cr>',
+  opts'Code [f]ormat (TS OrganizeImports & RemoveUnused)')
