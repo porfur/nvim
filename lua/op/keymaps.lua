@@ -139,6 +139,5 @@ key.set('n', '<leader>dd', "<cmd>lua require'dapui'.toggle()<cr>", opts 'DAP UI 
 key.set('n', '<leader>dt', "<cmd>lua require'dap'.terminate()<cr>", opts 'DAP [t]errminate')
 
 -- Lsp
-key.set('n', '<leader>cf',
-  '<cmd>lua vim.lsp.buf.format{ async = true }<cr>|<cmd>TypescriptOrganizeImports<cr>|<cmd>TypescriptRemoveUnused<cr>',
-  opts'Code [f]ormat (TS OrganizeImports & RemoveUnused)')
+key.set('n', '<leader>co', '<cmd>TypescriptOrganizeImports<cr>', opts 'Typescript [o]rganize imports')
+key.set('n', '<leader>cx', '<cmd>TypescriptRemoveUnused<cr>', opts 'Typescript remove unused')
