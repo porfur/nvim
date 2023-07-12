@@ -50,6 +50,7 @@ return packer.startup(function(use)
       -- LSP Support
       { 'neovim/nvim-lspconfig' },              -- Required
       { 'williamboman/mason.nvim' },            -- Optional
+      { 'j-hui/fidget.nvim'  ,tag = 'legacy' },            -- Optional
       { 'williamboman/mason-lspconfig.nvim' },  -- Optional
       { 'jose-elias-alvarez/typescript.nvim' }, -- For file rename
 
@@ -92,7 +93,10 @@ return packer.startup(function(use)
   use { 'numToStr/Comment.nvim' }
   use { 'JoosepAlviste/nvim-ts-context-commentstring' }
   use { 'kyazdani42/nvim-web-devicons' }
-  use { 'kyazdani42/nvim-tree.lua' }
+  use {
+    'glacambre/firenvim',
+    run = function() vim.fn['firenvim#install'](0) end 
+}
   use {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v2.x',

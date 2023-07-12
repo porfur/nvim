@@ -18,6 +18,12 @@ vim.g.mapleader = ' '
 --   term_mode = "t",
 --   command_mode = "c",
 
+--Primagen
+-- vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- vim.keymap.set("n", "n", "nzzzv")
+-- vim.keymap.set("n", "N", "Nzzzv")
 --
 -- Better window navigation
 key.set('n', '<C-h>', '<C-w>h', opts 'Window Navigate Left')
@@ -106,9 +112,9 @@ key.set('n', ']o', 'moo<ESC>`o', opts 'Empty Line below')
 -- Split Line
 key.set('n', '<Enter>', 'i<CR><Esc>', opts 'Split line (Opposite of J)')
 
--- Split Line
+-- Sessions
 key.set('n', '<leader>qs', ':mksession!<CR>', opts 'Make session')
-key.set('n', '<leader>ql', ':source Session.vim<CR>', opts 'Make session')
+key.set('n', '<leader>ql', ':source Session.vim<CR>', opts 'Make load')
 
 -- Plugins --
 

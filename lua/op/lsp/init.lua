@@ -24,12 +24,15 @@ end
 
 -- VSCode luasnip snippets
 require('luasnip/loaders/from_vscode').lazy_load()
+
+-- LSP info spinner
+require "fidget".setup {}
+
 -- No idea what this does
 neodev.setup {}
 
 -- Plugin that adds rename file and organize imports for typescript.
 -- This needs to be separated from LSP zero
--- commented because it stopped working
 typescript.setup {}
 
 --
