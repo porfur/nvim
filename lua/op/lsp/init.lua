@@ -247,7 +247,7 @@ null_ls.setup {
     null_opts.on_attach(client, bufnr)
   end,
   sources = {
-    -- null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettier,
     -- null_ls.builtins.diagnostics.eslint,
     -- null_ls.builtins.formatting.stylua,
     -- You can add tools not supported by mason.nvim

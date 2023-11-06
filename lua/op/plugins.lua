@@ -48,11 +48,11 @@ return packer.startup(function(use)
     branch = 'v1.x',
     requires = {
       -- LSP Support
-      { 'neovim/nvim-lspconfig' },              -- Required
-      { 'williamboman/mason.nvim' },            -- Optional
-      { 'j-hui/fidget.nvim',                 tag = 'legacy' }, -- Optional
-      { 'williamboman/mason-lspconfig.nvim' },  -- Optional
-      { 'jose-elias-alvarez/typescript.nvim' }, -- For file rename
+      { 'neovim/nvim-lspconfig' },                              -- Required
+      { 'williamboman/mason.nvim' },                            -- Optional
+      { 'j-hui/fidget.nvim',                 tag = 'legacy' },  -- Optional
+      { 'williamboman/mason-lspconfig.nvim' },                  -- Optional
+      { 'jose-elias-alvarez/typescript.nvim' },                 -- For file rename
 
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' },         -- Required
@@ -61,7 +61,8 @@ return packer.startup(function(use)
       { 'hrsh7th/cmp-path' },         -- Optional
       { 'saadparwaiz1/cmp_luasnip' }, -- Optional
       { 'hrsh7th/cmp-nvim-lua' },     -- Optional
-
+      { 'hrsh7th/cmp-nvim-lsp-signature-help' }
+      ,
       -- Snippets
       { 'L3MON4D3/LuaSnip' },             -- Required
       { 'rafamadriz/friendly-snippets' }, -- Optional
@@ -74,14 +75,6 @@ return packer.startup(function(use)
       'jose-elias-alvarez/null-ls.nvim',
     },
   }
-  -- cmp plugins
-  use { 'hrsh7th/nvim-cmp' }         -- The completion plugin
-  use { 'hrsh7th/cmp-buffer' }       -- buffer completions
-  use { 'hrsh7th/cmp-path' }         -- path completions
-  use { 'saadparwaiz1/cmp_luasnip' } -- snippet completions
-  use { 'hrsh7th/cmp-nvim-lsp' }
-  use { 'hrsh7th/cmp-nvim-lua' }
-  use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
 
   use { 'MunifTanjim/prettier.nvim' }
   ---------------------------------
@@ -169,15 +162,20 @@ return packer.startup(function(use)
   -- Tmux Navigation
   use { 'aserowy/tmux.nvim' }
 
-  -- Vim Wiki
-  use { 'vimwiki/vimwiki' }
-
+use {
+    "danymat/neogen",
+    config = function()
+        require('neogen').setup {}
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+    -- Uncomment next line if you want to follow only stable versions
+    -- tag = "*"
+}
   -- Vim Surround
   use {
     'kylechui/nvim-surround',
     tag = '*', -- Use for stability; omit to use `main` branch for the latest features
   }
-
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
