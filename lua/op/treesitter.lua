@@ -23,10 +23,11 @@ configs.setup {
   },
   indent = { enable = true, disable = { "python" } },
 
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
+  --BELOW IS DEPRACATED
+  -- context_commentstring = {
+  --   enable = true,
+  --   enable_autocmd = false,
+  -- },
 
   incremental_selection = {
     enable = true,
