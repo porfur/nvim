@@ -1,7 +1,6 @@
 -- https://github.com/goolord/alpha-nvim
 -- Adds a start up screen instead of empty buffer
 return {
- -- enable = false, -- Uncomment to disable
     'goolord/alpha-nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function ()

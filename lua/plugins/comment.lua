@@ -10,8 +10,8 @@ return {
     'JoosepAlviste/nvim-ts-context-commentstring'
     },
 
-
-config=function() pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook() end,
+-- TODO: Figure out how to use this pre hook with lazy
+-- config=function() pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook() end,
 
     opts = {
         -- add any options here

@@ -3,4 +3,4 @@ return {
     dependencies = {
       {'hrsh7th/cmp-nvim-lsp'},
     }
-  },
+  }
