@@ -1,15 +1,37 @@
-local status_ok, telescope = pcall(require, 'telescope')
-if not status_ok then
-  return
-end
+-- https://github.com/nvim-telescope/telescope.nvim
+-- Enabled by default in kickstart
+-- This overrides the kickstart defaults
 
+  return{
+	   -- enable = false, -- Uncomment to disable
+
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
+      -- Only load if `make` is available. Make sure you have the system
+      -- requirements installed.
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        -- NOTE: If you are having trouble with this installation,
+        --       refer to the README for telescope-fzf-native for more instructions.
+        build = 'make',
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
+    },
+
+config=function ()
+local telescope = require( 'telescope')
 local actions = require 'telescope.actions'
 local builtin = require 'telescope.builtin'
 
 telescope.setup {
   defaults = {
     path_display = { 'smart' },
-    file_ignore_patterns = { '.git/', 'node_modules' },
+    -- file_ignore_patterns = { '.git/', 'node_modules' },
     mappings = {
       i = {
         ['<C-n>'] = actions.cycle_history_next,
@@ -44,3 +66,6 @@ vim.keymap.set('n', '<leader>ss', builtin.live_grep, { desc = '[S]earch by [G]re
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
 vim.keymap.set('n', '<leader>sc', builtin.colorscheme, { desc = '[S]earch [c]olorschemes' })
+
+end,
+  }

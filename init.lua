@@ -1,28 +1,18 @@
-require 'op.impatient'
-require 'op.options'
-require 'op.keymaps'
-require 'op.whichkey'
-require 'op.plugins'
-require 'op.autocommands'
-require 'op.colorscheme'
--- -- require "op.cmp"
-require 'op.telescope'
-require 'op.gitsigns'
-require 'op.treesitter'
-require 'op.treesitter-context'
-require 'op.autopairs'
-require 'op.comment'
-require 'op.window-picker'
-require 'op.nvim-tree'
-require 'op.neotree'
-require 'op.lualine'
-require 'op.toggleterm'
-require 'op.project'
-require 'op.illuminate'
-require 'op.indentline'
-require 'op.alpha'
-require 'op.lsp'
-require 'op.dap'
-require 'op.nvim-surround'
-require 'op.tmux-navigation'
-require 'op.harpoon'
+-- [[Lazy setup]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+require("lazy").setup({
+  { import = 'plugins' }
+})
+
+
