@@ -1,2 +1,5 @@
-return   {'williamboman/mason.nvim',
-}
+return {
+    'williamboman/mason.nvim',
+    lazy = false,
+    config = true,
+  }

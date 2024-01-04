@@ -2,6 +2,7 @@
 -- Enabled by default in kickstart
 -- This overrides the kickstart defaults
 
+-- Function to hide when window is too small
 local hide = function(section, width)
   width = width or 150
   local condition = function()
@@ -11,7 +12,6 @@ local hide = function(section, width)
 end
 
   return {
- -- enable = false, -- Uncomment to disable
     "nvim-lualine/lualine.nvim"
     ,
     opts={

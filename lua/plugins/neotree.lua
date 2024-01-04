@@ -13,8 +13,8 @@
       }
     },
     config=function ()
-      vim.cmd([[nnoremap <Tab> :Neotree toggle<cr>]])
-      vim.cmd([[nnoremap <S-Tab> :Neotree float toggle<cr>]])
+      vim.cmd([[nnoremap <leader>e :Neotree left toggle<cr>]])
+      vim.cmd([[nnoremap <leader>E :Neotree float toggle<cr>]])
     end,
     opts = {
       close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab

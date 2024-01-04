@@ -1,7 +1,6 @@
 -- https://github.com/lukas-reineke/indent-blankline.nvim
 
   return {
- -- enable = false, -- Uncomment to disable
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     opts = {
