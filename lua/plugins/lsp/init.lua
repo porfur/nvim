@@ -96,51 +96,47 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-
-        -- `Enter` key to confirm completion
-        ['<CR>'] = cmp.confirm({ select = true }),
-        -- Ctrl+Space to trigger completion menu
-        ['<C-Space>'] = cmp.complete(),
-        -- Navigate between snippet placeholder
-        -- FIXME
-        ['<C-n>'] = luasnip.jump(1),
-        ['<C-p>'] = luasnip.jump(-1),
-        -- Scroll up and down in the completion documentation
-        ['<C-u>'] = cmp.scroll_docs(-1),
-        ['<C-d>'] = cmp.scroll_docs(1),
-        -- Scroll to next and prev item in list
-        ['<C-k>'] = cmp.select_prev_item(),
-        ['<C-j>'] = cmp.select_next_item(),
-        -- Super tab
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expandable() then
-            luasnip.expand()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif check_backspace() then
-            fallback()
-          else
-            fallback()
-          end
-        end, {
-          'i',
-          's',
-        }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, {
-          'i',
-          's',
-        }),
-      }),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-e>'] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    -- Accept currently selected item. If none selected, `select` first item.
+    --     -- Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping.confirm { select = true },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif check_backspace() then
+        fallback()
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
+  }),
       formatting = {
         expandable_indicator = true,
         fields = { 'kind', 'abbr', 'menu' },
