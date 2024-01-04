@@ -1,7 +1,7 @@
 return{
         "kdheepak/lazygit.nvim",
-        -- optional for floating window border decoration
         dependencies = {
+        -- optional for floating window border decoration
             "nvim-lua/plenary.nvim",
         },
     }

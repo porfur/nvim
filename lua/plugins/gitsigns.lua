@@ -2,7 +2,6 @@
 -- Git decorations and actions
 
 return {
- -- enable = false, -- Uncomment to disable
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`

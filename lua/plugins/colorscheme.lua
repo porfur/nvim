@@ -1,5 +1,4 @@
 return {
- -- enable = false, -- Uncomment to disable
   'cpea2506/one_monokai.nvim',
  dependencies= {
   'navarasu/onedark.nvim',

@@ -3,8 +3,6 @@
 
 
 return {
- -- enable = false, -- Uncomment to disable
-
 	"nvim-treesitter/nvim-treesitter-context",
 	opts={
 		enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

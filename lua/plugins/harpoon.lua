@@ -1,7 +1,6 @@
 -- https://github.com/ThePrimeagen/harpoon
 -- Blazingly fast buffer navigation
  return {
- -- enable = false, -- Uncomment to disable
     'ThePrimeagen/harpoon',
     config = function()
       local mark = require('harpoon.mark')

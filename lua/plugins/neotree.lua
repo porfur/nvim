@@ -2,7 +2,6 @@
 -- File tree
 --
   return {
- -- enable = false, -- Uncomment to disable
 'nvim-neo-tree/neo-tree.nvim',
     dependencies={
       'nvim-lua/plenary.nvim',
@@ -15,6 +14,17 @@
     config=function ()
       vim.cmd([[nnoremap <leader>e :Neotree left toggle<cr>]])
       vim.cmd([[nnoremap <leader>E :Neotree float toggle<cr>]])
+    require("neo-tree").setup({
+  event_handlers = {
+    {
+      event = "neo_tree_buffer_enter",
+      handler = function(arg)
+        vim.cmd [[
+          setlocal relativenumber
+        ]]
+      end,
+    }
+  }})
     end,
     opts = {
       close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
