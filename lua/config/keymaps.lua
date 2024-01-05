@@ -31,11 +31,6 @@ key.set('n', '<C-j>', '<C-w>j', opts 'Window Navigate Down')
 key.set('n', '<C-k>', '<C-w>k', opts 'Window Navigate Up')
 key.set('n', '<C-l>', '<C-w>l', opts 'Window Navigate Right')
 key.set('n', '<C-c>', '<C-w>c', opts 'Close Window')
---Tmux Navigator should match window navigation
-key.set('n', '<C-h>', '<cmd><C-U>TmuxNavigateLeft<cr>', opts 'Tmux Navigate Left')
-key.set('n', '<C-j>', '<cmd><C-U>TmuxNavigateDown<cr>', opts 'Tmux Navigate Down')
-key.set('n', '<C-k>', '<cmd><C-U>TmuxNavigateUp<cr>', opts 'Tmux Navigate Up')
-key.set('n', '<C-l>', '<cmd><C-U>TmuxNavigateRight<cr>', opts 'Tmux Navigate Right')
 -- Resize with Alt-hjkl
 key.set('n', '˚', '<cmd>resize -2<CR>', opts 'Window Horizontal Shrink')
 key.set('n', '∆', '<cmd>resize +2<CR>', opts 'Window Horizontal Grow')

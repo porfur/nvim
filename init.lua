@@ -16,6 +16,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
+   { 'tpope/vim-fugitive' },
+   { 'tpope/vim-rhubarb' },
+   { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
   { import = 'plugins' },
   { import = 'plugins.lsp' },
 })
