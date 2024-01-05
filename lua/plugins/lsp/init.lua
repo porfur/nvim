@@ -4,6 +4,35 @@ vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
 
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = 'rounded',
+  title = 'LSP Hover', -- add the title in hover float window
+})
+vim.diagnostic.config {
+  signs = true,            -- Diagnostic signs on the nr column
+  underline = true,        -- Underline the error
+  virtual_text = true,     -- Inline message
+  update_in_insert = true, -- Real time update of virtual text in INSERT mode
+  float = {
+    -- UI.
+
+    title = 'Vim Diagnostic', -- add the title in hover float window
+    border = 'rounded',
+    focusable = true,         -- Focus on the diagnostic with <C-w>w
+  },
+}
+-- Filter out the tsserver for formating
+-- This lets null-ls take over for the formating
+local lspFormat = function()
+  vim.lsp.buf.format {
+    filter = function(client)
+      return client.name ~= 'tsserver'
+    end,
+    async = false,
+    timeout_ms = 10000,
+  }
+end
+
 local bind = vim.keymap.set
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -14,62 +43,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
     -- these will be buffer-local keybindings
     -- because they only work if you have an active language server
-    bind('n', '<leader>cK', function()
-      vim.lsp.buf.hover()
-    end, opts '[K] Hover info')
-    bind('n', '<leader>cgg', function()
-      vim.lsp.buf.signature_help()
-    end, opts 'Si[g]nature help (alias: <C-g>)')
-    bind('n', '<C-g>', function()
-      vim.lsp.buf.signature_help()
-    end, opts 'Si[g]nature help')
-    bind('n', '<leader>cgd', function()
-      vim.lsp.buf.definition()
-    end, opts '[d]efinition')
-    bind('n', '<leader>cgl', function()
-      vim.diagnostic.open_float()
-    end, opts 'Diagnostics in F[l]oating window')
-    bind('n', '<leader>cgD', function()
-      vim.lsp.buf.declaration()
-    end, opts '[D]eclaration')
-    bind('n', '<leader>cgi', function()
-      vim.lsp.buf.implementation()
-    end, opts '[i]mplementation')
-    bind('n', '<leader>cgo', function()
-      vim.lsp.buf.type_definition()
-    end, opts 'Symb[o]l type definition')
+    bind('n', 'K', vim.lsp.buf.hover, opts '[K] Hover info')
+    bind('n', '<leader>cK', vim.lsp.buf.hover, opts '[K] Hover info')
+    bind('n', '<leader>cgg', vim.lsp.buf.signature_help, opts 'Si[g]nature help (alias: <C-g>)')
+    bind('n', '<C-g>', vim.lsp.buf.signature_help, opts 'Si[g]nature help')
+    bind('n', '<leader>cgd', vim.lsp.buf.definition, opts '[d]efinition')
+    bind('n', '<leader>cgl', vim.diagnostic.open_float, opts 'Diagnostics in F[l]oating window')
+    bind('n', '<leader>cgD', vim.lsp.buf.declaration, opts '[D]eclaration')
+    bind('n', '<leader>cgi', vim.lsp.buf.implementation, opts '[i]mplementation')
+    bind('n', '<leader>cgo', vim.lsp.buf.type_definition, opts 'Symb[o]l type definition')
     bind('n', '<leader>cgr', require('telescope.builtin').lsp_references, opts '[r]eferences')
     bind('n', 'gr', require('telescope.builtin').lsp_references, opts 'Go to [r]eferences')
-    bind('n', '<leader>c[d', function()
-      vim.diagnostic.goto_prev(_)
-    end, opts 'Previous Diagnostic')
-    bind('n', '<leader>c]d ', function()
-      vim.diagnostic.goto_next()
-    end, opts 'Next Diagnostic')
-    bind('n', '<leader>cr', function()
-      vim.lsp.buf.rename()
-    end, opts '[R]ename')
-    bind('n', '<leader>ca', function()
-      vim.lsp.buf.code_action()
-    end, opts '[A]ction')
-    bind('n', '<leader>f', function()
-      vim.lsp.buf.format {
-        filter = function(client)
-          return client.name ~= 'tsserver'
-        end,
-        async = false,
-        timeout_ms = 10000,
-      }
-    end, opts '[f]ormat')
-    bind('n', '<leader>cf', function()
-      vim.lsp.buf.format {
-        filter = function(client)
-          return client.name ~= 'tsserver'
-        end,
-        async = false,
-        timeout_ms = 10000,
-      }
-    end, opts '[f]ormat')
+    bind('n', '<leader>c[d', vim.diagnostic.goto_prev, opts 'Previous Diagnostic')
+    bind('n', '<leader>c]d ', vim.diagnostic.goto_next, opts 'Next Diagnostic')
+    bind('n', '<leader>cr', vim.lsp.buf.rename, opts '[R]ename')
+    bind('n', '<leader>ca', vim.lsp.buf.code_action, opts '[A]ction')
+    bind('n', '<leader>cf', lspFormat, opts '[f]ormat')
     -- more keybindings...
     bind('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, opts '[S]ymbols')
     bind('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts '[a]dd Folder')
@@ -120,14 +109,15 @@ return {
     'L3MON4D3/LuaSnip',
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer', -- Optional
-    'hrsh7th/cmp-path', -- Optional
+    'hrsh7th/cmp-buffer',       -- Optional
+    'hrsh7th/cmp-path',         -- Optional
     'saadparwaiz1/cmp_luasnip', -- Optional
-    'hrsh7th/cmp-nvim-lua', -- Optional
+    'hrsh7th/cmp-nvim-lua',     -- Optional
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'rafamadriz/friendly-snippets',
     'j-hui/fidget.nvim', -- Optional
     'nvimtools/none-ls.nvim',
+    'jay-babu/mason-null-ls.nvim',
   },
   config = function()
     local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -140,18 +130,15 @@ return {
 
     require('mason').setup {}
     require('mason-lspconfig').setup {
-      ensure_installed = { 'eslint' },
+      ensure_installed = { 'eslint', 'tsserver' },
       handlers = { default_setup },
     }
 
-    local null_ls = require 'null-ls'
-    null_ls.setup {
-      sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.completion.spell,
-      },
+    require('null-ls').setup {}
+    require('mason-null-ls').setup {
+      ensure_installed = { 'prettier', "eslint" },
+      automatic_installation = true,
+      handlers = {},
     }
 
     local luasnip = require 'luasnip'

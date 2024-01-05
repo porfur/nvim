@@ -85,6 +85,7 @@ return {}
   use { 'navarasu/onedark.nvim' }
   use { 'projekt0n/github-nvim-theme', tag = 'v0.0.7' }
   use { 'rebelot/kanagawa.nvim' }
+
   use { 'aktersnurra/no-clown-fiesta.nvim' }
   use { 'romgrk/doom-one.vim' }
   use { 'rockerBOO/boo-colorscheme-nvim' }
