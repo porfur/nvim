@@ -118,14 +118,6 @@ key.set('n', '<leader>ql', ':source Session.vim<CR>', opts 'Make load')
 
 -- Plugins --
 
--- NvimTree
-key.set('n', '<leader>u', ':UndotreeToggle<CR>:UndotreeFocus<CR>', opts 'Toggle NvimTree')
-
--- NvimTree
-key.set('n', '<leader>op', '<cmd>NvimTreeToggle<CR>', opts 'Toggle NvimTree')
-key.set('n', '<leader>e', '<cmd>NeoTreeFocusToggle<CR>', opts 'Toggle NeoTree')
-key.set('n', '<leader>E', '<cmd>NeoTreeFloatToggle<CR>', opts 'Toggle NvimTree')
-
 -- Git
 key.set('n', '<leader>gg', '<cmd>LazyGit<CR>', opts 'Lazy [G]it')
 key.set('n', '<leader>gb', '<cmd>GitBlameToggle<CR>', opts 'Toggle Git [B]lame')
