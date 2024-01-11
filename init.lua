@@ -329,6 +329,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     key('n', '<leader>cgg', vim.lsp.buf.signature_help, lsp_key_opts 'Si[g]nature help (alias: <C-g>)')
     key('n', '<C-g>', vim.lsp.buf.signature_help, lsp_key_opts 'Si[g]nature help')
     key('n', '<leader>cgd', vim.lsp.buf.definition, lsp_key_opts '[d]efinition')
+    key('n', 'gd', vim.lsp.buf.definition, lsp_key_opts '[d]efinition')
     key('n', '<leader>cgl', vim.diagnostic.open_float, lsp_key_opts 'Diagnostics in F[l]oating window')
     key('n', '<leader>cgD', vim.lsp.buf.declaration, lsp_key_opts '[D]eclaration')
     key('n', '<leader>cgi', vim.lsp.buf.implementation, lsp_key_opts '[i]mplementation')
