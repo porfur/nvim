@@ -208,7 +208,7 @@ key('n', '[o', 'moO<ESC>`o', key_opts 'Empty Line above')
 key('n', ']o', 'moo<ESC>`o', key_opts 'Empty Line below')
 
 -- Split Line
-key('n', '<C-j>', 'i<CR><Esc>', key_opts 'Split line (Opposite of J)')
+key('n', '|', 'i<CR><Esc>', key_opts 'Split line (Opposite of J)')
 
 -- Sessions
 key('n', '<leader>qs', ':mksession!<CR>', key_opts 'Make session')
