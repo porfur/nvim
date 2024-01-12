@@ -251,14 +251,14 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 -- LSP Diagnostics Setup
 vim.diagnostic.config {
-  signs = true, -- Diagnostic signs on the nr column
-  underline = true, -- Underline the error
-  virtual_text = true, -- Inline message
-  update_in_insert = true, -- Real time update of virtual text in INSERT mode
+  signs = true,               -- Diagnostic signs on the nr column
+  underline = true,           -- Underline the error
+  virtual_text = true,        -- Inline message
+  update_in_insert = true,    -- Real time update of virtual text in INSERT mode
   float = {
     title = 'Vim Diagnostic', -- add the title in hover float window
     border = 'rounded',
-    focusable = true, -- Focus on the diagnostic with <C-w>w
+    focusable = true,         -- Focus on the diagnostic with <C-w>w
   },
 }
 
@@ -387,7 +387,7 @@ local cmp_icons = {
 -- NOTES
 -- opts = {} is the equivalent of the setup({}) function
 require('lazy').setup {
-  { -- TREESITTER --
+  {   -- TREESITTER --
     { -- Treesitter --
       -- TODO Leard what setting are usefull below and remove what is not needed
       -- https://github.com/nvim-treesitter/nvim-treesitter
@@ -397,10 +397,10 @@ require('lazy').setup {
         local configs = require 'nvim-treesitter.configs'
         configs.setup {
           ensure_installed = { 'lua', 'markdown', 'markdown_inline', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'scss' }, -- put the language you want in this array
-          ignore_install = { '' }, -- List of parsers to ignore installing
-          sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+          ignore_install = { '' },                                                                                                          -- List of parsers to ignore installing
+          sync_install = false,                                                                                                             -- install languages synchronously (only applied to `ensure_installed`)
           highlight = {
-            enable = true, -- false will disable the whole extension
+            enable = true,                                                                                                                  -- false will disable the whole extension
             -- disable = { "css" }, -- list of language that will be disabled
           },
           autopairs = {
@@ -737,8 +737,8 @@ require('lazy').setup {
         },
         follow_current_file = { enabled = false }, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = false, -- when true, empty folders will be grouped together
-        hijack_netrw_behavior = 'open_default', -- netrw disabled, opening a directory opens neo-tree
+        group_empty_dirs = false,                  -- when true, empty folders will be grouped together
+        hijack_netrw_behavior = 'open_default',    -- netrw disabled, opening a directory opens neo-tree
         -- in whatever position is specified in window.position
         -- "open_current",  -- netrw disabled, opening a directory opens within the
         -- window like netrw would, regardless of window.position
@@ -764,7 +764,7 @@ require('lazy').setup {
       buffers = {
         follow_current_file = { enabled = true }, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = true, -- when true, empty folders will be grouped together
+        group_empty_dirs = true,                  -- when true, empty folders will be grouped together
         show_unloaded = true,
         window = {
           mappings = {
@@ -926,7 +926,7 @@ require('lazy').setup {
       key('n', '<leader>sc', builtin.colorscheme, key_opts '[S]earch [c]olorschemes')
     end,
   },
-  { -- (( OTHER )) --
+  {   -- (( OTHER )) --
     { -- Vim-sleuth --
       -- TODO Se if it's usefull and remove if not
       -- Detect tabstop and shiftwidth automatically
@@ -959,7 +959,7 @@ require('lazy').setup {
       },
     },
   },
-  { -- (( MOTIONS )) --
+  {   -- (( MOTIONS )) --
     { -- Surround Motion
       -- https://github.com/kylechui/nvim-surround
       'kylechui/nvim-surround',
@@ -976,14 +976,14 @@ require('lazy').setup {
         'JoosepAlviste/nvim-ts-context-commentstring',
       },
       opts = {
-      --  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        --  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
       },
-       -- TODO Delete this if it works with opts = {}
-       config = function()
-         require('Comment').setup {
-           pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-         }
-       end,
+      -- TODO Delete this if it works with opts = {}
+      config = function()
+        require('Comment').setup {
+          pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        }
+      end,
     },
   },
   { -- (( HARPOON )) --
@@ -1009,7 +1009,7 @@ require('lazy').setup {
       key('n', "<leader>'", nav(6), key_opts 'Harpoon to file 6')
     end,
   },
-  { -- (( AUTO CLOSE BRACKETS & TAGS )) --
+  {   -- (( AUTO CLOSE BRACKETS & TAGS )) --
     { -- Auto-pairs --
       -- https://github.com/windwp/nvim-autopairs
       'windwp/nvim-autopairs',
@@ -1024,7 +1024,7 @@ require('lazy').setup {
       opts = {},
     },
   },
-  { -- (( GIT )) --
+  {   -- (( GIT )) --
     -- TODO Learn to use these or remove them
     { -- GIT COMMANDS --
       -- https://github.com/tpope/vim-fugitive
@@ -1116,18 +1116,6 @@ require('lazy').setup {
   {
     -- LSP SETUP --
     {
-      -- NEODEV --
-      -- Automatically configures lua-language-server for your
-      -- Neovim config, Neovim runtime and plugin directories
-      -- https://github.com/folke/neodev.nvim
-      'folke/neodev.nvim',
-      opts = {},
-    },
-    { -- LSP NOTIFICATIONS --
-      -- https://github.com/j-hui/fidget.nvim
-      'j-hui/fidget.nvim',
-    },
-    {
       'neovim/nvim-lspconfig',
       dependencies = {
         'williamboman/mason.nvim',
@@ -1135,15 +1123,27 @@ require('lazy').setup {
         'L3MON4D3/LuaSnip',
         'hrsh7th/nvim-cmp',
         'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer', -- Optional
-        'hrsh7th/cmp-path', -- Optional
+        'hrsh7th/cmp-buffer',       -- Optional
+        'hrsh7th/cmp-path',         -- Optional
         'saadparwaiz1/cmp_luasnip', -- Optional
-        'hrsh7th/cmp-nvim-lua', -- Optional
+        'hrsh7th/cmp-nvim-lua',     -- Optional
         'hrsh7th/cmp-nvim-lsp-signature-help',
         'rafamadriz/friendly-snippets',
-        'j-hui/fidget.nvim', -- Optional
         'nvimtools/none-ls.nvim',
         'jay-babu/mason-null-ls.nvim',
+        {
+          -- NEODEV --
+          -- Automatically configures lua-language-server for your
+          -- Neovim config, Neovim runtime and plugin directories
+          -- https://github.com/folke/neodev.nvim
+          'folke/neodev.nvim',
+          opts = {},
+        },
+        { -- LSP NOTIFICATIONS --
+          -- https://github.com/j-hui/fidget.nvim
+          'j-hui/fidget.nvim',
+          opts = {}
+        },
       },
       config = function()
         local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -1168,6 +1168,7 @@ require('lazy').setup {
         }
 
         local luasnip = require 'luasnip'
+        key({ 'i' }, '<C-s>', luasnip.expand, key_opts "Expand Snippet")
         require('luasnip/loaders/from_vscode').lazy_load()
         local cmp = require 'cmp'
         cmp.setup {
