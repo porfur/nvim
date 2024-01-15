@@ -51,8 +51,7 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd({ 'FileType' }, {
   pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
   callback = function()
-    vim.cmd [[ nnoremap <silent> <buffer> q :close<CR> set nobuflisted
-    ]]
+    vim.cmd [[ nnoremap <silent> <buffer> q :close<CR> ]]
   end,
 })
 
@@ -220,6 +219,9 @@ key('n', '<leader>ql', ':source Session.vim<CR>', key_opts 'Make load')
 key('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', key_opts 'Open Diagnostic f[l]oat')
 key('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', key_opts 'Go to previous [d]iagnostic')
 key('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', key_opts 'Go to next [d]iagnostic')
+
+-- Quickfix
+key('n', '<C-q>', '<cmd>copen<cr>', key_opts 'Open Quickfix')
 --[[ KEYMAPS END ]]
 
 -- [[ LAZY BOOTSTRAP START ]]
