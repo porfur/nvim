@@ -6,15 +6,15 @@ vim.opt.backup = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.cmdheight = 1
 vim.opt.completeopt = { 'menuone', 'noselect' }
-vim.opt.conceallevel = 0
+-- vim.opt.conceallevel = 0
 vim.opt.fileencoding = 'utf-8'
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
-vim.opt.mouse = 'a'
--- vim.opt.showmode = false
-vim.opt.showtabline = 1
 vim.opt.smartcase = true
 vim.opt.smartindent = true
+vim.opt.mouse = 'a'
+vim.opt.showmode = false -- Lualine takes care of this
+-- vim.opt.showtabline = 1
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
@@ -22,26 +22,31 @@ vim.opt.termguicolors = true
 vim.opt.timeoutlen = 300
 vim.opt.undofile = true
 vim.opt.updatetime = 250
-vim.opt.writebackup = false
+-- vim.opt.writebackup = false
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.laststatus = 3
+-- vim.opt.laststatus = 3
 vim.opt.showcmd = false
-vim.opt.ruler = false
+-- vim.opt.ruler = false
 vim.opt.numberwidth = 4
 vim.opt.signcolumn = 'yes'
-vim.opt.wrap = false
+-- vim.opt.wrap = false
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
-vim.opt.fillchars.eob = ' '
-vim.opt.linebreak = true
+-- vim.opt.fillchars.eob = ' '
+-- vim.opt.linebreak = true
 vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
-vim.opt.guifont = 'Iosevka:h28'
+vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
+
+if vim.g.neovide then
+  print('In GUI')
+  -- Put anything you want to happen only in Neovide here
+end
 
 --[[ OPTIONS END ]]
 
@@ -69,47 +74,35 @@ autocmd({ 'VimResized' }, {
   end,
 })
 
-autocmd({ 'CmdWinEnter' }, {
-  callback = function()
-    vim.cmd 'quit'
-  end,
-})
+-- This quits the command history
+-- autocmd({ 'CmdWinEnter' }, {
+--   callback = function()
+--     vim.cmd 'quit'
+--   end,
+-- })
 
+-- Hilight on yank
 autocmd({ 'TextYankPost' }, {
   callback = function()
     vim.highlight.on_yank { higroup = 'Visual', timeout = 200 }
   end,
 })
 
-autocmd({ 'BufWritePost' }, {
-  pattern = { '*.java' },
-  callback = function()
-    vim.lsp.codelens.refresh()
-  end,
-})
+-- No idea
+-- autocmd({ 'BufWritePost' }, {
+--   pattern = { '*.java' },
+--   callback = function()
+--     vim.lsp.codelens.refresh()
+--   end,
+-- })
 
-autocmd({ 'VimEnter' }, {
-  callback = function()
-    vim.cmd 'hi link illuminatedWord LspReferenceText'
-  end,
-})
+-- No Idea
+-- autocmd({ 'VimEnter' }, {
+--   callback = function()
+--     vim.cmd 'hi link illuminatedWord LspReferenceText'
+--   end,
+-- })
 
-autocmd({ 'BufWinEnter' }, {
-  callback = function()
-    local line_count = vim.api.nvim_buf_line_count(0)
-    if line_count >= 5000 then
-      vim.cmd 'IlluminatePauseBuf'
-    end
-  end,
-})
---[[ AUTOCOMMANDS END ]]
-
---[[ KEYMAPS START ]]
-
--- MODES --
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
 --   visual_block_mode = "x",
 --   term_mode = "t",
 --   command_mode = "c",
@@ -157,7 +150,7 @@ key('n', '<leader>to', ':tabonly<CR>', key_opts 'Tab Only')
 -- Navigate buffers
 key('n', '<C-n>', ':bnext<CR>', key_opts 'Buffer Next')
 key('n', '<C-p>', ':bprevious<CR>', key_opts 'Buffer Previous')
-key('n', '<C-6>', '<C-^>', key_opts 'Alternate Buffer')
+key('n', '<C-a>', '<C-^>', key_opts 'Alternate Buffer')
 key('n', '<leader>bn', ':bnext<CR>', key_opts 'Buffer Next')
 key('n', '<leader>bp', ':bprevious<CR>', key_opts 'Buffer Previous')
 key('n', '<leader>ba', '<C-^>', key_opts 'Alternate Buffer')
@@ -255,8 +248,8 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
 vim.diagnostic.config {
   signs = true,               -- Diagnostic signs on the nr column
   underline = true,           -- Underline the error
-  virtual_text = true,        -- Inline message
-  update_in_insert = true,    -- Real time update of virtual text in INSERT mode
+  virtual_text = false,       -- Inline message
+  update_in_insert = false,   -- Real time update of virtual text in INSERT mode
   float = {
     title = 'Vim Diagnostic', -- add the title in hover float window
     border = 'rounded',
@@ -327,27 +320,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- these will be buffer-local keybindings
     -- because they only work if you have an active language server
     key('n', 'K', vim.lsp.buf.hover, lsp_key_opts '[K] Hover info')
-    key('n', '<leader>cK', vim.lsp.buf.hover, lsp_key_opts '[K] Hover info')
-    key('n', '<leader>cgg', vim.lsp.buf.signature_help, lsp_key_opts 'Si[g]nature help (alias: <C-g>)')
-    key('n', '<C-g>', vim.lsp.buf.signature_help, lsp_key_opts 'Si[g]nature help')
-    key('n', '<leader>cgd', vim.lsp.buf.definition, lsp_key_opts '[d]efinition')
+    key('n', '<leader>ck', vim.lsp.buf.hover, lsp_key_opts '[K] Hover info')
+    key('n', '<leader>cs', vim.lsp.buf.signature_help, lsp_key_opts '[S]ignature help ')
+    key('n', '<leader>cd', vim.lsp.buf.definition, lsp_key_opts '[d]efinition')
     key('n', 'gd', vim.lsp.buf.definition, lsp_key_opts '[d]efinition')
-    key('n', '<leader>cgl', vim.diagnostic.open_float, lsp_key_opts 'Diagnostics in F[l]oating window')
-    key('n', '<leader>cgD', vim.lsp.buf.declaration, lsp_key_opts '[D]eclaration')
-    key('n', '<leader>cgi', vim.lsp.buf.implementation, lsp_key_opts '[i]mplementation')
-    key('n', '<leader>cgo', vim.lsp.buf.type_definition, lsp_key_opts 'Symb[o]l type definition')
-    key('n', '<leader>cgr', require('telescope.builtin').lsp_references, lsp_key_opts '[r]eferences')
+    key('n', '<leader>cl', vim.diagnostic.open_float, lsp_key_opts 'Diagnostics in F[l]oating window')
+    key('n', '<leader>cD', vim.lsp.buf.declaration, lsp_key_opts '[D]eclaration')
+    key('n', '<leader>ci', vim.lsp.buf.implementation, lsp_key_opts '[i]mplementation')
+    key('n', '<leader>co', vim.lsp.buf.type_definition, lsp_key_opts 'Symb[o]l type definition')
+    key('n', '<leader>cR', require('telescope.builtin').lsp_references, lsp_key_opts '[r]eferences')
     key('n', 'gr', require('telescope.builtin').lsp_references, lsp_key_opts 'Go to [r]eferences')
     key('n', '<leader>c[d', vim.diagnostic.goto_prev, lsp_key_opts 'Previous Diagnostic')
     key('n', '<leader>c]d ', vim.diagnostic.goto_next, lsp_key_opts 'Next Diagnostic')
     key('n', '<leader>cr', vim.lsp.buf.rename, lsp_key_opts '[R]ename')
     key('n', '<leader>ca', vim.lsp.buf.code_action, lsp_key_opts '[A]ction')
-    key('n', '<leader>cf', lspFormat, lsp_key_opts '[f]ormat')
+    key({ 'n', 'v' }, '<leader>cf', lspFormat, lsp_key_opts '[f]ormat')
     -- more keybindings...
-    key('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, lsp_key_opts '[S]ymbols')
-    key('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, lsp_key_opts '[a]dd Folder')
-    key('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, lsp_key_opts '[r]emove Folder')
-    key('n', '<leader>wl', function()
+    key('n', '<leader>cws', require('telescope.builtin').lsp_dynamic_workspace_symbols, lsp_key_opts '[S]ymbols')
+    key('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, lsp_key_opts '[a]dd Folder')
+    key('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder, lsp_key_opts '[r]emove Folder')
+    key('n', '<leader>cwl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, lsp_key_opts '[l]ist folder')
   end,
@@ -398,11 +390,14 @@ require('lazy').setup {
       config = function()
         local configs = require 'nvim-treesitter.configs'
         configs.setup {
-          ensure_installed = { 'lua', 'markdown', 'markdown_inline', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'scss' }, -- put the language you want in this array
-          ignore_install = { '' },                                                                                                          -- List of parsers to ignore installing
-          sync_install = false,                                                                                                             -- install languages synchronously (only applied to `ensure_installed`)
+          TSConfig = {},
+          modules = {},
+          auto_install = true,
+          ensure_installed = { 'c', 'vim', 'lua', 'markdown', 'markdown_inline', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'scss' },
+          ignore_install = { '' },
+          sync_install = false,
           highlight = {
-            enable = true,                                                                                                                  -- false will disable the whole extension
+            enable = true,
             -- disable = { "css" }, -- list of language that will be disabled
           },
           autopairs = {
@@ -577,8 +572,8 @@ require('lazy').setup {
             event = 'neo_tree_buffer_enter',
             handler = function()
               vim.cmd [[
-          setlocal relativenumber
-          ]]
+           setlocal relativenumber
+           ]]
             end,
           },
         },
@@ -800,12 +795,14 @@ require('lazy').setup {
       'TmuxNavigateDown',
       'TmuxNavigateUp',
       'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
     },
     keys = {
       { '<c-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
       { '<c-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
       { '<c-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
       { '<c-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
+      { '<c-;>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
     },
   },
   { -- TOGGLE TERM --
@@ -814,8 +811,9 @@ require('lazy').setup {
     'akinsho/toggleterm.nvim',
     version = '*',
     opts = {
+
       size = 20,
-      open_mapping = [[<C-\>]],
+      open_mapping = [[<C-g>]],
       hide_numbers = true,
       shade_terminals = true,
       shading_factor = 2,
@@ -941,6 +939,17 @@ require('lazy').setup {
       -- Vim plugin for automatically highlighting other uses of
       -- the word under the cursor using either LSP, Tree-sitter, or regex matching.
       'RRethy/vim-illuminate',
+      -- This autocommand disables illuminate on long files
+      -- config = function()
+      -- autocmd({ 'BufWinEnter' }, {
+      --   callback = function()
+      --     local line_count = vim.api.nvim_buf_line_count(0)
+      --     if line_count >= 5000 then
+      --       vim.cmd 'IlluminatePauseBuf'
+      --     end
+      --   end,
+      -- })
+      -- end
     },
     { -- (( INDENT GUIDE-LINE )) --
       -- TODO -- Try removing it or removing opts
