@@ -53,12 +53,13 @@ end
 --[[ AUTOCOMMANDS START ]]
 --TODO figure out when these are usefull
 local autocmd = vim.api.nvim_create_autocmd
-autocmd({ 'FileType' }, {
-  pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
-  callback = function()
-    vim.cmd [[ nnoremap <silent> <buffer> q :close<CR> ]]
-  end,
-})
+
+-- autocmd({ 'FileType' }, {
+--   pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
+--   callback = function()
+--     vim.cmd [[ nnoremap <silent> <buffer> q :close<CR> ]]
+--   end,
+-- })
 
 autocmd({ 'FileType' }, {
   pattern = { 'gitcommit', 'markdown' },
@@ -150,10 +151,10 @@ key('n', '<leader>to', ':tabonly<CR>', key_opts 'Tab Only')
 -- Navigate buffers
 key('n', '<C-n>', ':bnext<CR>', key_opts 'Buffer Next')
 key('n', '<C-p>', ':bprevious<CR>', key_opts 'Buffer Previous')
-key('n', '<C-a>', '<C-^>', key_opts 'Alternate Buffer')
 key('n', '<leader>bn', ':bnext<CR>', key_opts 'Buffer Next')
 key('n', '<leader>bp', ':bprevious<CR>', key_opts 'Buffer Previous')
 key('n', '<leader>ba', '<C-^>', key_opts 'Alternate Buffer')
+key('n', '<leader>a', '<C-^>', key_opts 'Alternate Buffer')
 
 --Save buffers
 key({ 'n', 'v' }, '<leader>bs', ':write<CR>', key_opts 'Write Buffer')
@@ -164,6 +165,9 @@ key({ 'n', 'v' }, '<leader>bW', ':wall<CR>', key_opts 'Write all Buffers')
 key({ 'n', 'v' }, '<C-s>', ':write<CR>', key_opts 'Write Buffer')
 key({ 'n', 'v' }, '<C-S>', ':wall<CR>', key_opts 'Write all Buffers')
 
+key('n', 'gq', '<cmd>!qlmanage -p %<CR>', key_opts 'Quicklook file')
+key('n', 'gQ', '<cmd>!open .<CR>', key_opts 'Open directory in finder')
+key('n','<leader>yp','<cmd>let @+=expand("%:p)<CR>',key_opts '[y]ank [p]ath to system clipboard')
 -- Close buffers
 -- TODO SIMPLIFY THIS USING THE Z command
 -- switch to prev buffer then delete prev buffer [ bdelete# ]
@@ -926,7 +930,10 @@ require('lazy').setup {
       key('n', '<leader>sc', builtin.colorscheme, key_opts '[S]earch [c]olorschemes')
     end,
   },
-  {   -- (( OTHER )) --
+  { -- (( OTHER )) --
+    {
+      'joegesualdo/jsdoc.vim'
+    },
     { -- Vim-sleuth --
       -- TODO Se if it's usefull and remove if not
       -- Detect tabstop and shiftwidth automatically
@@ -1123,7 +1130,17 @@ require('lazy').setup {
       end,
     },
   },
-
+  {   -- (( ZEN MODE )) --
+    "folke/zen-mode.nvim",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    config = function()
+      key('n', '<leader>z', '<cmd>ZenMode<CR>', key_opts 'Toggle Zen')
+    end
+  },
   {
     -- LSP SETUP --
     {
