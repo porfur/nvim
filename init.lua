@@ -167,7 +167,7 @@ key({ 'n', 'v' }, '<C-S>', ':wall<CR>', key_opts 'Write all Buffers')
 
 key('n', 'gq', '<cmd>!qlmanage -p %<CR>', key_opts 'Quicklook file')
 key('n', 'gQ', '<cmd>!open .<CR>', key_opts 'Open directory in finder')
-key('n','<leader>yp','<cmd>let @+=expand("%:p)<CR>',key_opts '[y]ank [p]ath to system clipboard')
+key('n', '<leader>yp', '<cmd>let @+=expand("%:p)<CR>', key_opts '[y]ank [p]ath to system clipboard')
 -- Close buffers
 -- TODO SIMPLIFY THIS USING THE Z command
 -- switch to prev buffer then delete prev buffer [ bdelete# ]
@@ -934,6 +934,12 @@ require('lazy').setup {
     {
       'joegesualdo/jsdoc.vim'
     },
+    {
+      'kkoomen/vim-doge',
+      config = function()
+        vim.cmd(':call doge#install()')
+      end
+    },
     { -- Vim-sleuth --
       -- TODO Se if it's usefull and remove if not
       -- Detect tabstop and shiftwidth automatically
@@ -1130,7 +1136,7 @@ require('lazy').setup {
       end,
     },
   },
-  {   -- (( ZEN MODE )) --
+  { -- (( ZEN MODE )) --
     "folke/zen-mode.nvim",
     opts = {
       -- your configuration comes here
