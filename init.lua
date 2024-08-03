@@ -182,6 +182,10 @@ key('n', '<leader>bqq<CR>', ':qa!<CR>', key_opts 'Quit All Buffers')
 -- Clear highlights
 key('n', '<leader>x', ':nohlsearch<cr>', key_opts 'clear search highlight')
 
+-- Marks
+key('n', '<leader>dm', ':delm!<cr>', key_opts 'Delete local marks')
+key('n', '<leader>dM', ':delm A-Z0-9<cr>', key_opts 'Delete global marks')
+
 -- Paste in visual mode doesn't polute the clipboard with the old selection
 key('v', 'p', '"_dp', key_opts())
 
@@ -477,6 +481,18 @@ require('lazy').setup {
         key('n', '<leader>cc', ':TSContextToggle<CR>', key_opts 'TS [c]ontext toggle')
       end,
     },
+  },
+  {
+    -- TreeSJ --
+    -- Toggles blocks of code from single to multi line
+    -- https://github.com/Wansmer/treesj
+    'Wansmer/treesj',
+    -- keys = { '<space>o', '<space>-', '<space>+' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+    config = function()
+      require('treesj').setup({ use_default_keymaps = false })
+      key('n', '<space>o', ':TSJToggle<CR>', key_opts 'Toggle code block')
+    end,
   },
   { -- COLORSCHEMES --
     'cpea2506/one_monokai.nvim',
@@ -855,13 +871,13 @@ require('lazy').setup {
     },
     config = function()
       local whichkey = require 'which-key'
-      whichkey.register {
-        ['<leader>b'] = { name = 'Buffer' },
-        ['<leader>c'] = { name = '[C]ode (LSP)' },
-        ['<leader>g'] = { name = '[G]it' },
-        ['<leader>w'] = { name = '[W]orkspace' },
-        ['<leader>s'] = { name = '[S]earch' },
-      }
+      whichkey.add({
+        { '<leader>b', name = 'Buffer' },
+        { '<leader>c', name = '[C]ode (LSP)' },
+        { '<leader>g', name = '[G]it' },
+        { '<leader>w', name = '[W]orkspace' },
+        { '<leader>s', name = '[S]earch' },
+      })
     end,
   },
   { -- TELESCOPE --
@@ -892,7 +908,7 @@ require('lazy').setup {
       telescope.setup {
         defaults = {
           path_display = { 'smart' },
-          -- file_ignore_patterns = { '.git/', 'node_modules' },
+          file_ignore_patterns = { '.git/', 'node_modules' },
           mappings = {
             -- TODO See defaults and maybe remove these
             i = {
@@ -925,6 +941,8 @@ require('lazy').setup {
       key('n', '<leader>sW', builtin.grep_string, key_opts '[S]earch current [W]ord')
       key('n', '<leader>sw', builtin.live_grep, key_opts '[S]earch [w]ord by Grep')
       key('n', '<leader>ss', builtin.live_grep, key_opts '[S]earch by [G]rep')
+      key('n', '<leader>sS', function() builtin.live_grep({ additional_args = { '-u' } }) end,
+        key_opts '[S]earch by [G]rep')
       key('n', '<leader>sd', builtin.diagnostics, key_opts '[S]earch [D]iagnostics')
       key('n', '<leader>sk', builtin.keymaps, key_opts '[S]earch [K]eymaps')
       key('n', '<leader>sc', builtin.colorscheme, key_opts '[S]earch [c]olorschemes')
@@ -934,12 +952,12 @@ require('lazy').setup {
     {
       'joegesualdo/jsdoc.vim'
     },
-    {
-      'kkoomen/vim-doge',
-      config = function()
-        vim.cmd(':call doge#install()')
-      end
-    },
+    -- {
+    --   'kkoomen/vim-doge',
+    --   config = function()
+    --     vim.cmd(':call doge#install()')
+    --   end
+    -- },
     { -- Vim-sleuth --
       -- TODO Se if it's usefull and remove if not
       -- Detect tabstop and shiftwidth automatically
