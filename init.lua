@@ -45,7 +45,6 @@ vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
 vim.g.doge_enable_mappings = 0 -- vim plugin setting
 vim.g.codeium_enabled = true   -- figure out how to use this
 
-
 if vim.g.neovide then
   -- Put anything you want to happen only in Neovide here
 end
@@ -970,29 +969,40 @@ require('lazy').setup {
     end,
   },
   { -- (( OTHER )) --
-    {
-      "Exafunction/codeium.nvim",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
-      },
+    { -- https://github.com/Exafunction/codeium.vim
+      "Exafunction/codeium.vim",
       config = function()
-        require("codeium").setup({
-          workspace_root = {
-            use_lsp = true,
-            find_root = nil,
-            paths = {
-              ".bzr",
-              ".git",
-              ".hg",
-              ".svn",
-              "_FOSSIL_",
-              "package.json",
-            }
-          }
-        })
+        key('i', '<C-g>', function() return vim.fn['codeium#Accept']() end)
+        key('i', '<c-j>', function() return vim.fn['codeium#CycleCompletions'](1) end)
+        key('i', '<c-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end)
+        key('i', '<c-e>', function() return vim.fn['codeium#Clear']() end)
+        key('n', '<leader>ct', '<cmd>Codeium Toggle<cr>', key_opts 'Toggle Codeium')
       end
     },
+    -- { -- https://github.com/Exafunction/codeium.nvim
+    --   "Exafunction/codeium.nvim",
+    --   event = 'BufEnter',
+    --   dependencies = {
+    --     "nvim-lua/plenary.nvim",
+    --     "hrsh7th/nvim-cmp",
+    --   },
+    --   config = function()
+    --     require("codeium").setup({
+    --       workspace_root = {
+    --         use_lsp = true,
+    --         find_root = nil,
+    --         paths = {
+    --           ".bzr",
+    --           ".git",
+    --           ".hg",
+    --           ".svn",
+    --           "_FOSSIL_",
+    --           "package.json",
+    --         }
+    --       }
+    --     })
+    --   end
+    -- },
     { -- Neogen --
       --https://github.com/danymat/neogen
       "danymat/neogen",
