@@ -42,9 +42,11 @@ vim.opt.sidescrolloff = 5
 vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
 vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
+vim.g.doge_enable_mappings = 0 -- vim plugin setting
+vim.g.codeium_enabled = true   -- figure out how to use this
+
 
 if vim.g.neovide then
-  print('In GUI')
   -- Put anything you want to happen only in Neovide here
 end
 
@@ -120,6 +122,22 @@ local key_opts = function(desc, event)
   return opts
 end
 
+-- FUNCTIONS --
+function ToggleQuickfix()
+  local qf_exists = false
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win["quickfix"] == 1 then
+      qf_exists = true
+    end
+  end
+
+  if qf_exists then
+    vim.cmd('cclose')
+  else
+    vim.cmd('copen')
+  end
+end
+
 -- BINDINGS --
 -- Disable Single Space
 key('', '<Space>', '<Nop>', key_opts 'Space')
@@ -183,8 +201,8 @@ key('n', '<leader>bqq<CR>', ':qa!<CR>', key_opts 'Quit All Buffers')
 key('n', '<leader>x', ':nohlsearch<cr>', key_opts 'clear search highlight')
 
 -- Marks
-key('n', '<leader>dm', ':delm!<cr>', key_opts 'Delete local marks')
-key('n', '<leader>dM', ':delm A-Z0-9<cr>', key_opts 'Delete global marks')
+key('n', '<leader>`d', ':delm!<cr>', key_opts 'Delete local marks')
+key('n', '<leader>`D', ':delm A-Z0-9<cr>', key_opts 'Delete global marks')
 
 -- Paste in visual mode doesn't polute the clipboard with the old selection
 key('v', 'p', '"_dp', key_opts())
@@ -222,7 +240,8 @@ key('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', key_opts 'Go to previo
 key('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', key_opts 'Go to next [d]iagnostic')
 
 -- Quickfix
-key('n', '<C-q>', '<cmd>copen<cr>', key_opts 'Open Quickfix')
+key('n', '<C-q>', ':lua ToggleQuickfix()<cr>', key_opts 'Open Quickfix')
+key('n', '<leader>oq', ':lua ToggleQuickfix()<cr>', key_opts 'Open Quickfix')
 --[[ KEYMAPS END ]]
 
 -- [[ LAZY BOOTSTRAP START ]]
@@ -354,7 +373,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- ICONS --
+
 local cmp_icons = {
+  Codeium = "",
   Text = '',
   Method = '',
   Function = '',
@@ -950,14 +971,53 @@ require('lazy').setup {
   },
   { -- (( OTHER )) --
     {
-      'joegesualdo/jsdoc.vim'
+      "Exafunction/codeium.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+      },
+      config = function()
+        require("codeium").setup({
+          workspace_root = {
+            use_lsp = true,
+            find_root = nil,
+            paths = {
+              ".bzr",
+              ".git",
+              ".hg",
+              ".svn",
+              "_FOSSIL_",
+              "package.json",
+            }
+          }
+        })
+      end
     },
-    -- {
-    --   'kkoomen/vim-doge',
-    --   config = function()
-    --     vim.cmd(':call doge#install()')
-    --   end
-    -- },
+    { -- Neogen --
+      --https://github.com/danymat/neogen
+      "danymat/neogen",
+      config = function()
+        require('neogen').setup { snippet_engine = "luasnip" }
+      end
+    },
+    {
+      --https://github.com/kkoomen/vim-doge
+      'kkoomen/vim-doge',
+      config = function()
+        vim.cmd(':call doge#install()')
+
+        -- Generate comment for current line
+        key('n', '<Leader>cg', '<cmd>DogeGenerate<CR>', key_opts '[G]enerate documentation comment')
+
+        -- Interactive mode comment todo-jumping
+        -- key('n', '<TAB>', '<Plug>(doge-comment-jump-forward)')
+        -- key('n', '<S-TAB>', '<Plug>(doge-comment-jump-backward)')
+        -- key('i', '<TAB>', '<Plug>(doge-comment-jump-forward)')
+        -- key('i', '<S-TAB>', '<Plug>(doge-comment-jump-backward)')
+        -- key('x', '<TAB>', '<Plug>(doge-comment-jump-forward)')
+        -- key('x', '<S-TAB>', '<Plug>(doge-comment-jump-backward)')
+      end
+    },
     { -- Vim-sleuth --
       -- TODO Se if it's usefull and remove if not
       -- Detect tabstop and shiftwidth automatically
@@ -1208,7 +1268,7 @@ require('lazy').setup {
 
         require('mason').setup {}
         require('mason-lspconfig').setup {
-          ensure_installed = { 'eslint', 'tsserver' },
+          ensure_installed = { 'eslint', 'ts_ls' },
           handlers = { default_setup },
         }
 
@@ -1252,6 +1312,7 @@ require('lazy').setup {
               vim_item.kind = cmp_icons[vim_item.kind]
               vim_item.menu = ({
                 nvim_lsp = '[LSP]',
+                codeium = '[Codeium]',
                 luasnip = '[LuaSnip]',
                 nvim_lua = '[nvim_lua]',
                 buffer = '[buffer]',
@@ -1263,6 +1324,7 @@ require('lazy').setup {
           },
           sources = {
             { name = 'nvim_lsp' },
+            { name = 'codeium' },
             { name = 'nvim_lua' },
             { name = 'buffer' },
             { name = 'path' },
