@@ -518,7 +518,6 @@ require('lazy').setup {
     'cpea2506/one_monokai.nvim',
     dependencies = {
       'navarasu/onedark.nvim',
-      'folke/tokyonight.nvim',
       'catppuccin/nvim',
       'Mofiqul/dracula.nvim',
       'romgrk/doom-one.vim',
@@ -968,106 +967,101 @@ require('lazy').setup {
       key('n', '<leader>sc', builtin.colorscheme, key_opts '[S]earch [c]olorschemes')
     end,
   },
-  { -- (( OTHER )) --
-    { -- https://github.com/Exafunction/codeium.vim
-      "Exafunction/codeium.vim",
-      config = function()
-        key('i', '<C-g>', function() return vim.fn['codeium#Accept']() end)
-        key('i', '<c-j>', function() return vim.fn['codeium#CycleCompletions'](1) end)
-        key('i', '<c-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end)
-        key('i', '<c-e>', function() return vim.fn['codeium#Clear']() end)
-        key('n', '<leader>ct', '<cmd>Codeium Toggle<cr>', key_opts 'Toggle Codeium')
-      end
+  { 'echasnovski/mini.nvim', version = '*',
+    config = function()
+      require('mini.ai').setup()
+      require('mini.pick').setup()
+      -- require('mini.base16').setup()
+      -- require('mini.colors').setup()
+      -- require('mini.colors').setup()
+    end
+  },
+  {
+    -- -- (( CODEIUM VIM ))
+    -- -- https://github.com/Exafunction/codeium.vim
+    -- "Exafunction/codeium.vim",
+    -- config = function()
+    --   key('i', '<C-g>', function() return vim.fn['codeium#Accept']() end)
+    --   key('i', '<c-j>', function() return vim.fn['codeium#CycleCompletions'](1) end)
+    --   key('i', '<c-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end)
+    --   key('i', '<c-e>', function() return vim.fn['codeium#Clear']() end)
+    --   key('n', '<leader>ct', '<cmd>Codeium Toggle<cr>', key_opts 'Toggle Codeium')
+    -- end
+  },
+  { -- (( CODEIUM NVIM ))
+    -- https://github.com/Exafunction/codeium.nvim
+    "Exafunction/codeium.nvim",
+    event = 'BufEnter',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
     },
-    -- { -- https://github.com/Exafunction/codeium.nvim
-    --   "Exafunction/codeium.nvim",
-    --   event = 'BufEnter',
-    --   dependencies = {
-    --     "nvim-lua/plenary.nvim",
-    --     "hrsh7th/nvim-cmp",
-    --   },
-    --   config = function()
-    --     require("codeium").setup({
-    --       workspace_root = {
-    --         use_lsp = true,
-    --         find_root = nil,
-    --         paths = {
-    --           ".bzr",
-    --           ".git",
-    --           ".hg",
-    --           ".svn",
-    --           "_FOSSIL_",
-    --           "package.json",
-    --         }
-    --       }
-    --     })
-    --   end
-    -- },
-    { -- Neogen --
-      --https://github.com/danymat/neogen
-      "danymat/neogen",
-      config = function()
-        require('neogen').setup { snippet_engine = "luasnip" }
-      end
-    },
-    {
-      --https://github.com/kkoomen/vim-doge
-      'kkoomen/vim-doge',
-      config = function()
-        vim.cmd(':call doge#install()')
-
-        -- Generate comment for current line
-        key('n', '<Leader>cg', '<cmd>DogeGenerate<CR>', key_opts '[G]enerate documentation comment')
-
-        -- Interactive mode comment todo-jumping
-        -- key('n', '<TAB>', '<Plug>(doge-comment-jump-forward)')
-        -- key('n', '<S-TAB>', '<Plug>(doge-comment-jump-backward)')
-        -- key('i', '<TAB>', '<Plug>(doge-comment-jump-forward)')
-        -- key('i', '<S-TAB>', '<Plug>(doge-comment-jump-backward)')
-        -- key('x', '<TAB>', '<Plug>(doge-comment-jump-forward)')
-        -- key('x', '<S-TAB>', '<Plug>(doge-comment-jump-backward)')
-      end
-    },
-    { -- Vim-sleuth --
-      -- TODO Se if it's usefull and remove if not
-      -- Detect tabstop and shiftwidth automatically
-      -- Setting up indent levels and styles (based on existing files)
-      -- https://github.com/tpope/vim-sleuth
-      'tpope/vim-sleuth',
-    },
-    { -- Highlight Word --
-      -- https://github.com/RRethy/vim-illuminate
-      -- Vim plugin for automatically highlighting other uses of
-      -- the word under the cursor using either LSP, Tree-sitter, or regex matching.
-      'RRethy/vim-illuminate',
-      -- This autocommand disables illuminate on long files
-      -- config = function()
-      -- autocmd({ 'BufWinEnter' }, {
-      --   callback = function()
-      --     local line_count = vim.api.nvim_buf_line_count(0)
-      --     if line_count >= 5000 then
-      --       vim.cmd 'IlluminatePauseBuf'
-      --     end
-      --   end,
-      -- })
-      -- end
-    },
-    { -- (( INDENT GUIDE-LINE )) --
-      -- TODO -- Try removing it or removing opts
-      -- https://github.com/lukas-reineke/indent-blankline.nvim
-      'lukas-reineke/indent-blankline.nvim',
-      main = 'ibl',
-      opts = {
-        debounce = 500,
-        indent = { char = '▏', smart_indent_cap = true },
-        whitespace = { highlight = { 'Whitespace', 'NonText' } },
-        exclude = {
-          filetypes = {
-            'help',
-            'packer',
-          },
-          buftypes = { 'terminal', 'nofile' },
+    config = function()
+      require("codeium").setup({
+        workspace_root = {
+          use_lsp = true,
+          find_root = nil,
+          paths = {
+            ".bzr",
+            ".git",
+            ".hg",
+            ".svn",
+            "_FOSSIL_",
+            "package.json",
+          }
+        }
+      })
+    end
+  },
+  { -- (( VIM-DOGE ))
+    -- Generates documentation comments
+    -- https://github.com/kkoomen/vim-doge
+    'kkoomen/vim-doge',
+    config = function()
+      vim.cmd(':call doge#install()')
+      -- Generate comment for current line
+      key('n', '<Leader>cg', '<cmd>DogeGenerate<CR>', key_opts '[G]enerate documentation comment')
+    end
+  },
+  { -- (( VIM SLEUTH ))
+    -- TODO Se if it's usefull and remove if not
+    -- Detect tabstop and shiftwidth automatically
+    -- Setting up indent levels and styles (based on existing files)
+    -- https://github.com/tpope/vim-sleuth
+    'tpope/vim-sleuth',
+  },
+  { -- (( VIM-ILLUMATE ))
+    -- https://github.com/RRethy/vim-illuminate
+    -- Vim plugin for automatically highlighting other uses of
+    -- the word under the cursor using either LSP, Tree-sitter, or regex matching.
+    'RRethy/vim-illuminate',
+    -- This autocommand disables illuminate on long files
+    -- config = function()
+    -- autocmd({ 'BufWinEnter' }, {
+    --   callback = function()
+    --     local line_count = vim.api.nvim_buf_line_count(0)
+    --     if line_count >= 5000 then
+    --       vim.cmd 'IlluminatePauseBuf'
+    --     end
+    --   end,
+    -- })
+    -- end
+  },
+  { -- (( INDENT GUIDE-LINE )) --
+    -- TODO -- Try removing it or removing opts
+    -- https://github.com/lukas-reineke/indent-blankline.nvim
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = {
+      debounce = 500,
+      indent = { char = '▏', smart_indent_cap = true },
+      whitespace = { highlight = { 'Whitespace', 'NonText' } },
+      exclude = {
+        filetypes = {
+          'help',
+          'packer',
         },
+        buftypes = { 'terminal', 'nofile' },
       },
     },
   },
@@ -1083,7 +1077,7 @@ require('lazy').setup {
       -- https://github.com/numToStr/Comment.nvim
       'numToStr/Comment.nvim',
       dependencies = {
-        -- Commend based on treesitter context ( used for JSX )
+        -- Comment based on treesitter context ( used for JSX )
         -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
         'JoosepAlviste/nvim-ts-context-commentstring',
       },
