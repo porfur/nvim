@@ -1,3 +1,4 @@
+-- write a hello world in lua
 --[[ OPTIONS START ]]
 -- TODO REMOVE UNUSED
 vim.g.mapleader = ' '
@@ -14,7 +15,7 @@ vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.mouse = 'a'
 vim.opt.showmode = false -- Lualine takes care of this
--- vim.opt.showtabline = 1
+vim.opt.showtabline = 1
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.swapfile = false
@@ -44,6 +45,7 @@ vim.opt.foldenable = false
 vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
 vim.g.doge_enable_mappings = 0 -- vim plugin setting
 vim.g.codeium_enabled = true   -- figure out how to use this
+
 
 if vim.g.neovide then
   -- Put anything you want to happen only in Neovide here
@@ -135,6 +137,14 @@ function ToggleQuickfix()
   else
     vim.cmd('copen')
   end
+end
+
+local function organizeImports()
+  local params = {
+    command = "_typescript.organizeImports",
+    arguments = { vim.fn.expand("%:p") }
+  }
+  vim.lsp.buf.execute_command(params)
 end
 
 -- BINDINGS --
@@ -353,7 +363,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     key('n', '<leader>cl', vim.diagnostic.open_float, lsp_key_opts 'Diagnostics in F[l]oating window')
     key('n', '<leader>cD', vim.lsp.buf.declaration, lsp_key_opts '[D]eclaration')
     key('n', '<leader>ci', vim.lsp.buf.implementation, lsp_key_opts '[i]mplementation')
-    key('n', '<leader>co', vim.lsp.buf.type_definition, lsp_key_opts 'Symb[o]l type definition')
+    key('n', '<leader>ct', vim.lsp.buf.type_definition, lsp_key_opts 'Symbol [t]ype definition')
+    key('n', '<leader>co', organizeImports, lsp_key_opts '[o]rganize imports')
     key('n', '<leader>cR', require('telescope.builtin').lsp_references, lsp_key_opts '[r]eferences')
     key('n', 'gr', require('telescope.builtin').lsp_references, lsp_key_opts 'Go to [r]eferences')
     key('n', '<leader>c[d', vim.diagnostic.goto_prev, lsp_key_opts 'Previous Diagnostic')
@@ -976,43 +987,60 @@ require('lazy').setup {
       -- require('mini.colors').setup()
     end
   },
-  {
-    -- -- (( CODEIUM VIM ))
-    -- -- https://github.com/Exafunction/codeium.vim
-    -- "Exafunction/codeium.vim",
-    -- config = function()
-    --   key('i', '<C-g>', function() return vim.fn['codeium#Accept']() end)
-    --   key('i', '<c-j>', function() return vim.fn['codeium#CycleCompletions'](1) end)
-    --   key('i', '<c-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end)
-    --   key('i', '<c-e>', function() return vim.fn['codeium#Clear']() end)
-    --   key('n', '<leader>ct', '<cmd>Codeium Toggle<cr>', key_opts 'Toggle Codeium')
-    -- end
-  },
-  { -- (( CODEIUM NVIM ))
-    -- https://github.com/Exafunction/codeium.nvim
-    "Exafunction/codeium.nvim",
-    event = 'BufEnter',
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
-    },
-    config = function()
-      require("codeium").setup({
-        workspace_root = {
-          use_lsp = true,
-          find_root = nil,
-          paths = {
-            ".bzr",
-            ".git",
-            ".hg",
-            ".svn",
-            "_FOSSIL_",
-            "package.json",
-          }
-        }
-      })
-    end
-  },
+{
+  'stevearc/oil.nvim',
+  ---@module 'oil'
+  ---@type oil.SetupOpts
+  opts = {},
+  -- Optional dependencies
+  dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+},
+  -- {
+  --   'vimwiki/vimwiki',
+  --   config = function()
+  --     vim.g.vimwiki_list = {
+  --       {
+  --         path = '~/Dropbox/Personal/Obsidian/OP/',
+  --         syntax = 'markdown',
+  --         ext = '.md',
+  --       },
+  --     }
+  --   end
+  -- },
+  -- { -- (( CODEIUM NVIM ))
+  --   -- https://github.com/Exafunction/codeium.nvim
+  --   "Exafunction/codeium.nvim",
+  --   event = 'BufEnter',
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "hrsh7th/nvim-cmp",
+  --   },
+  --   config = function()
+  --     require("codeium").setup({
+  --       keys = { '<leader>ct', function()
+  --         if vim.g.codeium_enabled then
+  --           vim.g.codeium_enabled = false
+  --         else
+  --           vim.g.codeium_enabled = true
+  --         end
+  --       end },
+  --       -- virtual_text = { enabled = true },
+  --       workspace_root = {
+  --         use_lsp = true,
+  --         find_root = nil,
+  --         paths = {
+  --           ".bzr",
+  --           ".git",
+  --           ".hg",
+  --           ".svn",
+  --           "_FOSSIL_",
+  --           "package.json",
+  --         }
+  --       }
+  --     })
+  --   end
+  -- },
   { -- (( VIM-DOGE ))
     -- Generates documentation comments
     -- https://github.com/kkoomen/vim-doge
