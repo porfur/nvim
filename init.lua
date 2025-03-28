@@ -1,13 +1,10 @@
--- write a hello world in lua
---[[ OPTIONS START ]]
--- TODO REMOVE UNUSED
+--[[ OPTIONS:START ]]
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.backup = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.cmdheight = 1
 vim.opt.completeopt = { 'menuone', 'noselect' }
--- vim.opt.conceallevel = 0
 vim.opt.fileencoding = 'utf-8'
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
@@ -23,37 +20,37 @@ vim.opt.termguicolors = true
 vim.opt.timeoutlen = 300
 vim.opt.undofile = true
 vim.opt.updatetime = 250
--- vim.opt.writebackup = false
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
--- vim.opt.laststatus = 3
 vim.opt.showcmd = false
--- vim.opt.ruler = false
 vim.opt.numberwidth = 4
 vim.opt.signcolumn = 'yes'
--- vim.opt.wrap = false
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
--- vim.opt.fillchars.eob = ' '
--- vim.opt.linebreak = true
+vim.opt.wrap = false
+vim.opt.linebreak = true
 vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
 vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
 vim.g.doge_enable_mappings = 0 -- vim plugin setting
-vim.g.codeium_enabled = true   -- figure out how to use this
-
+vim.g.codeium_enabled = false  -- figure out how to use this
+vim.opt.wildignore:append { '**/node_modules/**', '**/.git/**', '**/dist/**' }
+-- vim.opt.writebackup = false
+-- vim.opt.laststatus = 3
+-- vim.opt.ruler = false
+-- vim.opt.fillchars.eob = ' '
 
 if vim.g.neovide then
   -- Put anything you want to happen only in Neovide here
 end
+--[[ OPTIONS:END ]]
+-- ==========================================================================
 
---[[ OPTIONS END ]]
-
---[[ AUTOCOMMANDS START ]]
+--[[ AUTOCOMMANDS:START ]]
 --TODO figure out when these are usefull
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -78,41 +75,19 @@ autocmd({ 'VimResized' }, {
   end,
 })
 
--- This quits the command history
--- autocmd({ 'CmdWinEnter' }, {
---   callback = function()
---     vim.cmd 'quit'
---   end,
--- })
-
 -- Hilight on yank
 autocmd({ 'TextYankPost' }, {
   callback = function()
     vim.highlight.on_yank { higroup = 'Visual', timeout = 200 }
   end,
 })
+--[[ AUTOCOMMANDS:END ]]
 
--- No idea
--- autocmd({ 'BufWritePost' }, {
---   pattern = { '*.java' },
---   callback = function()
---     vim.lsp.codelens.refresh()
---   end,
--- })
+-- ==========================================================================
 
--- No Idea
--- autocmd({ 'VimEnter' }, {
---   callback = function()
---     vim.cmd 'hi link illuminatedWord LspReferenceText'
---   end,
--- })
+--[[ KEYMAPS:START ]]
 
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
---   all = "",
-
--- KEYMAP LOCALS --
+-- Keymap locals --
 local key = vim.keymap.set
 local key_opts = function(desc, event)
   local opts = { silent = false, desc = desc or '**No Description**' }
@@ -123,31 +98,37 @@ local key_opts = function(desc, event)
   return opts
 end
 
--- FUNCTIONS --
+-- Keymap functions --
+
+local isWildIgnoreEnabled = true
+local function ToggleWildIgnore()
+  if isWildIgnoreEnabled then
+    vim.opt.wildignore = '' -- Disable ignoring
+    print 'Wildignore: OFF'
+  else
+    vim.opt.wildignore = { '**/node_modules/**', '**/.git/**', '**/dist/**' } -- Re-enable
+    print 'Wildignore: ON'
+  end
+  isWildIgnoreEnabled = not isWildIgnoreEnabled
+end
+
 function ToggleQuickfix()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do
-    if win["quickfix"] == 1 then
+    if win['quickfix'] == 1 then
       qf_exists = true
     end
   end
 
   if qf_exists then
-    vim.cmd('cclose')
+    vim.cmd 'cclose'
   else
-    vim.cmd('copen')
+    vim.cmd 'copen'
   end
 end
 
-local function organizeImports()
-  local params = {
-    command = "_typescript.organizeImports",
-    arguments = { vim.fn.expand("%:p") }
-  }
-  vim.lsp.buf.execute_command(params)
-end
-
--- BINDINGS --
+-- Bindings --
+--
 -- Disable Single Space
 key('', '<Space>', '<Nop>', key_opts 'Space')
 
@@ -164,16 +145,17 @@ key('n', '<C-k>', '<C-w>k', key_opts 'Window Navigate Up')
 key('n', '<C-l>', '<C-w>l', key_opts 'Window Navigate Right')
 
 -- Resize with Alt-hjkl
-key('n', '˚', ':resize -2<CR>', key_opts 'Window Horizontal Shrink')
-key('n', '∆', ':resize +2<CR>', key_opts 'Window Horizontal Grow')
-key('n', '˙', ':vertical resize -2<CR>', key_opts 'Window Vertical Shrink')
-key('n', '¬', ':vertical resize +2<CR>', key_opts 'Window Vertical Grow')
-key('n', '≠', '<C-w>=', key_opts 'Equalize Windows')
+key('n', '<M-j>', ':resize -2<CR>', key_opts 'Window Horizontal Shrink')
+key('n', '<M-k>', ':resize +2<CR>', key_opts 'Window Horizontal Grow')
+key('n', '<M-h>', ':vertical resize -2<CR>', key_opts 'Window Vertical Shrink')
+key('n', '<M-l>', ':vertical resize +2<CR>', key_opts 'Window Vertical Grow')
+key('n', '<M-=>', '<C-w>=', key_opts 'Equalize Windows')
 
 --Tabs
-key('n', '<leader>tn', ':tabnew<CR>', key_opts 'Tab New')
-key('n', '<leader>tc', ':tabclose<CR>', key_opts 'Tab Close')
-key('n', '<leader>to', ':tabonly<CR>', key_opts 'Tab Only')
+key('n', '<leader>tc', ':tabnew<CR>', key_opts 'Tab New')
+key('n', '<leader>tx', ':tabclose<CR>', key_opts 'Tab Close')
+key('n', '<leader>tn', ':tabnext<CR>', key_opts 'Tab Next')
+key('n', '<leader>tp', ':tabprevious<CR>', key_opts 'Tab Previous')
 
 -- Navigate buffers
 key('n', '<C-n>', ':bnext<CR>', key_opts 'Buffer Next')
@@ -192,15 +174,17 @@ key({ 'n', 'v' }, '<leader>bW', ':wall<CR>', key_opts 'Write all Buffers')
 key({ 'n', 'v' }, '<C-s>', ':write<CR>', key_opts 'Write Buffer')
 key({ 'n', 'v' }, '<C-S>', ':wall<CR>', key_opts 'Write all Buffers')
 
-key('n', 'gq', '<cmd>!qlmanage -p %<CR>', key_opts 'Quicklook file')
-key('n', 'gQ', '<cmd>!open .<CR>', key_opts 'Open directory in finder')
-key('n', '<leader>yp', '<cmd>let @+=expand("%:p)<CR>', key_opts '[y]ank [p]ath to system clipboard')
+key('n', 'gq', ':!qlmanage -p %<CR>', key_opts 'Quicklook file')
+key('n', 'gQ', ':!open .<CR>', key_opts 'Open directory in finder')
+key('n', 'yp', ':let @+=expand("%")<CR>', key_opts '[y]ank relative [p]ath to system clipboard')
+key('n', 'yP', ':let @+=expand("%:p")<CR>', key_opts '[y]ank absolute [p]ath to system clipboard')
+
 -- Close buffers
 -- TODO SIMPLIFY THIS USING THE Z command
 -- switch to prev buffer then delete prev buffer [ bdelete# ]
 -- That way splits dont close
 -- TODO Organize these And figure out what they do
-key('n', '<leader>bd', ':bprevious<bar>bdelete#!<CR>', key_opts 'Delete Buffer (Discard Changes)')
+key('n', '<leader>bd', ':bprevious<bar>bdelete!<CR>', key_opts 'Delete Buffer (Discard Changes)')
 key('n', '<leader>bD', ':bprevious<bar> %bdelete!<CR>', key_opts 'Delete All Buffer (Discard Changes)')
 key('n', '<leader>bc', ':write<bar>bprevious<bar>bdelete#<CR>', key_opts 'Write & Delete Buffer')
 key('n', '<leader>bC', ':wall<bar> %bdelete<CR>', key_opts 'Write & Delete Buffers')
@@ -216,15 +200,13 @@ key('n', '<leader>`D', ':delm A-Z0-9<cr>', key_opts 'Delete global marks')
 -- Paste in visual mode doesn't polute the clipboard with the old selection
 key('v', 'p', '"_dp', key_opts())
 
--- press jk fast to esc
+-- press kj fast to esc
 key('i', 'kj', '<esc>', key_opts())
 
 -- visual stay in indent mode
 key('v', '<', '<gv', key_opts())
 key('v', '>', '>gv', key_opts())
 
--- Netrw
-key('n', '<leader>o-', vim.cmd.Lex, key_opts 'Open Netrw')
 
 -- Move line in visual mode
 key('v', 'J', ":m '>+1<CR>gv=gv")
@@ -250,8 +232,11 @@ key('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', key_opts 'Go to next [
 
 -- Quickfix
 key('n', '<C-q>', ':lua ToggleQuickfix()<cr>', key_opts 'Open Quickfix')
-key('n', '<leader>oq', ':lua ToggleQuickfix()<cr>', key_opts 'Open Quickfix')
+key('n', '<leader><Tab>q', ':lua ToggleQuickfix()<cr>', key_opts 'Open Quickfix')
+key('n', '<leader><Tab>w', ToggleWildIgnore, key_opts 'Toggle [w]ildignore')
+
 --[[ KEYMAPS END ]]
+-- ==========================================================================
 
 -- [[ LAZY BOOTSTRAP START ]]
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -267,6 +252,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 -- [[ LAZY BOOTSTRAP END ]]
+-- ==========================================================================
 
 -- [[ LSP SETTINGS START ]]
 -- Setting up bindings variables and other settings
@@ -364,7 +350,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     key('n', '<leader>cD', vim.lsp.buf.declaration, lsp_key_opts '[D]eclaration')
     key('n', '<leader>ci', vim.lsp.buf.implementation, lsp_key_opts '[i]mplementation')
     key('n', '<leader>ct', vim.lsp.buf.type_definition, lsp_key_opts 'Symbol [t]ype definition')
-    key('n', '<leader>co', organizeImports, lsp_key_opts '[o]rganize imports')
     key('n', '<leader>cR', require('telescope.builtin').lsp_references, lsp_key_opts '[r]eferences')
     key('n', 'gr', require('telescope.builtin').lsp_references, lsp_key_opts 'Go to [r]eferences')
     key('n', '<leader>c[d', vim.diagnostic.goto_prev, lsp_key_opts 'Previous Diagnostic')
@@ -385,7 +370,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- ICONS --
 
 local cmp_icons = {
-  Codeium = "",
+  Codeium = '',
   Text = '',
   Method = '',
   Function = '',
@@ -420,98 +405,96 @@ local cmp_icons = {
 -- NOTES
 -- opts = {} is the equivalent of the setup({}) function
 require('lazy').setup {
-  {   -- TREESITTER --
-    { -- Treesitter --
-      -- TODO Leard what setting are usefull below and remove what is not needed
-      -- https://github.com/nvim-treesitter/nvim-treesitter
-      'nvim-treesitter/nvim-treesitter',
-      build = ':TSUpdate',
-      config = function()
-        local configs = require 'nvim-treesitter.configs'
-        configs.setup {
-          TSConfig = {},
-          modules = {},
-          auto_install = true,
-          ensure_installed = { 'c', 'vim', 'lua', 'markdown', 'markdown_inline', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'scss' },
-          ignore_install = { '' },
-          sync_install = false,
-          highlight = {
-            enable = true,
-            -- disable = { "css" }, -- list of language that will be disabled
-          },
-          autopairs = {
-            enable = true,
-          },
-          indent = { enable = true, disable = { 'python' } },
+  { -- Treesitter --
+    -- https://github.com/nvim-treesitter/nvim-treesitter
+    -- TODO Learn what setting are usefull below and remove what is not needed
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      local configs = require 'nvim-treesitter.configs'
+      configs.setup {
+        TSConfig = {},
+        modules = {},
+        auto_install = true,
+        ensure_installed = { 'c', 'vim', 'lua', 'markdown', 'markdown_inline', 'bash', 'python', 'javascript', 'typescript', 'html', 'css', 'scss' },
+        ignore_install = { '' },
+        sync_install = false,
+        highlight = {
+          enable = true,
+          -- disable = { "css" }, -- list of language that will be disabled
+        },
+        autopairs = {
+          enable = true,
+        },
+        indent = { enable = true, disable = { 'python' } },
 
-          incremental_selection = {
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = '<C-space>',
+            node_incremental = '<C-space>',
+            -- scope_incremental = '<C-s>',
+            node_decremental = '<C-backspace>',
+          },
+        },
+        textobjects = {
+          select = {
             enable = true,
+            lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
-              init_selection = '<C-space>',
-              node_incremental = '<C-space>',
-              -- scope_incremental = '<C-s>',
-              node_decremental = '<C-backspace>',
+              -- You can use the capture groups defined in textobjects.scm
+              ['aa'] = '@parameter.outer',
+              ['ia'] = '@parameter.inner',
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+              ['ac'] = '@class.outer',
+              ['ic'] = '@class.inner',
             },
           },
-          textobjects = {
-            select = {
-              enable = true,
-              lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-              keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ['aa'] = '@parameter.outer',
-                ['ia'] = '@parameter.inner',
-                ['af'] = '@function.outer',
-                ['if'] = '@function.inner',
-                ['ac'] = '@class.outer',
-                ['ic'] = '@class.inner',
-              },
+          move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+              [']m'] = '@function.outer',
+              [']]'] = '@class.outer',
             },
-            move = {
-              enable = true,
-              set_jumps = true, -- whether to set jumps in the jumplist
-              goto_next_start = {
-                [']m'] = '@function.outer',
-                [']]'] = '@class.outer',
-              },
-              goto_next_end = {
-                [']M'] = '@function.outer',
-                [']['] = '@class.outer',
-              },
-              goto_previous_start = {
-                ['[m'] = '@function.outer',
-                ['[['] = '@class.outer',
-              },
-              goto_previous_end = {
-                ['[M'] = '@function.outer',
-                ['[]'] = '@class.outer',
-              },
+            goto_next_end = {
+              [']M'] = '@function.outer',
+              [']['] = '@class.outer',
             },
-            swap = {
-              enable = true,
-              swap_next = {
-                ['<leader>a'] = '@parameter.inner',
-              },
-              swap_previous = {
-                ['<leader>A'] = '@parameter.inner',
-              },
+            goto_previous_start = {
+              ['[m'] = '@function.outer',
+              ['[['] = '@class.outer',
+            },
+            goto_previous_end = {
+              ['[M'] = '@function.outer',
+              ['[]'] = '@class.outer',
             },
           },
-        }
-      end,
-    },
-    {
-      -- Treesitter Context --
-      -- Show function context at top of the screen when function is long
-      -- https://github.com/nvim-treesitter/nvim-treesitter-context
-      'nvim-treesitter/nvim-treesitter-context',
-      opts = {},
-      config = function()
-        -- Adds underline to context regardless of the colorscheme
-        vim.cmd 'hi TreesitterContextBottom gui=underline guisp=Grey'
-        key('n', '<leader>cc', ':TSContextToggle<CR>', key_opts 'TS [c]ontext toggle')
-      end,
-    },
+          swap = {
+            enable = true,
+            swap_next = {
+              ['<leader>a'] = '@parameter.inner',
+            },
+            swap_previous = {
+              ['<leader>A'] = '@parameter.inner',
+            },
+          },
+        },
+      }
+    end,
+  },
+  {
+    -- Treesitter Context --
+    -- Show function context at top of the screen when function is long
+    -- https://github.com/nvim-treesitter/nvim-treesitter-context
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {},
+    config = function()
+      -- Adds underline to context regardless of the colorscheme
+      vim.cmd 'hi TreesitterContextBottom gui=underline guisp=Grey'
+      key('n', '<leader>cc', ':TSContextToggle<CR>', key_opts 'TS [c]ontext toggle')
+    end,
   },
   {
     -- TreeSJ --
@@ -521,7 +504,7 @@ require('lazy').setup {
     -- keys = { '<space>o', '<space>-', '<space>+' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
     config = function()
-      require('treesj').setup({ use_default_keymaps = false })
+      require('treesj').setup { use_default_keymaps = false }
       key('n', '<space>o', ':TSJToggle<CR>', key_opts 'Toggle code block')
     end,
   },
@@ -586,14 +569,14 @@ require('lazy').setup {
           lualine_y = { hide 'progress' },
           lualine_z = { hide 'location' },
         },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { { 'filename', path = 1 } },
-          lualine_x = { 'location' },
-          lualine_y = {},
-          lualine_z = {},
-        },
+        -- inactive_sections = {
+        --   lualine_a = {},
+        --   lualine_b = {},
+        --   lualine_c = { { 'filename', path = 1 } },
+        --   lualine_x = { 'location' },
+        --   lualine_y = {},
+        --   lualine_z = {},
+        -- },
         tabline = {},
         winbar = {},
         inactive_winbar = {},
@@ -881,7 +864,9 @@ require('lazy').setup {
     -- https://github.com/jiaoshijie/undotree
     'jiaoshijie/undotree',
     dependencies = 'nvim-lua/plenary.nvim',
-    config = true,
+    config = function()
+      require('undotree').setup { float_diff = false }
+    end,
     keys = { -- load the plugin only when using it's keybinding:
       { '<leader>u', "<cmd>lua require('undotree').toggle()<cr>" },
     },
@@ -901,13 +886,15 @@ require('lazy').setup {
     },
     config = function()
       local whichkey = require 'which-key'
-      whichkey.add({
-        { '<leader>b', name = 'Buffer' },
-        { '<leader>c', name = '[C]ode (LSP)' },
-        { '<leader>g', name = '[G]it' },
-        { '<leader>w', name = '[W]orkspace' },
-        { '<leader>s', name = '[S]earch' },
-      })
+      whichkey.add {
+        { '<leader>b',     name = 'Buffer' },
+        { '<leader>c',     name = '[C]ode (LSP)' },
+        { '<leader>t',     name = '[T]oggle' },
+        { '<leader><Tab>', name = '[T]Tab' },
+        { '<leader>g',     name = '[G]it' },
+        { '<leader>w',     name = '[W]orkspace' },
+        { '<leader>s',     name = '[S]earch' },
+      }
     end,
   },
   { -- TELESCOPE --
@@ -971,31 +958,33 @@ require('lazy').setup {
       key('n', '<leader>sW', builtin.grep_string, key_opts '[S]earch current [W]ord')
       key('n', '<leader>sw', builtin.live_grep, key_opts '[S]earch [w]ord by Grep')
       key('n', '<leader>ss', builtin.live_grep, key_opts '[S]earch by [G]rep')
-      key('n', '<leader>sS', function() builtin.live_grep({ additional_args = { '-u' } }) end,
-        key_opts '[S]earch by [G]rep')
+      key('n', '<leader>sS', function()
+        builtin.live_grep { additional_args = { '-u' } }
+      end, key_opts '[S]earch by [G]rep')
       key('n', '<leader>sd', builtin.diagnostics, key_opts '[S]earch [D]iagnostics')
       key('n', '<leader>sk', builtin.keymaps, key_opts '[S]earch [K]eymaps')
       key('n', '<leader>sc', builtin.colorscheme, key_opts '[S]earch [c]olorschemes')
     end,
   },
-  { 'echasnovski/mini.nvim', version = '*',
+  {
+    'echasnovski/mini.nvim',
+    version = '*',
     config = function()
       require('mini.ai').setup()
       require('mini.pick').setup()
       -- require('mini.base16').setup()
       -- require('mini.colors').setup()
-      -- require('mini.colors').setup()
-    end
+    end,
   },
-{
-  'stevearc/oil.nvim',
-  ---@module 'oil'
-  ---@type oil.SetupOpts
-  opts = {},
-  -- Optional dependencies
-  dependencies = { { "echasnovski/mini.icons", opts = {} } },
-  -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-},
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  },
   -- {
   --   'vimwiki/vimwiki',
   --   config = function()
@@ -1008,48 +997,48 @@ require('lazy').setup {
   --     }
   --   end
   -- },
-  -- { -- (( CODEIUM NVIM ))
-  --   -- https://github.com/Exafunction/codeium.nvim
-  --   "Exafunction/codeium.nvim",
-  --   event = 'BufEnter',
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "hrsh7th/nvim-cmp",
-  --   },
-  --   config = function()
-  --     require("codeium").setup({
-  --       keys = { '<leader>ct', function()
-  --         if vim.g.codeium_enabled then
-  --           vim.g.codeium_enabled = false
-  --         else
-  --           vim.g.codeium_enabled = true
-  --         end
-  --       end },
-  --       -- virtual_text = { enabled = true },
-  --       workspace_root = {
-  --         use_lsp = true,
-  --         find_root = nil,
-  --         paths = {
-  --           ".bzr",
-  --           ".git",
-  --           ".hg",
-  --           ".svn",
-  --           "_FOSSIL_",
-  --           "package.json",
-  --         }
-  --       }
-  --     })
-  --   end
-  -- },
+  { -- (( CODEIUM NVIM ))
+    -- https://github.com/Exafunction/codeium.nvim
+    'Exafunction/codeium.nvim',
+    event = 'BufEnter',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'hrsh7th/nvim-cmp',
+    },
+    config = function()
+      require('codeium').setup {
+
+        -- virtual_text = { enabled = true },
+        workspace_root = {
+          use_lsp = true,
+          find_root = nil,
+          paths = {
+            '.bzr',
+            '.git',
+            '.hg',
+            '.svn',
+            '_FOSSIL_',
+            'package.json',
+          },
+        },
+      }
+      vim.api.nvim_create_autocmd('VimEnter', {
+        callback = function()
+          vim.cmd 'Codeium Toggle' -- Toggling Codeium off at startup
+        end,
+      })
+      key('n', '<leader><Tab>c', '<cmd>Codeium Toggle<CR>', key_opts 'Toggle Codeium')
+    end,
+  },
   { -- (( VIM-DOGE ))
     -- Generates documentation comments
     -- https://github.com/kkoomen/vim-doge
     'kkoomen/vim-doge',
     config = function()
-      vim.cmd(':call doge#install()')
+      vim.cmd ':call doge#install()'
       -- Generate comment for current line
       key('n', '<Leader>cg', '<cmd>DogeGenerate<CR>', key_opts '[G]enerate documentation comment')
-    end
+    end,
   },
   { -- (( VIM SLEUTH ))
     -- TODO Se if it's usefull and remove if not
@@ -1247,7 +1236,7 @@ require('lazy').setup {
     },
   },
   { -- (( ZEN MODE )) --
-    "folke/zen-mode.nvim",
+    'folke/zen-mode.nvim',
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -1255,7 +1244,12 @@ require('lazy').setup {
     },
     config = function()
       key('n', '<leader>z', '<cmd>ZenMode<CR>', key_opts 'Toggle Zen')
-    end
+    end,
+  },
+  {
+    -- Nvim in chromium browsers
+    'glacambre/firenvim',
+    build = ':call firenvim#install(0)',
   },
   {
     -- LSP SETUP --
@@ -1286,7 +1280,7 @@ require('lazy').setup {
         { -- LSP NOTIFICATIONS --
           -- https://github.com/j-hui/fidget.nvim
           'j-hui/fidget.nvim',
-          opts = {}
+          opts = {},
         },
       },
       config = function()
@@ -1312,7 +1306,7 @@ require('lazy').setup {
         }
 
         local luasnip = require 'luasnip'
-        key({ 'i' }, '<C-s>', luasnip.expand, key_opts "Expand Snippet")
+        key({ 'i' }, '<C-s>', luasnip.expand, key_opts 'Expand Snippet')
         require('luasnip/loaders/from_vscode').lazy_load()
         local cmp = require 'cmp'
         cmp.setup {
@@ -1375,7 +1369,70 @@ require('lazy').setup {
       end,
     },
   },
+  {
+    'yetone/avante.nvim',
+    event = 'VeryLazy',
+    version = false, -- Never set this value to "*"! Never!
+    opts = {
+      -- add any opts here
+      -- for example
+      provider = 'ollama',
+      providers = {
+        ollama = {
+          endpoint = 'http://localhost:10000/',
+          model = 'llama3.2:latest',
+          -- model = 'gemma3:1b',
+          extra_request_body = {
+            timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
+            temperature = 0.75,
+            max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+            --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+          },
+        },
+      },
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = 'make',
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'stevearc/dressing.nvim',
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      --- The below dependencies are optional,
+      'echasnovski/mini.pick',         -- for file_selector provider mini.pick
+      'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
+      'hrsh7th/nvim-cmp',              -- autocompletion for avante commands and mentions
+      'ibhagwan/fzf-lua',              -- for file_selector provider fzf
+      'nvim-tree/nvim-web-devicons',   -- or echasnovski/mini.icons
+      'zbirenbaum/copilot.lua',        -- for providers='copilot'
+      {
+        -- support for image pasting
+        'HakonHarnes/img-clip.nvim',
+        event = 'VeryLazy',
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { 'markdown', 'Avante' },
+        },
+        ft = { 'markdown', 'Avante' },
+      },
+    },
+  },
 }
-
 --[[ PLUGINS SETUP END ]]
 --
