@@ -1,4 +1,22 @@
 return {
+
+  -- {
+  --   -- NOTE: Used for Neovim config only
+  --   -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+  --   -- used for completion, annotations and signatures of Neovim apis
+  --   'folke/lazydev.nvim',
+  --   ft = 'lua',
+  --   opts = {
+  --     library = {
+  --       -- Load luvit types when the `vim.uv` word is found
+  --       { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+  --     },
+  --   },
+  -- },
+
+  {
+
+
     -- A "data only" repo, providing basic, default
     -- Nvim LSP client configurations for various LSP servers.
     -- https://github.com/neovim/nvim-lspconfig
@@ -30,13 +48,15 @@ return {
         -- mason-lsp-config only accepts LSP
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         event = { "BufReadPre", "BufNewFile" },
-        opts = { ensure_installed = {
-          'ts_ls',
-          'lua_ls',
-          'prettierd',
-          'eslint_d',
-          'eslint'
-        }}
+        opts = {
+          ensure_installed = {
+            'ts_ls',
+            'lua_ls',
+            'prettierd',
+            'eslint_d',
+            'eslint'
+          }
+        }
       },
       {
         -- https://github.com/mason-org/mason.nvim
@@ -57,18 +77,6 @@ return {
         -- either LSP, Tree-sitter, or regex matching.
         'RRethy/vim-illuminate',
       },
-      {
-        -- NOTE: Used for Neovim config only
-        -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-        -- used for completion, annotations and signatures of Neovim apis
-        'folke/lazydev.nvim',
-        ft = 'lua',
-        opts = {
-          library = {
-            -- Load luvit types when the `vim.uv` word is found
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-          },
-        },
-      },
     },
   }
+}
