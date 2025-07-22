@@ -43,10 +43,12 @@ return {
         opts = {},
       },
       {
+        -- WARN: This is cool but breaks unused code dimming
         -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
         -- This plugin allows you to ensure installed LSP,DAP,Linter and Formatter
         -- mason-lsp-config only accepts LSP
         "WhoIsSethDaniel/mason-tool-installer.nvim",
+        enabled = false,
         event = { "BufReadPre", "BufNewFile" },
         opts = {
           ensure_installed = {
