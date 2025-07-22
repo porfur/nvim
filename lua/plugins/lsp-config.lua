@@ -25,6 +25,14 @@ return {
         opts = {},
       },
       {
+        -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+        -- This plugin allows you to ensure installed LSP,DAP,Linter and Formatter
+        -- mason-lsp-config only accepts LSP
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = { ensure_installed = {'ts_ls', 'lua_ls', 'prettierd','eslint_d'}}
+      },
+      {
         -- https://github.com/mason-org/mason.nvim
         --  Portable package manager for Neovim that runs everywhere Neovim runs.
         -- Easily install and manage LSP servers, DAP servers, linters, and formatters.

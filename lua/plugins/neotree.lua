@@ -26,24 +26,37 @@ return {
     default_component_configs = {
         icon = {
           enabled = false
-        }
+        },
+        git_status = {
+          symbols = {
+            added     = "A",  -- Added
+            modified  = "M",  -- Modified
+            deleted   = "D",  -- Deleted
+            renamed   = "R",  -- Renamed
+            untracked = "?",  -- Untracked
+            ignored   = "I",  -- Ignored
+            unstaged  = "U",  -- Unstaged
+            staged    = "S",  -- Staged
+            conflict  = "C",  -- Conflict
+          }
+        },
       },
-    filesystem = {
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
+      filesystem = {
+        window = {
+          mappings = {
+            ['\\'] = 'close_window',
+          },
+        },
+      },
+      event_handlers = {
+        {
+          event = 'neo_tree_buffer_enter',
+          handler = function()
+            vim.cmd [[
+            setlocal relativenumber
+            ]]
+          end,
         },
       },
     },
-    event_handlers = {
-      {
-        event = 'neo_tree_buffer_enter',
-        handler = function()
-          vim.cmd [[
-          setlocal relativenumber
-          ]]
-        end,
-      },
-    },
-  },
-}
+  }
