@@ -1,5 +1,6 @@
 local M = require('utils')
 local map = vim.keymap.set
+local hover_rounded = function() vim.lsp.buf.hover { border = "rounded" } end
 
 -- [[ QUALITY OF LIFE: START ]]
 
@@ -58,7 +59,7 @@ map('n', 'gq', M.utils.reveal_in_finder, { desc = 'Reveal file in Finder' })
 
 -- =============================================================================
 
--- [[ DIAGNOSTICS: START ]]
+-- [[ DIAGNOSTICS AND LSP: START ]]
 -- note: diagnostics are not exclusive to lsp servers
 -- so these can be global keybindings
 
@@ -68,11 +69,10 @@ map('n', ']d', M.diagnostic.jump(1), { desc = 'Next diagnostic float' })
 map('n', '[d', M.diagnostic.jump(-1), { desc = 'Prev diagnostic float' })
 
 map('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [d]iagnostic (current buffer)' })
-map('n', '<leader>D', function()
-  vim.diagnostic.setqflist { open = true }
-end, { desc = 'Open [D]iagnostics (all buffers)' })
+map('n', '<leader>D', vim.diagnostic.setqflist , { desc = 'Open [D]iagnostics (all buffers)' })
+map('n', 'K', hover_rounded, { desc = 'LSP hover' })
 
--- [[ DIAGNOSTICS: END ]]
+-- [[ DIAGNOSTICS AND LSP: END ]]
 -- =============================================================================
 
 -- [[ SESSIONS: START ]]
@@ -197,8 +197,3 @@ map('n', '<leader>`l', ':marks<CR>', { desc = 'List marks' })
 
 -- =============================================================================
 
--- [[ LSP: START ]]
-
-
-
--- [[ LSP: END ]]
