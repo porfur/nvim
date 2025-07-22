@@ -30,7 +30,12 @@ return {
         -- mason-lsp-config only accepts LSP
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         event = { "BufReadPre", "BufNewFile" },
-        opts = { ensure_installed = {'ts_ls', 'lua_ls', 'prettierd','eslint_d'}}
+        opts = { ensure_installed = {
+          'ts_ls',
+          'lua_ls',
+          -- 'prettierd',
+          -- 'eslint_d'
+        }}
       },
       {
         -- https://github.com/mason-org/mason.nvim
