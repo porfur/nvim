@@ -53,7 +53,7 @@ return {
       -- NOTE: Setting defaults to a table uses the default theme.
       -- wrapping it in require('telescope.themes').get_ivy defaults to the specified theme
       defaults = require('telescope.themes').get_ivy {
-      -- defaults = {
+        -- defaults = {
         winblend = 10,
         layout_config = {
           width = function(_, cols, _)
@@ -117,7 +117,10 @@ return {
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
-
+    local theme = require 'telescope.themes'
+    local function colorscheme()
+      builtin.colorscheme(theme.get_dropdown { enable_preview = true, previewer = false })
+    end
     local function find_config_files()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end
@@ -139,7 +142,7 @@ return {
     map('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
     map('n', '<leader>sh', builtin.help_tags, { desc = '[s]earch [h]elp' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[s]earch [k]eymaps' })
-    map('n', '<leader>sc', builtin.colorscheme, { desc = '[s]earch [c]olorschemes' })
+    map('n', '<leader>sc', colorscheme, { desc = '[s]earch [c]olorschemes' })
     map('n', '<leader>st', builtin.builtin, { desc = '[s]earch [t]elescope builtin' })
     map('n', '<leader>sv', find_config_files, { desc = '[s]earch neo[v]im files' })
     map('n', '<leader>sf', builtin.find_files, { desc = '[s]earch [f]iles' })
