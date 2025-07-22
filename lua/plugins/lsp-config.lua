@@ -33,8 +33,9 @@ return {
         opts = { ensure_installed = {
           'ts_ls',
           'lua_ls',
-          -- 'prettierd',
-          -- 'eslint_d'
+          'prettierd',
+          'eslint_d',
+          'eslint'
         }}
       },
       {
