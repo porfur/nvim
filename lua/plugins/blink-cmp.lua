@@ -101,7 +101,7 @@ return {
         lsp = {score_offset=0},
         snippets = {score_offset=1},
         path = {score_offset=2},
-        buffer = {score_offset=2}
+        buffer = {score_offset=3}
       }
     },
 
