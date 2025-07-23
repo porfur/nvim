@@ -106,7 +106,7 @@ return {
       extensions = {
         ['ui-select'] = {
           -- Changes the default ui-select with telescope's get_cursor theme
-          require('telescope.themes').get_cursor(),
+          require('telescope.themes').get_cursor { initial_mode = 'normal' },
         },
       },
     }
@@ -119,8 +119,12 @@ return {
     local builtin = require 'telescope.builtin'
     local theme = require 'telescope.themes'
     local function colorscheme()
-      builtin.colorscheme(theme.get_dropdown { enable_preview = true, previewer = false })
+      builtin.colorscheme(theme.get_dropdown {
+        initial_mode = 'normal',
+        enable_preview = true,
+        previewer = false })
     end
+
     local function find_config_files()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end
