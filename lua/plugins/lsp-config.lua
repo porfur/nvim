@@ -1,3 +1,4 @@
+
 return {
 
   -- {
@@ -48,7 +49,7 @@ return {
         -- This plugin allows you to ensure installed LSP,DAP,Linter and Formatter
         -- mason-lsp-config only accepts LSP
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        enabled = false,
+        -- enabled = false,
         event = { "BufReadPre", "BufNewFile" },
         opts = {
           ensure_installed = {
@@ -56,7 +57,6 @@ return {
             'lua_ls',
             'prettierd',
             'eslint_d',
-            'eslint'
           }
         }
       },
