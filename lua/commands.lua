@@ -92,9 +92,10 @@ create_autocmd('LspAttach', {
 --       - Sends <C-f> to open CmdWin
 --       - Moves cursor to start of word
 --   + Then triggers LSP rename (which opens Cmdline, triggering the autocmd)
-create_user_command('RenameInCmdWindow', function()
+create_user_command('OPRename', function()
   create_autocmd('CmdlineEnter', {
     desc = 'Open the CmdWindow on lsp rename',
+    once = true, -- Makes the autocmd one-time to avoid repeat triggers
     callback = function()
       -- <C-f> inside the CmdLine opens the CmdWindow
       -- Get termcode for <C-f> (open command-line window)
@@ -102,7 +103,6 @@ create_user_command('RenameInCmdWindow', function()
       vim.api.nvim_feedkeys(key, 'c', false) -- Simulates <C-f>
       vim.api.nvim_feedkeys('0', 'n', false) -- Simulates 0 (begining of line)
     end,
-    once = true, -- Makes the autocmd one-time to avoid repeat triggers
   })
   vim.lsp.buf.rename() -- Call rename and trigger the defined autocmd
 end, { desc = 'LSP Rename in command window with cursor at the start' })
