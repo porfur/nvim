@@ -67,9 +67,23 @@ return {
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
       preset = 'default',
-      ['<CR>'] = { 'select_and_accept' },
+      ['<CR>'] = { 'select_and_accept','fallback' },
     },
-
+    cmdline = {
+      enabled = false,
+      keymap = { preset = 'inherit' },
+      completion = {
+        list = { selection = { preselect = false, auto_insert = true } },
+        menu = {
+          auto_show = true,
+          draw = {
+            columns = {
+              { 'label' },
+            },
+          },
+        },
+      },
+    },
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
@@ -88,8 +102,9 @@ return {
         border = 'rounded',
         draw = {
           columns = {
-            { 'label', 'label_description', gap = 1 },
-            { 'kind',  'source_name',       gap = 1 },
+
+            { 'kind_icon', 'label',       'label_description', gap = 1 },
+            { 'kind',      'source_name', gap = 1 },
           },
         },
       },
