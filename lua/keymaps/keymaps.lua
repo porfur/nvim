@@ -92,8 +92,7 @@ map('n', '<leader>qQ', ':qa!<CR>', { desc = 'Discard and [q]uit all' })
 map('n', '<C-q>', M.toggle.quickfix, { desc = 'Toggle [q]uickfix' })
 map('n', '<leader><Tab>q', M.toggle.quickfix, { desc = 'Toggle [q]uickfix' })
 map('n', '<leader><Tab>l', M.toggle.locallist, { desc = 'Toggle [l]ocal list' })
-map('n', '<leader><Tab>w', M.toggle.wildignore, { desc = 'Toggle [w]ildignore' })
-map('n', '<leader><Tab>r', M.toggle.wrap, { desc = 'Toggle w[r]ap' })
+map('n', '<leader><Tab>w', M.toggle.wrap, { desc = 'Toggle [w]rap' })
 map('n', '<leader><Tab>v', M.toggle.virtual_text, { desc = 'Toggle diagnostic [v]irtual text' })
 
 -- [[ TOGGLES: END ]]
