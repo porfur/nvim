@@ -6,30 +6,6 @@ return {
       print('Word wrap ' .. (vim.wo.wrap and 'enabled' or 'disabled'))
     end,
 
-    wildignore = function()
-      -- TODO: Make sure this works and fix it
-      -- Toggle wildignore for common "ignored" files (like .gitignore)
-      local ignore_patterns = {
-        '**/.git/**',
-        '**/node_modules/**',
-        '**/dist/**',
-        '**/build/**',
-        '**/.next/**',
-        '**/.cache/**',
-        '**/*.lock',
-        '**/*.log',
-      }
-      local current = vim.opt.wildignore:get()
-
-      if vim.tbl_isempty(current) then
-        vim.opt.wildignore = ignore_patterns
-        print 'Wildignore: ON (ignoring junk files)'
-      else
-        vim.opt.wildignore = {}
-        print 'Wildignore: OFF (searching everything)'
-      end
-    end,
-
     quickfix = function()
       local qf_exists = false
       for _, win in pairs(vim.fn.getwininfo()) do
@@ -69,16 +45,17 @@ return {
     end,
 
     zoom = function()
-      if vim.g.op.zoom == true then
-        vim.g.op.zoom = false
+      if vim.g.op_zoom == true then
+        vim.g.op_zoom = false
         vim.cmd 'wincmd ='
         print 'wincmd ='
       else
-        vim.g.op.zoom = true
+        vim.g.op_zoom = true
         vim.cmd 'resize 999 | vertical resize 999'
         print 'resize 999 | vertical resize 999'
       end
     end,
+
     virtual_text = function()
       local current_virtual_text = vim.diagnostic.config().virtual_text
       vim.diagnostic.config { virtual_text = not current_virtual_text }
