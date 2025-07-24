@@ -11,7 +11,7 @@ return {
       delay = 0,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
-        mappings = false,
+        mappings = true,
         -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
         -- default which-key.nvim defined Nerd Font icons, otherwise define a string table
         keys = {

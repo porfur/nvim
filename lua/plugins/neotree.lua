@@ -5,7 +5,7 @@ return {
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    -- 'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
     'MunifTanjim/nui.nvim',
     {
       -- https://github.com/s1n7ax/nvim-window-picker
@@ -25,7 +25,7 @@ return {
   opts = {
     default_component_configs = {
         icon = {
-          enabled = false
+          enabled = true
         },
         git_status = {
           symbols = {
