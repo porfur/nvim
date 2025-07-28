@@ -32,6 +32,10 @@ return function(event)
     end
   end
 
+  local hover_rounded = function() vim.lsp.buf.hover { border = "rounded" } end
+
+  map('K', hover_rounded,  ' Hover')
+
   -- Rename the variable under your cursor.
   --  Most Language Servers support renaming across files, etc.
   map('grn', ':OPRename<CR>', '[R]e[n]ame')

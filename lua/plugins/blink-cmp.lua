@@ -116,9 +116,9 @@ return {
       default = { 'snippets', 'lsp', 'path', 'buffer' },
       providers = {
         lsp = { score_offset = 0, fallbacks = {} },
-        snippets = { score_offset = 1, fallbacks = {} },
-        path = { score_offset = 2, fallbacks = {} },
-        buffer = { score_offset = 3, fallbacks = {} },
+        snippets = { score_offset = 0, fallbacks = {} },
+        path = { score_offset = 0, fallbacks = {} },
+        buffer = { score_offset = -4, fallbacks = {} },
       },
     },
 

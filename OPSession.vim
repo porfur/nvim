@@ -13,18 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +121 ~/.config/nvim/lua/plugins/blink-cmp.lua
+badd +17 lua/plugins/alpha.lua
+badd +231 ~/.local/share/nvim/lazy/alpha-nvim/lua/alpha/themes/startify.lua
 argglobal
 %argdel
-edit ~/.config/nvim/lua/plugins/blink-cmp.lua
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
+edit lua/plugins/alpha.lua
 argglobal
+balt ~/.local/share/nvim/lazy/alpha-nvim/lua/alpha/themes/startify.lua
 setlocal foldmethod=indent
 setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
 setlocal foldmarker={{{,}}}
@@ -33,12 +28,12 @@ setlocal foldlevel=0
 setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal nofoldenable
-let s:l = 120 - ((33 * winheight(0) + 25) / 50)
+let s:l = 17 - ((16 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 120
-normal! 033|
+keepjumps 17
+normal! 026|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -46,8 +41,6 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
-let &winminheight = s:save_winminheight
-let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

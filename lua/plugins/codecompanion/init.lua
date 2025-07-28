@@ -1,6 +1,7 @@
 return {
   {
     "olimorris/codecompanion.nvim",
+      event = 'VeryLazy',
     opts = {},
     dependencies = {
       "ravitemer/mcphub.nvim",

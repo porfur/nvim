@@ -1,6 +1,5 @@
 local M = require('utils')
 local map = vim.keymap.set
-local hover_rounded = function() vim.lsp.buf.hover { border = "rounded" } end
 
 -- [[ QUALITY OF LIFE: START ]]
 
@@ -70,7 +69,6 @@ map('n', '[d', M.diagnostic.jump(-1), { desc = 'Prev diagnostic float' })
 
 map('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [d]iagnostic (current buffer)' })
 map('n', '<leader>D', vim.diagnostic.setqflist , { desc = 'Open [D]iagnostics (all buffers)' })
-map('n', 'K', hover_rounded, { desc = 'LSP hover' })
 
 -- [[ DIAGNOSTICS AND LSP: END ]]
 -- =============================================================================
