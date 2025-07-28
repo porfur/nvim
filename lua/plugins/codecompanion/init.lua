@@ -1,7 +1,7 @@
 return {
   {
     "olimorris/codecompanion.nvim",
-      event = 'VeryLazy',
+    event = 'VeryLazy',
     opts = {},
     dependencies = {
       "ravitemer/mcphub.nvim",
@@ -41,23 +41,17 @@ return {
           },
         },
         adapters = {
-          -- opts = {
-          --   show_defaults = false,
-          -- },
-          OP = function()
-            return require("codecompanion.adapters").extend("openai_compatible", {
-              env = {
-                url = "http://127.0.0.1:1234",
-                -- api_key = "OPENROUTER_API_KEY",
-                -- chat_url = "/v1/chat/completions",
-              },
-              -- schema = {
-              --   model = {
-              --     default = "qwen/qwen3-1.7b",
-              --   },
-              -- },
-            })
-          end,
+          http = {
+            OP = function()
+              return require("codecompanion.adapters").extend("openai_compatible", {
+                env = {
+                  url = "http://127.0.0.1:1234",
+                  -- api_key = "OPENROUTER_API_KEY",
+                  -- chat_url = "/v1/chat/completions",
+                },
+              })
+            end
+          },
         },
       })
       require("plugins.codecompanion.fidget-spinner"):init()

@@ -39,6 +39,7 @@ vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
 vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
+vim.opt.foldcolumn = '1'
 vim.opt.path:append("**") -- enable recursive search
 
 -- if vim.g.neovide then
