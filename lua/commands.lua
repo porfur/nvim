@@ -19,6 +19,16 @@ local create_augroup = vim.api.nvim_create_augroup
 local create_user_command = vim.api.nvim_create_user_command
 
 -- [[ AUTOCOMMANDS: START ]]
+
+create_autocmd("TermEnter", {
+  desc = 'Add relative numbers to terminals',
+  group = create_augroup('relativenumber-terminal', { clear = true }),
+  callback = function()
+    vim.wo.number = true
+    vim.wo.relativenumber = true
+  end,
+})
+
 create_autocmd('TextYankPost', {
   desc = 'Highlight yanked text',
   group = create_augroup('highlight-yank', { clear = true }),
@@ -50,7 +60,7 @@ create_autocmd({ 'FileType' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'VimResized' }, {
+create_autocmd({ 'VimResized' }, {
   desc = 'Make windows equaly high and wide after resize',
   group = create_augroup('equal-size-windows', { clear = true }),
   callback = function()

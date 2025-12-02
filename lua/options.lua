@@ -32,15 +32,15 @@ vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.ruler = false
-vim.opt.numberwidth = 4
-vim.opt.signcolumn = 'yes'
+-- vim.opt.numberwidth = 4
+-- vim.opt.signcolumn = 'yes'
 vim.opt.wrap = false
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
 vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
 vim.opt.foldcolumn = '1'
-vim.opt.path:append("**") -- enable recursive search
+vim.opt.wildignore:append { "*/node_modules/*", "*/.git/*" }
 
 -- if vim.g.neovide then
 -- -- NOTE: Neovide specific options

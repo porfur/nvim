@@ -10,9 +10,9 @@ map('i', 'kj', '<Esc>')
 map('n', '<leader>x', ':nohlsearch<CR>', { desc = 'Clear Search Highlight' })
 map('n', '<Esc>', ':nohlsearch<CR>', { desc = 'Clear Search Highlight' })
 
--- Cycle next/prev command in command mode.
-map('c', '<C-n>', '<down>', { desc = 'Next command' })
-map('c', '<C-p>', '<up>', { desc = 'Previous command' })
+-- Cycle next/prev command in command mode. Seems like it's a default now
+-- map('c', '<C-n>', '<down>', { desc = 'Next command' })
+-- map('c', '<C-p>', '<up>', { desc = 'Previous command' })
 
 -- Exit terminal mode with C-n C-n (Might not work in some terminals)
 -- Default is C-\ C-n
@@ -52,7 +52,7 @@ map('n', '<leader>fe', ':find .env<CR>', { desc = 'Open [f]ile .env' })
 map('n', '<leader>fp', ':find package.json<CR>', { desc = 'Open [f]ile package.json' })
 
 -- macOS quicklook
-map('n', 'gq', M.utils.reveal_in_finder, { desc = 'Reveal file in Finder' })
+map('n', 'gX', M.utils.reveal_in_finder, { desc = 'Reveal file in Finder' })
 
 -- [[ QUALITY OF LIFE: END ]]
 
@@ -68,7 +68,7 @@ map('n', ']d', M.diagnostic.jump(1), { desc = 'Next diagnostic float' })
 map('n', '[d', M.diagnostic.jump(-1), { desc = 'Prev diagnostic float' })
 
 map('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [d]iagnostic (current buffer)' })
-map('n', '<leader>D', vim.diagnostic.setqflist , { desc = 'Open [D]iagnostics (all buffers)' })
+map('n', '<leader>D', vim.diagnostic.setqflist, { desc = 'Open [D]iagnostics (all buffers)' })
 
 -- [[ DIAGNOSTICS AND LSP: END ]]
 -- =============================================================================
@@ -106,16 +106,16 @@ map('n', '<C-k>', '<C-w>k', { desc = 'Window Navigate Up' })
 map('n', '<C-l>', '<C-w>l', { desc = 'Window Navigate Right' })
 
 -- Resize with Alt-hjkl
-map('n', '<M-j>', ':resize -2<CR>', { desc = 'Window Horizontal Shrink' })
-map('n', '<M-k>', ':resize +2<CR>', { desc = 'Window Horizontal Grow' })
-map('n', '<M-h>', ':vertical resize -2<CR>', { desc = 'Window Vertical Shrink' })
-map('n', '<M-l>', ':vertical resize +2<CR>', { desc = 'Window Vertical Grow' })
+map('n', '<M-h', '<C-w><', { desc = 'Decrease width' })
+map('n', '<M-l>', '<C-w>>', { desc = 'Increase width' })
+map('n', '<M-j>', '<C-w>-', { desc = 'Decrease height' })
+map('n', '<M-k>', '<C-w>+', { desc = 'Increase height' })
 
 -- Equalize and maximize M-=
-map('n', '<M-\\>', ':vertical resize 999<CR>', { desc = 'Max window width' })
-map('n', '<M-|>', ':vertical resize 0<CR>', { desc = 'Min window width' })
-map('n', '<M-->', ':resize 999<CR>', { desc = 'Max window height' })
-map('n', '<M-_>', ':resize 0<CR>', { desc = 'Min window height' })
+map('n', '<M-|>', '<C-w>|', { desc = 'Max out the witdh' })
+map('n', '<M-_>', '<C-w>_', { desc = 'Max out the height' })
+map('n', '<M-=>', '<C-w>=', { desc = 'Equal hight and wide' })
+
 
 -- Zoom toggle
 map('n', '<M-Z>', M.toggle.zoom, { desc = 'Max out the height' })
@@ -127,10 +127,10 @@ map('n', '<C-w>z', M.toggle.zoom, { desc = 'Max out the height' })
 
 -- [[ TABS: START ]]
 -- TODO: Put index number on tab for easy moving
-map('n', '<leader>tn', ':tabnew<CR>', { desc = 'Tab New' })
-map('n', '<leader>tc', ':tabclose<CR>', { desc = 'Tab Close' })
-map('n', '<leader>tl', ':tabnext<CR>', { desc = 'Tab Next' })
-map('n', '<leader>th', ':tabprevious<CR>', { desc = 'Tab Previous' })
+map('n', '<leader>tc', ':tabnew<CR>', { desc = 'Tab New' })
+map('n', '<leader>tx', ':tabclose<CR>', { desc = 'Tab Close' })
+map('n', '<leader>tn', ':tabnext<CR>', { desc = 'Tab Next' })
+map('n', '<leader>tp', ':tabprevious<CR>', { desc = 'Tab Previous' })
 map('n', '<leader>to', ':tabonly<CR>', { desc = 'Tab Only' })
 map('n', '<leader>tm', ':tabmove', { desc = 'Tab Move' })
 
@@ -193,4 +193,3 @@ map('n', '<leader>`l', ':marks<CR>', { desc = 'List marks' })
 -- [[ MARKS: END ]]
 
 -- =============================================================================
-

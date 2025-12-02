@@ -3,34 +3,34 @@ return {
   'ThePrimeagen/harpoon',
   branch = 'harpoon2',
   dependencies = { 'nvim-lua/plenary.nvim' },
-      event = 'VeryLazy',
-  config = function ()
-local map = vim.keymap.set
-local harpoon = require("harpoon")
+  event = 'VeryLazy',
+  config = function()
+    local map = vim.keymap.set
+    local harpoon = require("harpoon")
 
-local add = function ()
-return function ()harpoon:list():add()end
-end
+    local add = function()
+      return function() harpoon:list():add() end
+    end
 
-local select= function(index)
-return function ()harpoon:list():select(index)end
-end
+    local select = function(index)
+      return function() harpoon:list():select(index) end
+    end
 
-local next = function()
-return function()harpoon:list():next()end
-end
+    local next = function()
+      return function() harpoon:list():next() end
+    end
 
-local prev = function()
-return function()harpoon:list():prev()end
-end
+    local prev = function()
+      return function() harpoon:list():prev() end
+    end
 
- local toggle = function()
-   return function()harpoon.ui:toggle_quick_menu(harpoon:list())end
- end
+    local toggle = function()
+      return function() harpoon.ui:toggle_quick_menu(harpoon:list()) end
+    end
 
--- REQUIRED
-harpoon:setup()
--- REQUIRED
+    -- REQUIRED
+    harpoon:setup()
+    -- REQUIRED
 
     map('n', '<leader>m', add(), { desc = 'Harpoon [m]ark' })
     map('n', '<leader>M', toggle(), { desc = 'Harpoon [M]enu' })
@@ -42,6 +42,6 @@ harpoon:setup()
     map('n', '<leader>l', select(4), { desc = 'Harpoon to file 4' })
     map('n', '<leader>;', select(5), { desc = 'Harpoon to file 5' })
     map('n', "<leader>'", select(6), { desc = 'Harpoon to file 6' })
-end
+  end
 
 }

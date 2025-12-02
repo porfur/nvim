@@ -25,7 +25,7 @@ return {
   opts = {
     default_component_configs = {
         icon = {
-          enabled = true
+          enabled = false
         },
         git_status = {
           symbols = {

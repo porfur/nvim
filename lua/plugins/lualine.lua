@@ -1,4 +1,5 @@
 return {
+  enabled=true,
   -- https://github.com/nvim-lualine/lualine.nvim
   -- TODO: Try removing the options
   'nvim-lualine/lualine.nvim',
