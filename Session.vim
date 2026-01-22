@@ -13,10 +13,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +4 ~/.config/nvim/lua/plugins/cursor.lua
+badd +41 ~/.config/nvim/lua/plugins/toggle-term.lua
 argglobal
 %argdel
-edit ~/.config/nvim/lua/plugins/cursor.lua
+edit ~/.config/nvim/lua/plugins/toggle-term.lua
 argglobal
 setlocal foldmethod=indent
 setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
@@ -26,12 +26,12 @@ setlocal foldlevel=0
 setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal nofoldenable
-let s:l = 4 - ((3 * winheight(0) + 31) / 62)
+let s:l = 41 - ((40 * winheight(0) + 31) / 62)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
-normal! 032|
+keepjumps 41
+normal! 028|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
