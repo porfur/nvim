@@ -1,6 +1,3 @@
-local a = 2
-
-
 return {
             -- https://github.com/nvim-treesitter/nvim-treesitter
   -- TODO: Learn what setting are usefull below and remove what is not needed

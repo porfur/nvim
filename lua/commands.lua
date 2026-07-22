@@ -18,16 +18,19 @@ local create_autocmd = vim.api.nvim_create_autocmd
 local create_augroup = vim.api.nvim_create_augroup
 local create_user_command = vim.api.nvim_create_user_command
 
+-- Expose Neovim server
+-- vim.fn.serverstart("/tmp/nvim-server")
+
 -- [[ AUTOCOMMANDS: START ]]
 
-create_autocmd("TermEnter", {
-  desc = 'Add relative numbers to terminals',
-  group = create_augroup('relativenumber-terminal', { clear = true }),
-  callback = function()
-    vim.wo.number = true
-    vim.wo.relativenumber = true
-  end,
-})
+-- create_autocmd("TermEnter", {
+--   desc = 'Add relative numbers to terminals',
+--   group = create_augroup('relativenumber-terminal', { clear = true }),
+--   callback = function()
+--     vim.wo.number = true
+--     vim.wo.relativenumber = true
+--   end,
+-- })
 
 create_autocmd('TextYankPost', {
   desc = 'Highlight yanked text',

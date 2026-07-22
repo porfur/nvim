@@ -141,8 +141,8 @@ map('n', '<leader>tm', ':tabmove', { desc = 'Tab Move' })
 -- [[ BUFFERS: START ]]
 
 -- Navigate buffers
-map('n', '<C-n>', ':bnext<CR>', { desc = 'Buffer Next' })
-map('n', '<C-p>', ':bprevious<CR>', { desc = 'Buffer Previous' })
+-- map('n', '<C-n>', ':bnext<CR>', { desc = 'Buffer Next' })
+-- map('n', '<C-p>', ':bprevious<CR>', { desc = 'Buffer Previous' })
 map('n', '<leader>bn', ':bnext<CR>', { desc = 'Buffer Next' })
 map('n', '<leader>bp', ':bprevious<CR>', { desc = 'Buffer Previous' })
 map('n', '<leader>n', ':bnext<CR>', { desc = 'Buffer Next' })
@@ -157,7 +157,6 @@ map({ 'n', 'v' }, '<leader>bs', ':write<CR>', { desc = 'Write Buffer' })
 map({ 'n', 'v' }, '<leader>bS', ':wall<CR>', { desc = 'Write all Buffers' })
 
 map({ 'n', 'v' }, '<C-s>', ':write<CR>', { desc = 'Write Buffer' })
-map({ 'n', 'v' }, '<C-S>', ':wall<CR>', { desc = 'Write all Buffers' })
 
 map({ 'n', 'v' }, '<leader>bw', ':write<CR>', { desc = 'Write Buffer' })
 map({ 'n', 'v' }, '<leader>bW', ':wall<CR>', { desc = 'Write all Buffers' })

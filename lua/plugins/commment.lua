@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 return {
 -- Allows block comments with gbc
 -- https://github.com/numToStr/Comment.nvim

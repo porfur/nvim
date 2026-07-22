@@ -18,9 +18,9 @@ return {
   },
   lazy = false,
   keys = {
-    { '\\', ':Neotree right reveal<CR>', desc = 'neoTree right reveal', silent = true },
-    { '<leader>e', ':Neotree float toggle<CR>', desc = 'n[e]oTree right toggle', silent = true },
-    { '<leader>E', ':Neotree left toggle<CR>', desc = 'n[E]oTree toggle', silent = true },
+    { '<leader>el', ':Neotree right reveal<CR>', desc = 'neoTree right reveal', silent = true },
+    { '<leader>ee', ':Neotree float toggle<CR>', desc = 'n[e]oTree right toggle', silent = true },
+    { '<leader>eh', ':Neotree left toggle<CR>', desc = 'n[E]oTree toggle', silent = true },
   },
   opts = {
     default_component_configs = {

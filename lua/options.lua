@@ -40,6 +40,7 @@ vim.opt.sidescrolloff = 5
 vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
 vim.opt.foldcolumn = '1'
+vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
 vim.opt.wildignore:append { "*/node_modules/*", "*/.git/*" }
 
 -- if vim.g.neovide then
