@@ -1,3 +1,7 @@
+if true then
+  return{}
+end
+
 return {
   -- Treesitter Context --
   -- Show function context at top of the screen when function is long
