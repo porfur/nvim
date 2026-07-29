@@ -1,6 +1,6 @@
 return {
   config = function()
-    vim.cmd 'colorscheme one_monokai'
+    vim.cmd 'colorscheme dracula'
   end,
   priority = 1000, -- Ensure it loads first
 

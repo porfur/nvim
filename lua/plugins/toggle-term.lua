@@ -1,47 +1,47 @@
 return {
   -- TODO See what options can be removed
   -- https://github.com/akinsho/toggleterm.nvim
-  "akinsho/toggleterm.nvim",
+  'akinsho/toggleterm.nvim',
   config = function(_, opts)
-    require("toggleterm").setup(opts)
-    local Terminal = require("toggleterm.terminal").Terminal
+    require('toggleterm').setup(opts)
+    local Terminal = require('toggleterm.terminal').Terminal
 
-    local terminal_g = Terminal:new({
-      display_name = '[C-g] Terminal',
-      direction = "float",
-      hide_numbers = false,
-      shade_terminals = true,
-      shading_factor = 2,
-      start_in_insert = true,
-      insert_mappings = true,
-      close_on_exit = true,
-      float_opts = { border = "curved" },
-    })
+    local function create_terminals(keys)
+      local terminals = {}
 
-    vim.keymap.set({ "n", "t" }, "<C-g><C-g>", function()
-      terminal_g:toggle()
-    end, { desc = "Toggle Terminal [G]eneric" })
+      for _, key in ipairs(keys) do
+        terminals[key] = Terminal:new {
+          display_name = '[C-' .. key .. ']',
+          direction = 'float',
+          size = 100,
+          hide_numbers = false,
+          shade_terminals = true,
+          shading_factor = 2,
+          start_in_insert = true,
+          insert_mappings = true,
+          close_on_exit = true,
+          shell = vim.o.shell,
+          float_opts = {
+            border = 'curved',
+          },
+        }
 
-    local terminal_t = Terminal:new({
-      display_name = '[C-t] Terminal',
-      direction = "float",
-      hide_numbers = false,
-      shade_terminals = true,
-      shading_factor = 2,
-      start_in_insert = true,
-      insert_mappings = true,
-      close_on_exit = true,
-      float_opts = { border = "curved" },
-    })
+        vim.keymap.set({ 'n', 't' }, '<C-' .. key .. '>', function()
+          terminals[key]:toggle(80)
+        end, {
+          desc = 'Toggle terminal ' .. key,
+        })
+      end
 
-    vim.keymap.set({ "n", "t" }, "<C-g><C-t>", function()
-      terminal_t:toggle()
-    end, { desc = "Toggle [T]erminal Generic" })
+      return terminals
+    end
 
-    local cursor_term = Terminal:new({
-      cmd = "cursor-agent",
-      display_name = '[C-i] Cursor Agent',
-      direction = "float",
+    local cursor_terms = create_terminals { 't', 'g' }
+
+    local claude_term = Terminal:new {
+      cmd = 'claude',
+      display_name = '[\\\\] Claude',
+      direction = 'float',
       size = 100,
       hide_numbers = false,
       shade_terminals = true,
@@ -50,17 +50,17 @@ return {
       insert_mappings = true,
       close_on_exit = true,
       shell = vim.o.shell,
-      float_opts = { border = "curved" },
-    })
+      float_opts = { border = 'curved' },
+    }
 
-    vim.keymap.set({ "n", "t" }, "||", function()
-     cursor_term:toggle(80)
-    end, { desc = "Toggle Cursor CLI terminal" })
+    vim.keymap.set({ 'n', 't' }, '\\\\', function()
+      claude_term:toggle(80)
+    end, { desc = 'Toggle Claude CLI terminal' })
 
-    local opencode_term = Terminal:new({
-      cmd = "opencode",
-      display_name = '[\\\\] OpenCode',
-      direction = "float",
+    local opencode_term = Terminal:new {
+      cmd = 'opencode',
+      display_name = '||',
+      direction = 'float',
       size = 100,
       hide_numbers = false,
       shade_terminals = true,
@@ -69,11 +69,11 @@ return {
       insert_mappings = true,
       close_on_exit = true,
       shell = vim.o.shell,
-      float_opts = { border = "curved" },
-    })
+      float_opts = { border = 'curved' },
+    }
 
-    vim.keymap.set({ "n", "t" }, "\\\\", function()
+    vim.keymap.set({ 'n', 't' }, '||', function()
       opencode_term:toggle(80)
-    end, { desc = "Toggle OpenCode CLI terminal" })
+    end, { desc = 'Toggle OpenCode CLI terminal' })
   end,
 }

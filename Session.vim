@@ -10,30 +10,25 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 let s:shortmess_save = &shortmess
 set shortmess+=aoO
-badd +10 ~/.config/nvim/lua/plugins/treesitter-context.lua
-badd +679 health://
-badd +2 ~/.config/nvim/init.lua
-badd +1 ~/.config/nvim/lua/plugins/alpha.lua
-badd +9 lua/plugins/treesitter.lua
+badd +61 ~/.config/nvim/lua/plugins/toggle-term.lua
 argglobal
 %argdel
-edit lua/plugins/treesitter.lua
+edit ~/.config/nvim/lua/plugins/toggle-term.lua
 argglobal
-balt ~/.config/nvim/lua/plugins/alpha.lua
-setlocal foldmethod=indent
-setlocal foldexpr=0
+setlocal foldmethod=expr
+setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
 setlocal foldmarker={{{,}}}
 setlocal foldignore=#
 setlocal foldlevel=0
 setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal nofoldenable
-let s:l = 9 - ((8 * winheight(0) + 31) / 62)
+let s:l = 61 - ((41 * winheight(0) + 30) / 60)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 9
-normal! 0
+keepjumps 61
+normal! 021|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
