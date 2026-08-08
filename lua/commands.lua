@@ -37,7 +37,7 @@ create_autocmd('TextYankPost', {
   group = create_augroup('highlight-yank', { clear = true }),
   callback = function()
     -- Use built-in highlight (default 'IncSearch', 200ms)
-    vim.highlight.on_yank {
+    vim.hl.on_yank {
       higroup = 'IncSearch', -- Can be changes to other ex: 'Visual'
       timeout = 200,
     }
