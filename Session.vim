@@ -10,11 +10,15 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 let s:shortmess_save = &shortmess
 set shortmess+=aoO
-badd +61 ~/.config/nvim/lua/plugins/toggle-term.lua
+badd +1 ~/.config/nvim/lua/plugins/cursor.lua
+badd +1 ~/.config/nvim/lua/plugins/commment.lua
+badd +73 ~/.config/nvim/lua/plugins/conform.lua
+badd +11 lua/plugins/blink-cmp.lua
 argglobal
 %argdel
-edit ~/.config/nvim/lua/plugins/toggle-term.lua
+edit lua/plugins/blink-cmp.lua
 argglobal
+balt ~/.config/nvim/lua/plugins/conform.lua
 setlocal foldmethod=expr
 setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
 setlocal foldmarker={{{,}}}
@@ -23,12 +27,12 @@ setlocal foldlevel=0
 setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal nofoldenable
-let s:l = 61 - ((41 * winheight(0) + 30) / 60)
+let s:l = 1 - ((0 * winheight(0) + 30) / 60)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 61
-normal! 021|
+keepjumps 1
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -42,7 +46,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

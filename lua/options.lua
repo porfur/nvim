@@ -23,9 +23,9 @@ vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.writebackup = false
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 2   -- Number of spaces to use for each step of (auto)indent
-vim.opt.tabstop = 2      -- Number of spaces that a <Tab> in the file counts for
-vim.opt.softtabstop = 2  -- Number of spaces inserted/deleted when hitting <Tab>/<BS>
+vim.opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent
+vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
+vim.opt.softtabstop = 2 -- Number of spaces inserted/deleted when hitting <Tab>/<BS>
 vim.opt.expandtab = true -- Convert tabs to spaces
 vim.opt.indentexpr = ''
 vim.opt.cursorline = true
@@ -41,7 +41,8 @@ vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = false
 vim.opt.foldcolumn = '1'
 vim.opt.guifont = 'IosevkaTerm Nerd Font:h18'
-vim.opt.wildignore:append { "*/node_modules/*", "*/.git/*" }
+vim.opt.wildignore:append { '*/node_modules/*', '*/.git/*' }
+vim.o.confirm = true
 
 -- if vim.g.neovide then
 -- -- NOTE: Neovide specific options
